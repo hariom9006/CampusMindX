@@ -1,0 +1,74 @@
+{
+  "dataset": {
+    "total_samples": 1200,
+    "train_samples": 960,
+    "test_samples": 240,
+    "features": [
+      "attendance",
+      "assignment_completion",
+      "internal_marks",
+      "previous_gpa",
+      "recent_trend",
+      "core_subject_score",
+      "study_hours_weekly",
+      "missed_labs"
+    ]
+  },
+  "model_1_risk_detection": {
+    "task": "Multiclass Classification (Low, Medium, High)",
+    "selected_model": "Random Forest Classifier",
+    "comparison": {
+      "Logistic Regression": {
+        "accuracy": 0.9417,
+        "macro_f1": 0.9289,
+        "macro_precision": 0.9301,
+        "macro_recall": 0.9285
+      },
+      "Random Forest Classifier": {
+        "accuracy": 0.9708,
+        "macro_f1": 0.9684,
+        "macro_precision": 0.9722,
+        "macro_recall": 0.965
+      },
+      "Gradient Boosting Classifier": {
+        "accuracy": 0.9708,
+        "macro_f1": 0.9684,
+        "macro_precision": 0.9722,
+        "macro_recall": 0.965
+      }
+    },
+    "test_metrics": {
+      "accuracy": 0.9708,
+      "macro_f1": 0.9684,
+      "macro_precision": 0.9722,
+      "macro_recall": 0.965
+    }
+  },
+  "model_2_performance_prediction": {
+    "task": "Continuous Regression (Future Semester GPA)",
+    "selected_model": "Ridge Regression",
+    "comparison": {
+      "Ridge Regression": {
+        "mae": 0.2315,
+        "rmse": 0.2876,
+        "r2_score": 0.9254
+      },
+      "Random Forest Regressor": {
+        "mae": 0.2397,
+        "rmse": 0.2932,
+        "r2_score": 0.9225
+      },
+      "Gradient Boosting Regressor": {
+        "mae": 0.2431,
+        "rmse": 0.2959,
+        "r2_score": 0.921
+      }
+    },
+    "test_metrics": {
+      "mae": 0.2315,
+      "rmse": 0.2876,
+      "r2_score": 0.9254
+    }
+  },
+  "model_version": "v1.3.0-phase3"
+}

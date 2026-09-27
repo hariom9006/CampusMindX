@@ -1,0 +1,25 @@
+{
+  "name": "campusmind-x",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CampusMind X: An Explainable AI-Powered University Intelligence and Student Success Platform",
+  "scripts": {
+    "dev": "npm --prefix client run dev",
+    "client": "npm --prefix client run dev",
+    "server": "npm --prefix server run dev",
+    "build:client": "npm --prefix client run build",
+    "install:all": "npm --prefix client install && npm --prefix server install"
+  },
+  "keywords": [
+    "explainable-ai",
+    "student-success",
+    "university-intelligence",
+    "shap",
+    "react",
+    "vite",
+    "express",
+    "fastapi"
+  ],
+  "author": "CampusMind X Project Team",
+  "license": "ISC"
+}
