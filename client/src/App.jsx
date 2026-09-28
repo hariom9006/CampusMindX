@@ -42,6 +42,9 @@ const AdminAnalysisResultPage = lazy(() => import('./pages/analysis/AdminAnalysi
 const ConnectUniversityPage = lazy(() => import('./pages/integration/ConnectUniversityPage'));
 const ConnectedIntelligencePage = lazy(() => import('./pages/integration/ConnectedIntelligencePage'));
 
+// 404 Fallback Page
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+
 export default function App() {
   return (
     <ErrorBoundary>
@@ -51,6 +54,11 @@ export default function App() {
             {/* Public Landing & Persona Switcher */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<RoleSelectPage />} />
+            <Route path="/register" element={<RoleSelectPage />} />
+
+            {/* Convenience Aliases */}
+            <Route path="/dashboard" element={<Navigate to="/student" replace />} />
+            <Route path="/profile" element={<Navigate to="/student" replace />} />
 
             {/* University LMS & Cloud Integration */}
             <Route path="/connect-university" element={<ConnectUniversityPage />} />
@@ -93,8 +101,8 @@ export default function App() {
               <Route path="/admin/assistant" element={<AdminAssistant />} />
             </Route>
 
-            {/* Fallback to Landing */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* Application-Level 404 Catch-All */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

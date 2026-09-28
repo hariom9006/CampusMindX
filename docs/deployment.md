@@ -62,19 +62,29 @@ CampusMind X is architected for decoupled cloud deployment across standard platf
 5. On initial launch, the server automatically connects to MongoDB Atlas and auto-seeds the initial demo cohort.
 
 ### Step 4: Deploy Frontend (Vercel)
-1. Connect Git repository to [Vercel](https://vercel.com).
-2. Set Root Directory to `client`.
-3. Framework Preset: `Vite`.
-4. Build Command: `npm run build`.
-5. Output Directory: `dist`.
+CampusMind X is configured to deploy effortlessly to [Vercel](https://vercel.com) under either scenario:
+
+#### Option A: Root Repository Deployment (Zero-Config / Recommended)
+If deploying the GitHub repository root (`/`):
+1. Import repository `CampusMindX` in Vercel.
+2. Keep **Root Directory** as default (`./`).
+3. Vercel automatically reads root `vercel.json`:
+   - **Framework Preset**: `Vite`
+   - **Build Command**: `npm --prefix client install && npm --prefix client run build`
+   - **Output Directory**: `client/dist`
+   - **Rewrites**: SPA fallback to `/index.html`
+4. Add Environment Variable:
+   - `VITE_API_URL=https://<your-backend-service>.onrender.com/api` (Optional; in-memory resilient simulation fallback is active if omitted)
+
+#### Option B: Subdirectory Deployment (`client`)
+If configuring Root Directory specifically to the `client` folder in Vercel Project Settings:
+1. Set **Root Directory** to `client`.
+2. Framework Preset: `Vite`.
+3. Build Command: `npm run build`.
+4. Output Directory: `dist`.
+5. Vercel reads `client/vercel.json` for SPA rewrites (`/*` -> `/index.html`).
 6. Add Environment Variable:
    - `VITE_API_URL=https://<your-backend-service>.onrender.com/api`
-7. In Vercel Project Settings, add Single-Page Application (SPA) rewrite rule in `vercel.json` if needed:
-   ```json
-   {
-     "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-   }
-   ```
 
 ---
 
