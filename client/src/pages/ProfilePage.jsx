@@ -25,6 +25,14 @@ export default function ProfilePage() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Keep state synchronized when user object rehydrates from API
+  React.useEffect(() => {
+    if (user) {
+      if (user.name) setName(user.name);
+      if (user.email) setEmail(user.email);
+    }
+  }, [user]);
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     setSuccessMessage('');
