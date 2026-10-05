@@ -22,7 +22,8 @@ import {
   ArrowDown,
   Menu,
   X,
-  Check
+  Check,
+  Zap
 } from 'lucide-react';
 import AIOrb from '../components/AIOrb';
 import ExplainabilityModal from '../components/ExplainabilityModal';
