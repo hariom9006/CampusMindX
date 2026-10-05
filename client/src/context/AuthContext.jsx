@@ -77,7 +77,7 @@ export function AuthProvider({ children }) {
         return { success: false, message: errMsg };
       }
     } catch (err) {
-      const errMsg = 'Network error or server unavailable. Please try again.';
+      const errMsg = 'Unable to connect to the authentication server.';
       setError(errMsg);
       return { success: false, message: errMsg };
     }
@@ -99,7 +99,7 @@ export function AuthProvider({ children }) {
         return { success: false, message: errMsg };
       }
     } catch (err) {
-      const errMsg = 'Network error or server unavailable. Please try again.';
+      const errMsg = 'Unable to connect to the authentication server.';
       setError(errMsg);
       return { success: false, message: errMsg };
     }

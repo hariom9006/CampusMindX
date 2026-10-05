@@ -53,9 +53,12 @@ export const register = async (req, res, next) => {
       userRole = 'student';
     }
 
+    console.log('[Auth] Registration request received for email:', cleanEmail, 'Role:', userRole);
+
     // 5. Duplicate email detection
     const existing = await User.findOne({ email: cleanEmail });
     if (existing) {
+      console.log('[Auth] Registration failed: Email already registered:', cleanEmail);
       return res.status(409).json({
         success: false,
         message: 'An account with this email address already exists. Please sign in.'
@@ -67,7 +70,6 @@ export const register = async (req, res, next) => {
     let facultyRef = null;
 
     if (userRole === 'student') {
-      // Check if student profile exists with this email or link to default demo student
       const matchedStudent = await Student.findOne({ email: cleanEmail });
       if (matchedStudent) {
         studentRef = matchedStudent._id;
@@ -90,6 +92,7 @@ export const register = async (req, res, next) => {
     });
 
     const token = signToken(user._id, user.role);
+    console.log('[Auth] Registration successful for user ID:', user._id, 'Role:', user.role);
 
     res.status(201).json({
       success: true,
@@ -104,6 +107,7 @@ export const register = async (req, res, next) => {
       }
     });
   } catch (err) {
+    console.error('[Auth] Registration error:', err.message);
     next(err);
   }
 };
@@ -119,21 +123,24 @@ export const login = async (req, res, next) => {
     }
 
     const cleanEmail = email.toLowerCase().trim();
+    console.log('[Auth] Authentication request received for email:', cleanEmail);
 
     // Find user by email
     const user = await User.findOne({ email: cleanEmail });
     if (!user) {
-      // Do not reveal whether email exists for security
+      console.log('[Auth] Authentication failed: User not found for email:', cleanEmail);
       return res.status(401).json({ success: false, message: 'Invalid email or password.' });
     }
 
     // Compare bcrypt password hash
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
+      console.log('[Auth] Authentication failed: Incorrect password for email:', cleanEmail);
       return res.status(401).json({ success: false, message: 'Invalid email or password.' });
     }
 
     const token = signToken(user._id, user.role);
+    console.log('[Auth] Authentication successful for user ID:', user._id, 'Role:', user.role);
 
     res.status(200).json({
       success: true,
@@ -149,6 +156,7 @@ export const login = async (req, res, next) => {
       }
     });
   } catch (err) {
+    console.error('[Auth] Login error:', err.message);
     next(err);
   }
 };

@@ -88,7 +88,7 @@ export default function RegisterPage() {
         setErrorMessage(res.message || 'Registration failed. Please verify your details.');
       }
     } catch (err) {
-      setErrorMessage('Network error or server unavailable. Please try again.');
+      setErrorMessage('Unable to connect to the authentication server.');
     } finally {
       setIsSubmitting(false);
     }

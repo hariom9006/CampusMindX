@@ -43,11 +43,35 @@ app.use((req, res, next) => {
   next();
 });
 
-// Configurable CORS support for production deployments
-const corsOrigin = process.env.CORS_ORIGIN || '*';
-const allowedOrigins = corsOrigin.includes(',') ? corsOrigin.split(',').map(s => s.trim()) : corsOrigin;
+// Configurable CORS support for local development and production deployments
+const configuredOrigins = (process.env.CORS_ORIGIN || '')
+  .split(',')
+  .map(s => s.trim())
+  .filter(Boolean);
+
+const defaultAllowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://localhost:4173',
+  'http://127.0.0.1:5173',
+  'http://127.0.0.1:3000'
+];
+
 app.use(cors({
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    // Allow non-browser requests (e.g. mobile, curl, Postman, internal calls)
+    if (!origin) return callback(null, true);
+
+    const isExplicit = configuredOrigins.includes(origin) || defaultAllowedOrigins.includes(origin);
+    const isVercelPreview = origin.endsWith('.vercel.app');
+    const isLocalhost = origin.includes('localhost') || origin.includes('127.0.0.1');
+    const isWildcardConfigured = configuredOrigins.includes('*');
+
+    if (isExplicit || isVercelPreview || isLocalhost || isWildcardConfigured) {
+      return callback(null, origin);
+    }
+    return callback(new Error(`CORS blocked request from origin: ${origin}`));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -62,7 +86,7 @@ async function connectDB() {
   try {
     await mongoose.connect(MONGODB_URI);
     isDbConnected = true;
-    console.log(`✓ [CampusMind Express] Successfully connected to MongoDB at: ${MONGODB_URI}`);
+    console.log(`✓ [CampusMind Express] MongoDB connected successfully at: ${MONGODB_URI}`);
 
     // Auto-seed if students collection is empty
     const studentCount = await Student.countDocuments();

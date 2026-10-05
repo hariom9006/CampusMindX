@@ -74,7 +74,7 @@ export default function LoginPage() {
         setErrorMessage(res.message || 'Invalid email or password.');
       }
     } catch (err) {
-      setErrorMessage('Network error or server unavailable. Please try again.');
+      setErrorMessage('Unable to connect to the authentication server.');
     } finally {
       setIsSubmitting(false);
     }

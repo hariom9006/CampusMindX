@@ -9,7 +9,60 @@ import { studentAttendanceData } from "../data/attendanceData";
 import { studentSkillData } from "../data/skills";
 import { studentRecommendations, facultyInterventionPrototypes } from "../data/recommendations";
 
-const API_BASE = import.meta.env.VITE_API_URL || "/api";
+// Normalize API Base URL: handle missing /api, trailing slashes, and environment variables
+const rawApiUrl = import.meta.env.VITE_API_URL;
+const normalizeApiBase = (url) => {
+  if (!url || typeof url !== 'string' || !url.trim()) {
+    return '/api';
+  }
+  const clean = url.trim().replace(/\/+$/, '');
+  // If set to domain root (e.g. https://campusmind-backend.onrender.com), append /api
+  if (!clean.endsWith('/api') && !clean.includes('/api/')) {
+    return `${clean}/api`;
+  }
+  return clean;
+};
+
+const API_BASE = normalizeApiBase(rawApiUrl);
+
+// Robust auth response parser with accurate status handling and non-JSON resilience
+const parseAuthResponse = async (res) => {
+  let json = null;
+  try {
+    const text = await res.text();
+    if (text) {
+      json = JSON.parse(text);
+    }
+  } catch {
+    // Non-JSON or HTML gateway error (e.g. Vercel SPA rewrite fallback or offline server)
+    if (res.status >= 500) {
+      return { success: false, message: 'Server error. Please try again later.' };
+    }
+    return { success: false, message: 'Unable to connect to the authentication server.' };
+  }
+
+  if (res.ok && json?.success) {
+    return json;
+  }
+
+  if (res.status === 401) {
+    return { success: false, message: json?.message || 'Invalid email or password.' };
+  }
+  if (res.status === 400) {
+    return { success: false, message: json?.message || 'Please check your login details.' };
+  }
+  if (res.status === 403) {
+    return { success: false, message: json?.message || 'Access denied. Administrator accounts cannot be created via public registration.' };
+  }
+  if (res.status === 409) {
+    return { success: false, message: json?.message || 'An account with this email address already exists. Please sign in.' };
+  }
+  if (res.status >= 500) {
+    return { success: false, message: 'Server error. Please try again later.' };
+  }
+
+  return { success: false, message: json?.message || 'Unable to connect to the authentication server.' };
+};
 
 export const apiService = {
   // Auth Token Helper
@@ -48,13 +101,13 @@ export const apiService = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      const json = await res.json();
-      if (json.success && json.token) {
-        this.setAuthToken(json.token);
+      const parsed = await parseAuthResponse(res);
+      if (parsed.success && parsed.token) {
+        this.setAuthToken(parsed.token);
       }
-      return json;
-    } catch (err) {
-      return { success: false, message: 'Network error or server unavailable. Please try again.' };
+      return parsed;
+    } catch {
+      return { success: false, message: 'Unable to connect to the authentication server.' };
     }
   },
 
@@ -65,13 +118,13 @@ export const apiService = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
-      const json = await res.json();
-      if (json.success && json.token) {
-        this.setAuthToken(json.token);
+      const parsed = await parseAuthResponse(res);
+      if (parsed.success && parsed.token) {
+        this.setAuthToken(parsed.token);
       }
-      return json;
-    } catch (err) {
-      return { success: false, message: 'Network error or server unavailable. Please try again.' };
+      return parsed;
+    } catch {
+      return { success: false, message: 'Unable to connect to the authentication server.' };
     }
   },
 
@@ -112,9 +165,9 @@ export const apiService = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       });
-      return await res.json();
-    } catch (err) {
-      return { success: false, message: err.message };
+      return await parseAuthResponse(res);
+    } catch {
+      return { success: false, message: 'Unable to connect to the authentication server.' };
     }
   },
 
@@ -125,9 +178,9 @@ export const apiService = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, password })
       });
-      return await res.json();
-    } catch (err) {
-      return { success: false, message: err.message };
+      return await parseAuthResponse(res);
+    } catch {
+      return { success: false, message: 'Unable to connect to the authentication server.' };
     }
   },
 
