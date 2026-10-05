@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import Student from '../models/Student.js';
 import Faculty from '../models/Faculty.js';
+import { logAccountCreated, logSignIn, logLogout } from '../services/googleSheetsService.js';
 
 const signToken = (id, role) => {
   return jwt.sign(
@@ -94,6 +95,11 @@ export const register = async (req, res, next) => {
     const token = signToken(user._id, user.role);
     console.log('[Auth] Registration successful for user ID:', user._id, 'Role:', user.role);
 
+    // Record activity in Google Sheets asynchronously (non-blocking)
+    logAccountCreated(user, req).catch(err => {
+      console.error('[Google Sheets] Async registration logging error:', err.message);
+    });
+
     res.status(201).json({
       success: true,
       message: 'Account registered successfully.',
@@ -142,6 +148,11 @@ export const login = async (req, res, next) => {
     const token = signToken(user._id, user.role);
     console.log('[Auth] Authentication successful for user ID:', user._id, 'Role:', user.role);
 
+    // Record activity in Google Sheets asynchronously (non-blocking)
+    logSignIn(user, req).catch(err => {
+      console.error('[Google Sheets] Async sign-in logging error:', err.message);
+    });
+
     res.status(200).json({
       success: true,
       token,
@@ -157,6 +168,54 @@ export const login = async (req, res, next) => {
     });
   } catch (err) {
     console.error('[Auth] Login error:', err.message);
+    next(err);
+  }
+};
+
+// @desc    Logout user & record activity
+// @route   POST /api/auth/logout
+export const logout = async (req, res, next) => {
+  try {
+    let user = null;
+    let token = null;
+
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'supersecret_campusmind_jwt_key_2026');
+        user = await User.findById(decoded.id).select('name email role');
+      } catch {
+        // Token invalid or expired; proceed with logout
+      }
+    }
+
+    if (!user && req.body?.email) {
+      user = await User.findOne({ email: req.body.email.toLowerCase().trim() }).select('name email role');
+      if (!user) {
+        user = {
+          name: req.body.name || 'User',
+          email: req.body.email,
+          role: req.body.role || 'student'
+        };
+      }
+    }
+
+    console.log('[Auth] Logout request received for user:', user?.email || 'Anonymous');
+
+    // Record activity in Google Sheets asynchronously (non-blocking)
+    logLogout(user, req).catch(err => {
+      console.error('[Google Sheets] Async logout logging error:', err.message);
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Logged out successfully.'
+    });
+  } catch (err) {
+    console.error('[Auth] Logout error:', err.message);
     next(err);
   }
 };

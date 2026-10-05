@@ -184,8 +184,19 @@ export const apiService = {
     }
   },
 
-  logout() {
-    this.setAuthToken(null);
+  async logout(userData = null) {
+    try {
+      const headers = this.getHeaders();
+      await fetch(`${API_BASE}/auth/logout`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(userData || {})
+      });
+    } catch (err) {
+      console.warn('[API Service] Logout activity logging ping failed:', err.message);
+    } finally {
+      this.setAuthToken(null);
+    }
   },
 
   async demoLogin(role = 'student') {

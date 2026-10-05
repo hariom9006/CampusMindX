@@ -106,13 +106,21 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Logout handler
-  const logout = useCallback(() => {
-    apiService.logout();
-    setUser(null);
-    setToken(null);
-    setIsAuthenticated(false);
-    setError(null);
-  }, []);
+  const logout = useCallback(async () => {
+    const currentUser = user;
+    try {
+      await apiService.logout(
+        currentUser ? { name: currentUser.name, email: currentUser.email, role: currentUser.role } : null
+      );
+    } catch {
+      // Ignored
+    } finally {
+      setUser(null);
+      setToken(null);
+      setIsAuthenticated(false);
+      setError(null);
+    }
+  }, [user]);
 
   // Update profile handler
   const updateProfile = useCallback(async (data) => {
