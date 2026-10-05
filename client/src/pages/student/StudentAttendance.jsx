@@ -40,8 +40,8 @@ export default function StudentAttendance() {
     async function loadAttendanceData() {
       try {
         const [studentData, records] = await Promise.all([
-          apiService.getCurrentStudent('22BCA1042'),
-          apiService.getAttendanceRecords('22BCA1042')
+          apiService.getCurrentStudent('22BCA1042').catch(() => null),
+          apiService.getAttendanceRecords('22BCA1042').catch(() => null)
         ]);
 
         if (isMounted) {
@@ -67,7 +67,7 @@ export default function StudentAttendance() {
 
             const totalHeld = records.reduce((acc, curr) => acc + curr.totalClasses, 0);
             const totalAtt = records.reduce((acc, curr) => acc + curr.attendedClasses, 0);
-            const avg = totalHeld > 0 ? Math.round((totalAtt / totalHeld) * 100) : studentData?.attendance || 68;
+            const avg = totalHeld > 0 ? Math.round((totalAtt / totalHeld) * 100) : studentData?.attendance || 71;
 
             setAtt((prev) => ({
               ...prev,
@@ -80,7 +80,7 @@ export default function StudentAttendance() {
           }
         }
       } catch (err) {
-        console.error('Error fetching attendance from API:', err);
+        console.warn('Attendance records fallback:', err);
       }
     }
 
@@ -91,206 +91,220 @@ export default function StudentAttendance() {
   }, []);
 
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
-      {/* Page Header */}
+    <div className="space-y-8 animate-fadeIn pb-16">
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-extrabold text-white tracking-tight">Attendance Telemetry & Clearance</h1>
-            {isLive && (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                <Database className="w-3 h-3 text-emerald-400" />
-                <span>MongoDB Live</span>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-0.5 rounded-full">
+              Attendance Telemetry
+            </span>
+            {isLive ? (
+              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                Live Data Connected
+              </span>
+            ) : (
+              <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200">
+                Demo Intelligence
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Real-time biometric & LMS lecture attendance tracking for <span className="text-slate-200 font-semibold">{student.name}</span> ({student.rollNo || student.enrollmentNumber}) with predictive recovery modeling.
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Attendance Analytics & Clearance
+          </h1>
+          <p className="text-sm sm:text-base text-slate-500 font-medium mt-1">
+            Exam eligibility verification, threshold warnings, and automated recovery planning.
           </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-mono px-3 py-1.5 rounded-xl bg-amber-950/70 text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
-            <AlertTriangle className="w-4 h-4 text-amber-400" />
-            <span>Attendance Shortage: {att.overallPercentage}% (Req: 75%)</span>
-          </span>
         </div>
       </div>
 
-      {/* KPI Cards */}
+      {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Overall Attendance"
-          value={att.overallPercentage}
+          value={att.overallPercentage || 71}
           unit="%"
-          glowColor="amber"
-          trend={{ direction: 'down', label: `${att.overallPercentage - 75}% below 75% threshold` }}
+          variant="amber"
+          trend={{ direction: 'down', label: '4% below 75% target' }}
           icon={CalendarCheck}
         />
         <StatCard
           title="Classes Attended"
-          value={att.totalClassesAttended}
-          unit={`/ ${att.totalClassesHeld}`}
-          glowColor="cyan"
-          subtitle={`${att.totalClassesAttended} sessions logged`}
+          value={att.totalClassesAttended || 142}
+          unit={`/ ${att.totalClassesHeld || 200}`}
+          variant="indigo"
+          subtitle="Lectures & practicals"
           icon={CheckCircle2}
         />
         <StatCard
-          title="Recovery Target"
-          value={att.shortageCount}
-          unit="classes"
-          glowColor="rose"
-          trend={{ direction: 'neutral', label: '10 consecutive required' }}
-          icon={ShieldAlert}
+          title="Subjects At Risk"
+          value={att.subjectsAtRisk || 1}
+          unit="Subject"
+          variant="pink"
+          trend={{ direction: 'down', label: 'DBMS: 71%' }}
+          icon={AlertTriangle}
         />
         <StatCard
-          title="Total Missed"
-          value={att.missedClasses}
-          unit="hours"
-          glowColor="purple"
-          subtitle="4 unexcused absences"
+          title="Recovery Classes"
+          value="4"
+          unit="Classes"
+          variant="mint"
+          subtitle="Needed to reach 75% clearance"
           icon={Clock}
         />
       </div>
 
-      {/* Action Notice Banner */}
-      <AIInsightCard
-        title="Predictive Attendance Recovery Plan"
-        description="Your aggregate attendance is 68%. Under university academic regulation 4.2, students below 75% are ineligible to sit for final semester examinations. You must attend 10 consecutive scheduled lectures without absence to reach exactly 75.0%."
-        rationale="Severe deficit concentrated in Computer Networks (48%) and Data Structures Lab (62%). Full Stack Web Tech is currently in safe zone (79%)."
-        impact="Examination Clearance Critical"
-        type="warning"
-        actionText="Download Attendance Log PDF"
-        onAction={() => alert("Attendance summary report exported for Dr. Sunita Kulkarni (Advisor).")}
-      />
+      {/* Main Attendance Telemetry Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Subject-Wise Attendance Bar Chart */}
+        <div className="lg:col-span-8">
+          <ChartCard
+            title="Subject-Wise Attendance vs 75% Clearance Benchmark"
+            subtitle="Red reference line represents mandatory University exam eligibility threshold"
+            height="h-72"
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={subjectList} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+                <XAxis dataKey="code" stroke="#94A3B8" tick={{ fontSize: 11 }} />
+                <YAxis domain={[0, 100]} stroke="#94A3B8" tick={{ fontSize: 11 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    borderColor: '#E2E8F0',
+                    borderRadius: '16px',
+                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.08)'
+                  }}
+                />
+                <ReferenceLine y={75} stroke="#EF4444" strokeDasharray="4 4" label={{ value: '75% Target', fill: '#EF4444', fontSize: 11 }} />
+                <Bar dataKey="percentage" name="Attendance %" fill="#6366F1" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Weekly Trend with 75% Threshold Line */}
-        <ChartCard
-          title="Weekly Attendance Trend"
-          subtitle="Historical weekly percentage vs mandatory 75% eligibility line"
-          height="h-72"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={att.weeklyTrend} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
-              <defs>
-                <linearGradient id="attGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-              <XAxis dataKey="week" stroke="#64748b" tick={{ fontSize: 11 }} />
-              <YAxis domain={[40, 100]} stroke="#64748b" tick={{ fontSize: 11 }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#0b1222',
-                  borderColor: '#1e293b',
-                  borderRadius: '12px',
-                  fontSize: '12px'
-                }}
-              />
-              <ReferenceLine y={75} stroke="#ef4444" strokeDasharray="3 3" label={{ value: '75% Threshold', fill: '#ef4444', fontSize: 10 }} />
-              <Area
-                type="monotone"
-                dataKey="attendance"
-                name="Attendance %"
-                stroke="#f59e0b"
-                strokeWidth={3}
-                fill="url(#attGradient)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </ChartCard>
+        {/* Clearance Diagnostics */}
+        <div className="lg:col-span-4">
+          <div className="glass-panel rounded-[26px] p-6 border border-slate-200/80 bg-white/95 shadow-sm h-full flex flex-col justify-between">
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                University Clearance
+              </span>
+              <h3 className="text-base font-bold text-slate-900">
+                Examination Eligibility
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Calculated by automated institutional rules
+              </p>
 
-        {/* Monthly Comparison */}
-        <ChartCard
-          title="Monthly Attendance vs Cohort Average"
-          subtitle="Aarav Sharma monthly attendance compared with BCA Sem 5 peers"
-          height="h-72"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={att.monthlyComparison} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-              <XAxis dataKey="month" stroke="#64748b" tick={{ fontSize: 11 }} />
-              <YAxis domain={[0, 100]} stroke="#64748b" tick={{ fontSize: 11 }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#0b1222',
-                  borderColor: '#1e293b',
-                  borderRadius: '12px',
-                  fontSize: '12px'
-                }}
-              />
-              <Bar dataKey="rate" name="Aarav %" fill="#06b6d4" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="batchAvg" name="Cohort Average %" fill="#64748b" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
+              <div className="mt-6 p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs text-amber-900 space-y-2">
+                <div className="font-bold flex items-center gap-1.5 text-amber-800">
+                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                  <span>Advisory: 1 Coursework Shortage</span>
+                </div>
+                <p className="text-[11px] text-amber-800 leading-relaxed">
+                  DBMS (BCA-502) is currently at 71%. Attend the next 3 scheduled lab sessions to clear semester exam hall ticket requirements.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-slate-100 text-xs text-slate-500">
+              Regulation: Ordinance 4.2 • 75% Minimum Attendance Clause
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Subject-Wise Detailed Table */}
-      <div className="glass-panel rounded-2xl border border-slate-800 p-5">
-        <h3 className="text-base font-bold text-white mb-1">Subject-Wise Attendance Clearance Table</h3>
-        <p className="text-xs text-slate-400 mb-4">
-          Status of each enrolled course in BCA Semester 5 with faculty leads (MongoDB Sync).
-        </p>
+      {/* Attendance Log Table */}
+      <div className="glass-panel rounded-[24px] border border-slate-200/80 overflow-hidden shadow-xs bg-white">
+        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/60">
+          <div>
+            <h3 className="text-base font-bold text-slate-900">
+              Subject Attendance Registry
+            </h3>
+            <p className="text-xs text-slate-500 font-medium mt-0.5">
+              Live semester lecture and laboratory counters
+            </p>
+          </div>
+        </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-300">
-            <thead className="bg-[#0b1222] text-slate-400 font-semibold border-b border-slate-800">
+        {/* Mobile Attendance Cards */}
+        <div className="block md:hidden divide-y divide-slate-100">
+          {subjectList.map((sub, i) => (
+            <div key={i} className="p-4 space-y-2.5">
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <h4 className="font-bold text-sm text-slate-900">{sub.subject}</h4>
+                  <span className="text-[11px] text-slate-400 font-mono">{sub.code}</span>
+                </div>
+                <span
+                  className={`px-2 py-0.5 rounded-full font-bold text-[10px] border ${
+                    sub.percentage >= 75
+                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                      : 'bg-amber-50 text-amber-700 border-amber-200'
+                  }`}
+                >
+                  {sub.percentage >= 75 ? 'Cleared' : 'Shortage'}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-500 font-medium">Attended: {sub.attended} / {sub.total} classes</span>
+                <span className={`font-mono font-extrabold text-sm ${sub.percentage >= 75 ? 'text-slate-900' : 'text-amber-600'}`}>
+                  {sub.percentage}%
+                </span>
+              </div>
+              <ProgressBar
+                value={sub.percentage}
+                threshold={75}
+                color={sub.percentage >= 75 ? 'emerald' : 'amber'}
+                showValue={false}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop Attendance Table */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full text-left text-xs text-slate-700">
+            <thead className="bg-slate-50/80 text-slate-500 font-bold border-b border-slate-100">
               <tr>
-                <th className="py-3 px-3">Subject / Code</th>
-                <th className="py-3 px-3">Faculty In-Charge</th>
-                <th className="py-3 px-3">Sessions Attended</th>
-                <th className="py-3 px-3">Percentage</th>
-                <th className="py-3 px-3">Visual Progress</th>
-                <th className="py-3 px-3">Exam Clearance</th>
+                <th className="py-3 px-4">Subject</th>
+                <th className="py-3 px-4">Attended / Total</th>
+                <th className="py-3 px-4">Attendance %</th>
+                <th className="py-3 px-4">Progress</th>
+                <th className="py-3 px-4">Eligibility Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 font-medium">
-              {subjectList.map((item) => (
-                <tr key={item.code} className="hover:bg-slate-800/30 transition-colors">
-                  <td className="py-3.5 px-3">
-                    <span className="font-bold text-white block">{item.subject}</span>
-                    <span className="text-[11px] font-mono text-cyan-400">{item.code}</span>
+            <tbody className="divide-y divide-slate-100">
+              {subjectList.map((sub, i) => (
+                <tr key={i} className="hover:bg-slate-50/60 transition-colors">
+                  <td className="py-3.5 px-4 font-bold text-slate-900">
+                    <div>{sub.subject}</div>
+                    <div className="text-[10px] text-slate-400 font-mono">{sub.code}</div>
                   </td>
-                  <td className="py-3.5 px-3 text-slate-400">{item.faculty}</td>
-                  <td className="py-3.5 px-3 font-mono">
-                    {item.attended} / {item.total}
+                  <td className="py-3.5 px-4 font-mono font-medium">
+                    {sub.attended} / {sub.total} classes
                   </td>
-                  <td className="py-3.5 px-3">
-                    <span
-                      className={`font-bold font-mono text-sm ${
-                        item.percentage < 60
-                          ? 'text-rose-400'
-                          : item.percentage < 75
-                          ? 'text-amber-400'
-                          : 'text-emerald-400'
-                      }`}
-                    >
-                      {item.percentage}%
-                    </span>
+                  <td className="py-3.5 px-4 font-mono font-extrabold text-slate-900">
+                    {sub.percentage}%
                   </td>
-                  <td className="py-3.5 px-3 w-48">
+                  <td className="py-3.5 px-4 w-48">
                     <ProgressBar
-                      value={item.percentage}
-                      max={100}
+                      value={sub.percentage}
                       threshold={75}
-                      color={item.percentage < 60 ? 'rose' : item.percentage < 75 ? 'amber' : 'emerald'}
+                      color={sub.percentage >= 75 ? 'emerald' : 'amber'}
                       showValue={false}
-                      height="h-2"
                     />
                   </td>
-                  <td className="py-3.5 px-3">
+                  <td className="py-3.5 px-4">
                     <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
-                        item.percentage >= 75
-                          ? 'bg-emerald-950/60 text-emerald-300 border-emerald-500/30'
-                          : 'bg-rose-950/60 text-rose-300 border-rose-500/30'
+                      className={`px-2.5 py-0.5 rounded-full font-bold text-[10px] border ${
+                        sub.percentage >= 75
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : 'bg-amber-50 text-amber-700 border-amber-200'
                       }`}
                     >
-                      {item.status}
+                      {sub.percentage >= 75 ? 'Cleared for Exams' : 'Shortage Advisory'}
                     </span>
                   </td>
                 </tr>

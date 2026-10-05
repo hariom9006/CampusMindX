@@ -19,10 +19,10 @@ import { apiService } from '../../services/api';
 export default function AdminAnalytics() {
   const [dept, setDept] = useState(studentAcademicData.departmentOverview);
   const [stats, setStats] = useState({
-    totalStudents: 420,
-    averageAttendance: 74.5,
-    averagePerformance: 72.8,
-    passPercentage: 86.4
+    totalStudents: 1640,
+    averageAttendance: 82.5,
+    averagePerformance: 81.8,
+    passPercentage: 91.4
   });
   const [isLive, setIsLive] = useState(false);
 
@@ -38,19 +38,19 @@ export default function AdminAnalytics() {
     let isMounted = true;
     async function loadAdminAnalytics() {
       try {
-        const res = await apiService.getAnalyticsOverview();
+        const res = await apiService.getAnalyticsOverview().catch(() => null);
         if (isMounted && res) {
           if (res.department) setDept(res.department);
           setStats({
-            totalStudents: res.totalStudents || 420,
-            averageAttendance: res.averageAttendance || 74.5,
-            averagePerformance: res.averagePerformance || 72.8,
-            passPercentage: res.passPercentage || 86.4
+            totalStudents: res.totalStudents || 1640,
+            averageAttendance: res.averageAttendance || 82.5,
+            averagePerformance: res.averagePerformance || 81.8,
+            passPercentage: res.passPercentage || 91.4
           });
           setIsLive(true);
         }
       } catch (err) {
-        console.error('Error loading admin analytics:', err);
+        console.warn('Analytics overview fallback:', err);
       }
     }
 
@@ -61,122 +61,111 @@ export default function AdminAnalytics() {
   }, []);
 
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-blue-950/80 text-blue-300 border border-blue-500/30">
-              Institutional Intelligence
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-cyan-700 bg-cyan-50 border border-cyan-200 px-3 py-0.5 rounded-full">
+              Institutional Accreditation
             </span>
-            <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-500/30">
-              Accreditation Benchmarking
-            </span>
-            {isLive && (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                <Database className="w-3 h-3 text-emerald-400" />
-                <span>MongoDB Active</span>
-              </span>
-            )}
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight mt-1.5">
-            Departmental & Accreditation Analytics
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
+            Department Analytics
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Systemic multi-department evaluation, NAAC criterion compliance, and institutional KPI projections.
+          <p className="text-sm sm:text-base text-slate-500 font-medium mt-1">
+            NAAC criteria metrics, campus-wide learning velocity, and institutional pass rate forecasts.
           </p>
         </div>
       </div>
 
-      {/* KPI Cards */}
+      {/* KPI Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="Student Progression Index"
-          value="3.78"
-          unit="/ 4.0"
-          glowColor="blue"
-          trend={{ direction: 'up', label: 'Highest institutional pillar' }}
-          icon={Award}
-        />
-        <StatCard
-          title="On-Time Graduation Rate"
-          value={stats.passPercentage}
-          unit="%"
-          glowColor="emerald"
-          trend={{ direction: 'up', label: '+2.4% vs 2025' }}
-          icon={TrendingUp}
-        />
-        <StatCard
-          title="Monitored Students"
+          title="Campus Enrollment"
           value={stats.totalStudents}
-          unit="enrolled"
-          glowColor="cyan"
-          subtitle="Real-time Mongoose Tracking"
+          unit="Enrolled"
+          variant="indigo"
+          subtitle="All academic faculties"
+          icon={Layers}
+        />
+        <StatCard
+          title="Overall Attendance"
+          value={stats.averageAttendance}
+          unit="%"
+          variant="cyan"
+          trend={{ direction: 'neutral', label: 'Threshold: 75%' }}
           icon={CheckCircle2}
         />
         <StatCard
-          title="Average Attendance Rate"
-          value={stats.averageAttendance}
+          title="Passing Forecast"
+          value={stats.passPercentage}
           unit="%"
-          glowColor="purple"
-          subtitle="Institutional mean compliance"
-          icon={Layers}
+          variant="mint"
+          trend={{ direction: 'up', label: '+3.8% projected' }}
+          icon={TrendingUp}
+        />
+        <StatCard
+          title="Accreditation Score"
+          value="3.56"
+          unit="/ 4.0"
+          variant="violet"
+          trend={{ direction: 'up', label: 'NAAC A+ Ready' }}
+          icon={Award}
         />
       </div>
 
-      {/* Charts: NAAC Criteria & GPA Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* NAAC Pillars */}
-        <ChartCard
-          title="NAAC Accreditation Pillar Scores"
-          subtitle="Current evaluated score per institutional criterion (out of 4.0)"
-          height="h-72"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={naacCriteriaScores}
-              layout="vertical"
-              margin={{ top: 10, right: 30, left: 40, bottom: 0 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" horizontal={false} />
-              <XAxis type="number" domain={[0, 4.0]} stroke="#64748b" tick={{ fontSize: 10 }} />
-              <YAxis dataKey="criterion" type="category" stroke="#94a3b8" tick={{ fontSize: 10 }} width={120} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#0b1222',
-                  borderColor: '#1e293b',
-                  borderRadius: '12px',
-                  fontSize: '12px'
-                }}
-              />
-              <Bar dataKey="score" name="Criterion Score" fill="#3b82f6" radius={[0, 4, 4, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
+      {/* Accreditation Performance Chart */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="lg:col-span-8">
+          <ChartCard
+            title="NAAC Quality Framework Assessment"
+            subtitle="Evaluating 5 key university criteria on a 4.0 CGPA grade scale"
+            height="h-72"
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={naacCriteriaScores} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+                <XAxis dataKey="criterion" stroke="#94A3B8" fontSize={10} tickLine={false} />
+                <YAxis domain={[0, 4.0]} stroke="#94A3B8" fontSize={11} tickLine={false} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    borderColor: '#E2E8F0',
+                    borderRadius: '16px'
+                  }}
+                />
+                <Bar dataKey="score" name="Institutional Score" fill="#06B6D4" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        </div>
 
-        {/* GPA Stratification */}
-        <ChartCard
-          title="Undergraduate Performance Distribution"
-          subtitle="Distribution across performance bands in School of Computing"
-          height="h-72"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={dept.semesterPerformanceDist || studentAcademicData.departmentOverview.semesterPerformanceDist} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-              <XAxis dataKey="range" stroke="#64748b" tick={{ fontSize: 11 }} />
-              <YAxis stroke="#64748b" tick={{ fontSize: 11 }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#0b1222',
-                  borderColor: '#1e293b',
-                  borderRadius: '12px',
-                  fontSize: '12px'
-                }}
-              />
-              <Bar dataKey="count" name="Enrolled Students" fill="#06b6d4" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
+        <div className="lg:col-span-4">
+          <div className="glass-panel rounded-[26px] p-6 border border-slate-200/80 bg-white/95 shadow-sm h-full flex flex-col justify-between">
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                Executive Synthesis
+              </span>
+              <h3 className="text-base font-bold text-slate-900">
+                Institutional Quality Assurance
+              </h3>
+              <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                CampusMind X attribution data satisfies NAAC Criterion 2.6 (Student Performance & Learning Outcomes) through explainable continuous evaluations.
+              </p>
+
+              <div className="mt-4 p-3.5 rounded-2xl bg-cyan-50/60 border border-cyan-200 text-xs text-cyan-800 font-semibold space-y-1">
+                <div className="flex items-center gap-1.5 text-cyan-900">
+                  <Award className="w-4 h-4 text-cyan-600" />
+                  <span>NAAC Grade A+ Readiness</span>
+                </div>
+                <p className="text-[11px] text-cyan-700 font-normal">
+                  Composite institutional score meets all regulatory thresholds for academic cycle 2025-2026.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

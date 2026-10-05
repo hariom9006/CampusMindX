@@ -305,20 +305,20 @@ export default function AnalyzeFormPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#050814] text-slate-100 p-4 sm:p-6 lg:p-8 flex flex-col justify-between selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen bg-[#F8FAFF] text-slate-800 p-4 sm:p-6 lg:p-8 flex flex-col justify-between aurora-bg-mesh selection:bg-indigo-500/20 selection:text-indigo-900">
       <div className="max-w-4xl mx-auto w-full">
         {/* Top Navigation & Mode Indicator */}
-        <div className="flex items-center justify-between pb-6 border-b border-slate-800/80 mb-6">
+        <div className="flex items-center justify-between pb-6 border-b border-slate-200 mb-6">
           <div className="flex items-center gap-3">
             <Link
               to="/"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:text-white transition-colors"
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors shadow-2xs"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back to Home</span>
             </Link>
-            <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-cyan-400" />
+            <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 text-indigo-600" />
               <span>Personal Analysis Mode</span>
             </span>
           </div>
@@ -326,14 +326,14 @@ export default function AnalyzeFormPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={handleSaveProgress}
-              className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs font-medium text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors"
+              className="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-900 flex items-center gap-1.5 shadow-2xs transition-colors"
             >
-              <Save className="w-3.5 h-3.5 text-cyan-400" />
+              <Save className="w-3.5 h-3.5 text-indigo-600" />
               <span className="hidden sm:inline">Save Progress</span>
             </button>
             <button
               onClick={handleResetForm}
-              className="p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-rose-500/40 text-xs text-slate-400 hover:text-rose-300 transition-colors"
+              className="p-2 rounded-xl bg-white border border-slate-200 hover:border-rose-300 text-xs text-slate-600 hover:text-rose-600 shadow-2xs transition-colors"
               title="Reset Form"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -343,7 +343,7 @@ export default function AnalyzeFormPage() {
 
         {/* Save Notification Toast */}
         {saveToast && (
-          <div className="mb-4 p-3 rounded-xl bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2 animate-fadeIn">
+          <div className="mb-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 animate-fadeIn">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
             <span>Information saved to browser storage. You can resume anytime.</span>
           </div>
@@ -351,9 +351,9 @@ export default function AnalyzeFormPage() {
 
         {/* Multi-Step Progress Tracker */}
         <div className="mb-8">
-          <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+          <div className="flex items-center justify-between text-xs font-mono text-slate-500 mb-2">
             <span>Step {currentStep} of 5</span>
-            <span className="text-cyan-400 font-semibold">
+            <span className="text-indigo-600 font-semibold">
               {currentStep === 1 && 'Basic Information'}
               {currentStep === 2 && 'Academic Performance'}
               {currentStep === 3 && 'Biometric Attendance'}
@@ -363,7 +363,7 @@ export default function AnalyzeFormPage() {
           </div>
 
           {/* Progress Bar Track */}
-          <div className="w-full h-2 rounded-full bg-slate-900 border border-slate-800 overflow-hidden">
+          <div className="w-full h-2 rounded-full bg-slate-100 border border-slate-200 overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 transition-all duration-300 rounded-full"
               style={{ width: `${(currentStep / 5) * 100}%` }}
@@ -388,10 +388,10 @@ export default function AnalyzeFormPage() {
                   onClick={() => setCurrentStep(step.num)}
                   className={`py-2 px-1 sm:px-3 rounded-xl border text-center text-xs flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 transition-all ${
                     isCurrent
-                      ? 'bg-cyan-950/60 border-cyan-500/50 text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600 border-indigo-600 text-slate-900 shadow-xs font-bold'
                       : isDone
-                      ? 'bg-slate-900/80 border-emerald-500/30 text-emerald-400'
-                      : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:text-slate-300'
+                      ? 'bg-emerald-50 border-emerald-200 text-emerald-700 font-semibold'
+                      : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5 shrink-0" />
@@ -404,7 +404,7 @@ export default function AnalyzeFormPage() {
         </div>
 
         {/* STEP CONTENT CONTAINER */}
-        <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800/80 bg-slate-950/60 backdrop-blur-xl shadow-2xl relative min-h-[460px]">
+        <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-200/80 bg-white/60 backdrop-blur-xl shadow-2xl relative min-h-[460px]">
           <AnimatePresence mode="wait">
             {/* STEP 1: BASIC INFORMATION */}
             {currentStep === 1 && (
@@ -417,31 +417,31 @@ export default function AnalyzeFormPage() {
                 className="space-y-6"
               >
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <User className="w-5 h-5 text-cyan-400" />
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <User className="w-5 h-5 text-indigo-600" />
                     <span>Student Profile & Career Target</span>
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-500 mt-1">
                     Enter your academic profile and selected career destination. No sensitive personal documents required.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                      Full Name <span className="text-cyan-400">*</span>
+                    <label className="text-xs font-semibold text-slate-700 block mb-1.5">
+                      Full Name <span className="text-indigo-600">*</span>
                     </label>
                     <input
                       type="text"
                       placeholder="e.g., Jane Doe"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs text-slate-900 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
                     />
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                    <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                       College / University
                     </label>
                     <input
@@ -449,12 +449,12 @@ export default function AnalyzeFormPage() {
                       placeholder="e.g., National Institute of Technology"
                       value={formData.college}
                       onChange={(e) => setFormData({ ...formData, college: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs text-slate-900 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
                     />
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                    <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                       Course / Program
                     </label>
                     <input
@@ -462,22 +462,22 @@ export default function AnalyzeFormPage() {
                       placeholder="e.g., BCA / B.Tech Computer Science"
                       value={formData.program}
                       onChange={(e) => setFormData({ ...formData, program: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs text-slate-900 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                      <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                         Current Semester
                       </label>
                       <select
                         value={formData.semester}
                         onChange={(e) => setFormData({ ...formData, semester: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl glass-input text-xs text-white focus:outline-none focus:border-cyan-500"
+                        className="w-full px-3 py-2.5 rounded-xl glass-input text-xs text-slate-900 focus:outline-none focus:border-cyan-500"
                       >
                         {[1, 2, 3, 4, 5, 6, 7, 8].map((s) => (
-                          <option key={s} value={s} className="bg-slate-900 text-white">
+                          <option key={s} value={s} className="bg-slate-50 text-slate-900">
                             Semester {s}
                           </option>
                         ))}
@@ -485,31 +485,31 @@ export default function AnalyzeFormPage() {
                     </div>
 
                     <div>
-                      <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                      <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                         Academic Year
                       </label>
                       <input
                         type="text"
                         value={formData.academicYear}
                         onChange={(e) => setFormData({ ...formData, academicYear: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl glass-input text-xs text-white focus:outline-none focus:border-cyan-500"
+                        className="w-full px-3 py-2.5 rounded-xl glass-input text-xs text-slate-900 focus:outline-none focus:border-cyan-500"
                       />
                     </div>
                   </div>
                 </div>
 
                 {/* Career Goal Dropdown */}
-                <div className="pt-2 border-t border-slate-800/80">
-                  <label className="text-xs font-semibold text-slate-300 block mb-1.5">
-                    Target Career Goal <span className="text-cyan-400">*</span>
+                <div className="pt-2 border-t border-slate-200/80">
+                  <label className="text-xs font-semibold text-slate-700 block mb-1.5">
+                    Target Career Goal <span className="text-indigo-600">*</span>
                   </label>
                   <select
                     value={formData.careerGoal}
                     onChange={(e) => setFormData({ ...formData, careerGoal: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs text-white focus:outline-none focus:border-cyan-500 font-medium"
+                    className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs text-slate-900 focus:outline-none focus:border-cyan-500 font-medium"
                   >
                     {CAREER_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt} className="bg-slate-900 text-white">
+                      <option key={opt} value={opt} className="bg-slate-50 text-slate-900">
                         {opt}
                       </option>
                     ))}
@@ -517,7 +517,7 @@ export default function AnalyzeFormPage() {
 
                   {formData.careerGoal === 'Other' && (
                     <div className="mt-3">
-                      <label className="text-xs font-semibold text-slate-400 block mb-1">
+                      <label className="text-xs font-semibold text-slate-500 block mb-1">
                         Specify Your Career Goal
                       </label>
                       <input
@@ -525,22 +525,22 @@ export default function AnalyzeFormPage() {
                         placeholder="e.g., Embedded Systems Engineer / Game Developer"
                         value={formData.customCareerGoal}
                         onChange={(e) => setFormData({ ...formData, customCareerGoal: e.target.value })}
-                        className="w-full px-3.5 py-2 rounded-xl glass-input text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
+                        className="w-full px-3.5 py-2 rounded-xl glass-input text-xs text-slate-900 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
                       />
                     </div>
                   )}
                 </div>
 
                 {/* Optional Additional Profile Info */}
-                <div className="pt-4 border-t border-slate-800/80">
-                  <span className="text-[11px] font-mono uppercase text-slate-400 block mb-3">
+                <div className="pt-4 border-t border-slate-200/80">
+                  <span className="text-[11px] font-mono uppercase text-slate-500 block mb-3">
                     Optional Profile Context (Used for Custom Study Plan)
                   </span>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs text-slate-300 block mb-1 flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-slate-400" />
+                      <label className="text-xs text-slate-700 block mb-1 flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-slate-500" />
                         <span>Dedicated Weekly Study Time</span>
                       </label>
                       <div className="flex items-center gap-2">
@@ -550,14 +550,14 @@ export default function AnalyzeFormPage() {
                           max="60"
                           value={formData.weeklyStudyHours}
                           onChange={(e) => setFormData({ ...formData, weeklyStudyHours: e.target.value })}
-                          className="w-24 px-3 py-2 rounded-xl glass-input text-xs text-white text-center focus:outline-none focus:border-cyan-500"
+                          className="w-24 px-3 py-2 rounded-xl glass-input text-xs text-slate-900 text-center focus:outline-none focus:border-cyan-500"
                         />
-                        <span className="text-xs text-slate-400">hours / week</span>
+                        <span className="text-xs text-slate-500">hours / week</span>
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-xs text-slate-300 block mb-1">
+                      <label className="text-xs text-slate-700 block mb-1">
                         Currently Learning / Enrolled Courses
                       </label>
                       <input
@@ -565,7 +565,7 @@ export default function AnalyzeFormPage() {
                         placeholder="e.g., React, Express, Python"
                         value={formData.currentLearning}
                         onChange={(e) => setFormData({ ...formData, currentLearning: e.target.value })}
-                        className="w-full px-3.5 py-2 rounded-xl glass-input text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
+                        className="w-full px-3.5 py-2 rounded-xl glass-input text-xs text-slate-900 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
                       />
                     </div>
                   </div>
@@ -585,11 +585,11 @@ export default function AnalyzeFormPage() {
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                      <BookOpen className="w-5 h-5 text-cyan-400" />
+                    <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                      <BookOpen className="w-5 h-5 text-indigo-600" />
                       <span>Academic Performance & Subjects</span>
                     </h2>
-                    <p className="text-xs text-slate-400 mt-1">
+                    <p className="text-xs text-slate-500 mt-1">
                       Add the courses/subjects you are currently studying along with obtained marks.
                     </p>
                   </div>
@@ -604,7 +604,7 @@ export default function AnalyzeFormPage() {
                         ]
                       }));
                     }}
-                    className="px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-cyan-600/20 shrink-0"
+                    className="px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-900 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-cyan-600/20 shrink-0"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Add Subject</span>
@@ -625,7 +625,7 @@ export default function AnalyzeFormPage() {
                           }));
                         }
                       }}
-                      className="px-2 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-400 hover:text-cyan-300 hover:border-cyan-500/40 shrink-0 transition-colors"
+                      className="px-2 py-1 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-500 hover:text-cyan-300 hover:border-cyan-500/40 shrink-0 transition-colors"
                     >
                       + {subj}
                     </button>
@@ -633,9 +633,9 @@ export default function AnalyzeFormPage() {
                 </div>
 
                 {/* Subjects Table */}
-                <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/40">
-                  <table className="w-full text-left text-xs text-slate-300">
-                    <thead className="bg-slate-900/90 text-slate-400 font-semibold border-b border-slate-800">
+                <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs/40">
+                  <table className="w-full text-left text-xs text-slate-700">
+                    <thead className="bg-slate-50/90 text-slate-500 font-semibold border-b border-slate-200">
                       <tr>
                         <th className="py-2.5 px-3">Subject Name</th>
                         <th className="py-2.5 px-3 w-28 text-center">Max Marks</th>
@@ -661,7 +661,7 @@ export default function AnalyzeFormPage() {
                                   updated[idx].name = e.target.value;
                                   setFormData({ ...formData, subjects: updated });
                                 }}
-                                className="w-full bg-transparent border-b border-slate-700/60 text-white focus:border-cyan-400 focus:outline-none py-1 text-xs"
+                                className="w-full bg-transparent border-b border-slate-200/60 text-slate-900 focus:border-cyan-400 focus:outline-none py-1 text-xs"
                                 placeholder="e.g. Operating Systems"
                               />
                             </td>
@@ -676,7 +676,7 @@ export default function AnalyzeFormPage() {
                                   updated[idx].maxMarks = e.target.value;
                                   setFormData({ ...formData, subjects: updated });
                                 }}
-                                className="w-20 px-2 py-1 rounded-lg bg-slate-900 border border-slate-800 text-center text-white focus:border-cyan-400 focus:outline-none text-xs"
+                                className="w-20 px-2 py-1 rounded-lg bg-slate-50 border border-slate-200 text-center text-slate-900 focus:border-cyan-400 focus:outline-none text-xs"
                               />
                             </td>
                             <td className="py-2.5 px-3 text-center">
@@ -690,7 +690,7 @@ export default function AnalyzeFormPage() {
                                   updated[idx].obtainedMarks = e.target.value;
                                   setFormData({ ...formData, subjects: updated });
                                 }}
-                                className="w-20 px-2 py-1 rounded-lg bg-slate-900 border border-slate-800 text-center text-white focus:border-cyan-400 focus:outline-none text-xs"
+                                className="w-20 px-2 py-1 rounded-lg bg-slate-50 border border-slate-200 text-center text-slate-900 focus:border-cyan-400 focus:outline-none text-xs"
                               />
                             </td>
                             <td className="py-2.5 px-3 text-center">
@@ -735,27 +735,27 @@ export default function AnalyzeFormPage() {
 
                 {/* Live Academic Summary Banner */}
                 {liveAcademic.hasData && (
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs">
                     <div>
-                      <span className="text-[10px] font-mono text-slate-400 block uppercase">Overall Average</span>
-                      <span className="text-base font-extrabold text-cyan-400 font-mono">
+                      <span className="text-[10px] font-mono text-slate-500 block uppercase">Overall Average</span>
+                      <span className="text-base font-extrabold text-indigo-600 font-mono">
                         {liveAcademic.overallPercentage}%
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono text-slate-400 block uppercase">Average Marks</span>
-                      <span className="text-base font-bold text-white font-mono">
+                      <span className="text-[10px] font-mono text-slate-500 block uppercase">Average Marks</span>
+                      <span className="text-base font-bold text-slate-900 font-mono">
                         {liveAcademic.averageMarks}
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono text-slate-400 block uppercase">Highest Subject</span>
+                      <span className="text-[10px] font-mono text-slate-500 block uppercase">Highest Subject</span>
                       <span className="text-xs font-semibold text-emerald-400 truncate block">
                         {liveAcademic.highestSubject?.name} ({liveAcademic.highestSubject?.percentage}%)
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono text-slate-400 block uppercase">Lowest Subject</span>
+                      <span className="text-[10px] font-mono text-slate-500 block uppercase">Lowest Subject</span>
                       <span className="text-xs font-semibold text-rose-400 truncate block">
                         {liveAcademic.lowestSubject?.name} ({liveAcademic.lowestSubject?.percentage}%)
                       </span>
@@ -777,11 +777,11 @@ export default function AnalyzeFormPage() {
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                      <CalendarCheck className="w-5 h-5 text-cyan-400" />
+                    <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                      <CalendarCheck className="w-5 h-5 text-indigo-600" />
                       <span>Subject-Wise Attendance</span>
                     </h2>
-                    <p className="text-xs text-slate-400 mt-1">
+                    <p className="text-xs text-slate-500 mt-1">
                       Enter lecture & lab attendance per course. Clearance requirement is dynamically calculated.
                     </p>
                   </div>
@@ -789,7 +789,7 @@ export default function AnalyzeFormPage() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={syncSubjectsToAttendance}
-                      className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-colors"
+                      className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-900 text-xs font-medium transition-colors"
                       title="Import subject names from Step 2"
                     >
                       Sync from Subjects
@@ -804,7 +804,7 @@ export default function AnalyzeFormPage() {
                           ]
                         }));
                       }}
-                      className="px-3.5 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold flex items-center gap-1 transition-colors"
+                      className="px-3.5 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-slate-900 text-xs font-semibold flex items-center gap-1 transition-colors"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Add Row</span>
@@ -813,9 +813,9 @@ export default function AnalyzeFormPage() {
                 </div>
 
                 {/* Configurable Threshold Bar */}
-                <div className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white border border-slate-200 shadow-xs text-xs">
                   <div className="flex items-center gap-2">
-                    <Sliders className="w-4 h-4 text-cyan-400" />
+                    <Sliders className="w-4 h-4 text-indigo-600" />
                     <span>Configured Minimum Examination Target:</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -825,16 +825,16 @@ export default function AnalyzeFormPage() {
                       max="95"
                       value={formData.attendanceThreshold}
                       onChange={(e) => setFormData({ ...formData, attendanceThreshold: Number(e.target.value) || 75 })}
-                      className="w-16 px-2 py-1 rounded-lg bg-slate-900 border border-slate-800 text-center text-cyan-400 font-mono font-bold text-xs"
+                      className="w-16 px-2 py-1 rounded-lg bg-slate-50 border border-slate-200 text-center text-indigo-600 font-mono font-bold text-xs"
                     />
-                    <span className="font-mono text-slate-400">%</span>
+                    <span className="font-mono text-slate-500">%</span>
                   </div>
                 </div>
 
                 {/* Attendance Table */}
-                <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/40">
-                  <table className="w-full text-left text-xs text-slate-300">
-                    <thead className="bg-slate-900/90 text-slate-400 font-semibold border-b border-slate-800">
+                <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs/40">
+                  <table className="w-full text-left text-xs text-slate-700">
+                    <thead className="bg-slate-50/90 text-slate-500 font-semibold border-b border-slate-200">
                       <tr>
                         <th className="py-2.5 px-3">Subject</th>
                         <th className="py-2.5 px-3 w-28 text-center">Total Classes</th>
@@ -863,7 +863,7 @@ export default function AnalyzeFormPage() {
                                   updated[idx].subjectName = e.target.value;
                                   setFormData({ ...formData, attendanceRecords: updated });
                                 }}
-                                className="w-full bg-transparent border-b border-slate-700/60 text-white focus:border-cyan-400 focus:outline-none py-1 text-xs"
+                                className="w-full bg-transparent border-b border-slate-200/60 text-slate-900 focus:border-cyan-400 focus:outline-none py-1 text-xs"
                               />
                             </td>
                             <td className="py-2.5 px-3 text-center">
@@ -877,7 +877,7 @@ export default function AnalyzeFormPage() {
                                   updated[idx].totalClasses = e.target.value;
                                   setFormData({ ...formData, attendanceRecords: updated });
                                 }}
-                                className="w-16 px-2 py-1 rounded-lg bg-slate-900 border border-slate-800 text-center text-white focus:outline-none text-xs"
+                                className="w-16 px-2 py-1 rounded-lg bg-slate-50 border border-slate-200 text-center text-slate-900 focus:outline-none text-xs"
                               />
                             </td>
                             <td className="py-2.5 px-3 text-center">
@@ -891,7 +891,7 @@ export default function AnalyzeFormPage() {
                                   updated[idx].attendedClasses = e.target.value;
                                   setFormData({ ...formData, attendanceRecords: updated });
                                 }}
-                                className="w-16 px-2 py-1 rounded-lg bg-slate-900 border border-slate-800 text-center text-white focus:outline-none text-xs"
+                                className="w-16 px-2 py-1 rounded-lg bg-slate-50 border border-slate-200 text-center text-slate-900 focus:outline-none text-xs"
                               />
                             </td>
                             <td className="py-2.5 px-3 text-center font-mono font-bold">
@@ -940,15 +940,15 @@ export default function AnalyzeFormPage() {
 
                 {/* Attendance Live Status Summary */}
                 {liveAttendance.hasData && (
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs">
                     <div>
-                      <span className="text-[10px] font-mono text-slate-400 block uppercase">Overall Attendance</span>
-                      <span className="text-base font-extrabold text-cyan-400 font-mono">
+                      <span className="text-[10px] font-mono text-slate-500 block uppercase">Overall Attendance</span>
+                      <span className="text-base font-extrabold text-indigo-600 font-mono">
                         {liveAttendance.overallAttendance}%
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono text-slate-400 block uppercase">Status</span>
+                      <span className="text-[10px] font-mono text-slate-500 block uppercase">Status</span>
                       <span
                         className={`text-xs font-bold ${
                           liveAttendance.status === 'Healthy'
@@ -962,13 +962,13 @@ export default function AnalyzeFormPage() {
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono text-slate-400 block uppercase">Above Target (≥{liveAttendance.threshold}%)</span>
+                      <span className="text-[10px] font-mono text-slate-500 block uppercase">Above Target (≥{liveAttendance.threshold}%)</span>
                       <span className="text-xs font-bold text-emerald-400">
                         {liveAttendance.aboveTargetCount} Subjects
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] font-mono text-slate-400 block uppercase">Below Target (&lt;{liveAttendance.threshold}%)</span>
+                      <span className="text-[10px] font-mono text-slate-500 block uppercase">Below Target (&lt;{liveAttendance.threshold}%)</span>
                       <span className="text-xs font-bold text-rose-400">
                         {liveAttendance.belowTargetCount} Subjects
                       </span>
@@ -989,29 +989,29 @@ export default function AnalyzeFormPage() {
                 className="space-y-6"
               >
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <CheckSquare className="w-5 h-5 text-cyan-400" />
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <CheckSquare className="w-5 h-5 text-indigo-600" />
                     <span>Assignments & Continuous Assessment</span>
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-500 mt-1">
                     Enter the count of semester assignments. If no assignments have been assigned yet, leave total as 0.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-                    <label className="text-xs text-slate-400 block mb-1">Total Assigned</label>
+                  <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200">
+                    <label className="text-xs text-slate-500 block mb-1">Total Assigned</label>
                     <input
                       type="number"
                       min="0"
                       max="100"
                       value={formData.assignments.total}
                       onChange={(e) => updateAssignmentField('total', e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl glass-input text-lg font-bold font-mono text-white text-center focus:outline-none focus:border-cyan-500"
+                      className="w-full px-3 py-2 rounded-xl glass-input text-lg font-bold font-mono text-slate-900 text-center focus:outline-none focus:border-cyan-500"
                     />
                   </div>
 
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-emerald-500/30">
+                  <div className="p-4 rounded-xl bg-slate-50/80 border border-emerald-500/30">
                     <label className="text-xs text-emerald-300 block mb-1">Completed / Submitted</label>
                     <input
                       type="number"
@@ -1023,7 +1023,7 @@ export default function AnalyzeFormPage() {
                     />
                   </div>
 
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-amber-500/30">
+                  <div className="p-4 rounded-xl bg-slate-50/80 border border-amber-500/30">
                     <label className="text-xs text-amber-300 block mb-1">Pending Submissions</label>
                     <input
                       type="number"
@@ -1035,7 +1035,7 @@ export default function AnalyzeFormPage() {
                     />
                   </div>
 
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-rose-500/30">
+                  <div className="p-4 rounded-xl bg-slate-50/80 border border-rose-500/30">
                     <label className="text-xs text-rose-300 block mb-1">Overdue Tasks</label>
                     <input
                       type="number"
@@ -1050,10 +1050,10 @@ export default function AnalyzeFormPage() {
 
                 {/* Assignment Completion Progress Bar & Insights */}
                 {Number(formData.assignments.total) > 0 ? (
-                  <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-3">
+                  <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs space-y-3">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-semibold text-slate-200">Assignment Completion Rate</span>
-                      <span className="font-mono font-bold text-cyan-400 text-sm">
+                      <span className="font-mono font-bold text-indigo-600 text-sm">
                         {Math.round((formData.assignments.completed / formData.assignments.total) * 100)}%
                       </span>
                     </div>
@@ -1070,7 +1070,7 @@ export default function AnalyzeFormPage() {
                       />
                     </div>
 
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-slate-500">
                       You have submitted <strong className="text-slate-200">{formData.assignments.completed}</strong> of{' '}
                       <strong className="text-slate-200">{formData.assignments.total}</strong> assignments.
                       {formData.assignments.overdue > 0 && (
@@ -1081,7 +1081,7 @@ export default function AnalyzeFormPage() {
                     </p>
                   </div>
                 ) : (
-                  <div className="p-6 rounded-xl bg-slate-900/40 border border-slate-800 text-center text-xs text-slate-500">
+                  <div className="p-6 rounded-xl bg-slate-50/40 border border-slate-200 text-center text-xs text-slate-500">
                     No assignment data available. If you have coursework, enter your total assignments above.
                   </div>
                 )}
@@ -1099,19 +1099,19 @@ export default function AnalyzeFormPage() {
                 className="space-y-6"
               >
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <Target className="w-5 h-5 text-cyan-400" />
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <Target className="w-5 h-5 text-indigo-600" />
                     <span>Skills & Career Alignment</span>
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-500 mt-1">
                     Select your current technical competencies. We benchmark them against{' '}
-                    <strong className="text-cyan-400">{formData.careerGoal}</strong> expectations.
+                    <strong className="text-indigo-600">{formData.careerGoal}</strong> expectations.
                   </p>
                 </div>
 
                 {/* Quick Add Skill Chips */}
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-slate-400 block mb-2">
+                  <span className="text-[10px] font-mono uppercase text-slate-500 block mb-2">
                     Quick Add Common Skills:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -1133,8 +1133,8 @@ export default function AnalyzeFormPage() {
                           }}
                           className={`px-2.5 py-1 rounded-lg text-xs transition-colors border ${
                             exists
-                              ? 'bg-slate-900/40 border-slate-800 text-slate-600 cursor-not-allowed'
-                              : 'bg-slate-900 border-slate-800 text-slate-300 hover:border-cyan-500/40 hover:text-cyan-300'
+                              ? 'bg-slate-50/40 border-slate-200 text-slate-600 cursor-not-allowed'
+                              : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-cyan-500/40 hover:text-cyan-300'
                           }`}
                         >
                           + {skillName}
@@ -1147,7 +1147,7 @@ export default function AnalyzeFormPage() {
                 {/* Active Student Skills with Slider & Level Buttons */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-300">
+                    <span className="text-xs font-semibold text-slate-700">
                       Your Selected Skills ({formData.skills.length})
                     </span>
                     <button
@@ -1160,7 +1160,7 @@ export default function AnalyzeFormPage() {
                           }));
                         }
                       }}
-                      className="text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-medium"
+                      className="text-xs text-indigo-600 hover:text-cyan-300 flex items-center gap-1 font-medium"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Custom Skill</span>
@@ -1171,11 +1171,11 @@ export default function AnalyzeFormPage() {
                     {formData.skills.map((skill, idx) => (
                       <div
                         key={idx}
-                        className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                        className="p-3 rounded-xl bg-slate-50/80 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
                       >
-                        <div className="w-full sm:w-48 font-medium text-white truncate flex items-center justify-between sm:justify-start gap-2">
+                        <div className="w-full sm:w-48 font-medium text-slate-900 truncate flex items-center justify-between sm:justify-start gap-2">
                           <span>{skill.name}</span>
-                          <span className="font-mono text-cyan-400 font-bold sm:hidden">{skill.level}%</span>
+                          <span className="font-mono text-indigo-600 font-bold sm:hidden">{skill.level}%</span>
                         </div>
 
                         {/* Slider and Quick Preset Buttons */}
@@ -1192,7 +1192,7 @@ export default function AnalyzeFormPage() {
                             }}
                             className="w-full accent-cyan-400 cursor-pointer"
                           />
-                          <span className="font-mono text-cyan-400 w-10 text-right font-bold hidden sm:inline">
+                          <span className="font-mono text-indigo-600 w-10 text-right font-bold hidden sm:inline">
                             {skill.level}%
                           </span>
                         </div>
@@ -1213,7 +1213,7 @@ export default function AnalyzeFormPage() {
                                 className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-colors ${
                                   isSelected
                                     ? 'bg-cyan-950 text-cyan-300 border-cyan-500/40'
-                                    : 'bg-slate-900 text-slate-500 border-slate-800 hover:text-slate-300'
+                                    : 'bg-slate-50 text-slate-500 border-slate-200 hover:text-slate-700'
                                 }`}
                               >
                                 {tier[0]}
@@ -1236,7 +1236,7 @@ export default function AnalyzeFormPage() {
                     ))}
 
                     {formData.skills.length === 0 && (
-                      <div className="p-6 text-center text-slate-500 text-xs border border-dashed border-slate-800 rounded-xl">
+                      <div className="p-6 text-center text-slate-500 text-xs border border-dashed border-slate-200 rounded-xl">
                         No skills selected yet. Click the quick suggestions above to add your technologies.
                       </div>
                     )}
@@ -1245,16 +1245,16 @@ export default function AnalyzeFormPage() {
 
                 {/* Career Target Benchmark Live Preview */}
                 {liveSkillAnalysis.hasData && (
-                  <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs space-y-2">
+                  <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs text-xs space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-slate-300">
+                      <span className="font-semibold text-slate-700">
                         Live Role Readiness Index ({formData.careerGoal}):
                       </span>
-                      <span className="font-mono font-bold text-base text-cyan-400">
+                      <span className="font-mono font-bold text-base text-indigo-600">
                         {liveSkillAnalysis.readinessPercentage}%
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="text-[11px] text-slate-500">
                       Evaluated against {liveSkillAnalysis.skills.length} target competencies. Identified{' '}
                       <strong className="text-rose-400">{liveSkillAnalysis.highPriorityCount} high priority skill gaps</strong>{' '}
                       and <strong className="text-emerald-400">{liveSkillAnalysis.masteredCount} mastered skills</strong>.
@@ -1267,11 +1267,11 @@ export default function AnalyzeFormPage() {
         </div>
 
         {/* BOTTOM ACTION BAR */}
-        <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-800/80">
+        <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-200/80">
           {currentStep > 1 ? (
             <button
               onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1))}
-              className="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors"
+              className="px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-900 flex items-center gap-1.5 transition-colors"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back</span>
@@ -1287,8 +1287,8 @@ export default function AnalyzeFormPage() {
                 onClick={() => setCurrentStep((prev) => Math.min(5, prev + 1))}
                 className={`px-5 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
                   canProceed()
-                    ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-600/20 hover:from-cyan-500 hover:to-blue-500'
-                    : 'bg-slate-900 text-slate-500 border border-slate-800 cursor-not-allowed'
+                    ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-slate-900 shadow-lg shadow-cyan-600/20 hover:from-cyan-500 hover:to-blue-500'
+                    : 'bg-slate-50 text-slate-500 border border-slate-200 cursor-not-allowed'
                 }`}
               >
                 <span>Next Step</span>
@@ -1297,7 +1297,7 @@ export default function AnalyzeFormPage() {
             ) : (
               <button
                 onClick={handleStartAnalysis}
-                className="px-6 py-3 rounded-xl text-sm font-extrabold text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center gap-2 transition-all transform hover:scale-[1.02]"
+                className="px-6 py-3 rounded-xl text-sm font-extrabold text-slate-900 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center gap-2 transition-all transform hover:scale-[1.02]"
               >
                 <BrainCircuit className="w-4 h-4 animate-pulse" />
                 <span>Analyze My Data</span>
@@ -1309,26 +1309,26 @@ export default function AnalyzeFormPage() {
 
       {/* VISUAL PROTOTYPE PROCESSING OVERLAY */}
       {isProcessing && (
-        <div className="fixed inset-0 z-50 bg-[#050814]/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center animate-fadeIn">
-          <div className="max-w-md w-full glass-panel p-8 rounded-2xl border border-cyan-500/30 text-center space-y-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-white/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center animate-fadeIn">
+          <div className="max-w-md w-full glass-panel p-8 rounded-[26px] border border-indigo-200 bg-white text-center space-y-6 shadow-2xl">
             <div className="relative flex items-center justify-center mx-auto w-20 h-20">
-              <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl animate-pulse" />
-              <div className="w-16 h-16 rounded-2xl border-2 border-cyan-500/20 border-t-cyan-400 border-r-purple-400 animate-spin" />
-              <BrainCircuit className="w-7 h-7 text-cyan-400 absolute animate-pulse" />
+              <div className="absolute inset-0 bg-indigo-500/20 rounded-full blur-xl animate-pulse" />
+              <div className="w-16 h-16 rounded-2xl border-2 border-indigo-200 border-t-indigo-600 border-r-purple-600 animate-spin" />
+              <BrainCircuit className="w-7 h-7 text-indigo-600 absolute animate-pulse" />
             </div>
 
             <div>
               <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30">
                 Visual Prototype Processing
               </span>
-              <h3 className="text-lg font-bold text-white mt-2">Analyzing Student Telemetry</h3>
-              <p className="text-xs text-slate-400 mt-1">
+              <h3 className="text-lg font-bold text-slate-900 mt-2">Analyzing Student Telemetry</h3>
+              <p className="text-xs text-slate-500 mt-1">
                 Applying transparent evaluation rules and career benchmarks...
               </p>
             </div>
 
             {/* Step Sequence List */}
-            <div className="space-y-2 text-left bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs font-mono">
+            <div className="space-y-2 text-left bg-slate-50/80 p-3.5 rounded-xl border border-slate-200 text-xs font-mono">
               {processingPhases.map((phase, idx) => {
                 const isPassed = idx < processingStepIndex;
                 const isCurrent = idx === processingStepIndex;

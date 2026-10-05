@@ -1,113 +1,77 @@
 import React from 'react';
-import { Sparkles, Brain, ArrowRight, ShieldAlert, CheckCircle, Info } from 'lucide-react';
+import { Sparkles, Brain, ArrowRight, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 export default function AIInsightCard({
-  title,
-  description,
-  rationale = null,
-  impact = null,
-  actionText = "Explore Solution",
-  onAction = null,
-  type = "info", // "info", "warning", "success", "purple"
+  title = "CampusMind AI Insight",
+  description = "Your academic performance has improved over the last 3 weeks, but your DBMS performance is trending below your previous average.",
+  whyPoints = [
+    "Recent DBMS scores decreased (18.5/30)",
+    "2 assignments are pending in queue",
+    "Attendance is 71% (below 75% target)"
+  ],
+  actionText = "Understand Why",
   onExplain = null,
   className = ""
 }) {
-  const typeStyles = {
-    info: {
-      border: "border-cyan-500/30",
-      bg: "bg-cyan-950/20",
-      glow: "hover:shadow-[0_0_25px_rgba(6,182,212,0.25)]",
-      badge: "bg-cyan-900/60 text-cyan-300 border-cyan-500/30",
-      icon: Sparkles,
-      iconColor: "text-cyan-400"
-    },
-    warning: {
-      border: "border-amber-500/30",
-      bg: "bg-amber-950/20",
-      glow: "hover:shadow-[0_0_25px_rgba(245,158,11,0.25)]",
-      badge: "bg-amber-900/60 text-amber-300 border-amber-500/30",
-      icon: ShieldAlert,
-      iconColor: "text-amber-400"
-    },
-    success: {
-      border: "border-emerald-500/30",
-      bg: "bg-emerald-950/20",
-      glow: "hover:shadow-[0_0_25px_rgba(16,185,129,0.25)]",
-      badge: "bg-emerald-900/60 text-emerald-300 border-emerald-500/30",
-      icon: CheckCircle,
-      iconColor: "text-emerald-400"
-    },
-    purple: {
-      border: "border-purple-500/30",
-      bg: "bg-purple-950/20",
-      glow: "hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]",
-      badge: "bg-purple-900/60 text-purple-300 border-purple-500/30",
-      icon: Brain,
-      iconColor: "text-purple-400"
-    }
-  };
-
-  const style = typeStyles[type] || typeStyles.info;
-  const Icon = style.icon;
-
   return (
     <div
-      className={`glass-panel rounded-2xl p-5 border transition-all duration-300 relative overflow-hidden ${style.border} ${style.bg} ${style.glow} ${className}`}
+      className={`glass-panel rounded-[24px] p-6 border border-indigo-100/90 shadow-[0_12px_32px_-8px_rgba(99,102,241,0.08),0_4px_12px_rgba(15,23,42,0.02)] relative overflow-hidden bg-gradient-to-br from-white/95 via-white/90 to-indigo-50/40 ${className}`}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-start space-x-3">
-          <div className={`p-2 rounded-xl border bg-slate-900/80 ${style.border} ${style.iconColor} shrink-0 mt-0.5`}>
-            <Icon className="w-5 h-5 animate-pulse" />
+      {/* Decorative gradient top accent bar */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
+
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+            <Sparkles className="w-5 h-5 animate-pulse" />
           </div>
           <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h4 className="text-sm font-bold text-white tracking-tight">{title}</h4>
-              <span className={`text-[10px] uppercase font-mono px-2 py-0.5 rounded-full border ${style.badge}`}>
-                AI Insight
+            <div className="flex items-center gap-2">
+              <h3 className="text-base font-bold text-slate-900 tracking-tight">
+                {title}
+              </h3>
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
+                Predictive Intelligence
               </span>
             </div>
-            <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">{description}</p>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Continuous neural telemetry analysis
+            </p>
           </div>
         </div>
 
-        {impact && (
-          <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-700 text-slate-200 shrink-0">
-            {impact}
-          </span>
+        {onExplain && (
+          <button
+            onClick={onExplain}
+            className="self-start md:self-auto inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 shadow-md shadow-indigo-500/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <Brain className="w-3.5 h-3.5" />
+            <span>{actionText}</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
         )}
       </div>
 
-      {rationale && (
-        <div className="mt-3.5 pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-start gap-1.5">
-          <Info className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-          <span>
-            <strong className="text-slate-300">Factor Analysis:</strong> {rationale}
-          </span>
+      {/* Main Insight Description */}
+      <div className="p-4 rounded-2xl bg-white/80 border border-slate-200/80 mb-4 shadow-xs">
+        <p className="text-sm text-slate-800 font-medium leading-relaxed">
+          {description}
+        </p>
+      </div>
+
+      {/* Why This Insight Section */}
+      <div className="bg-slate-50/80 rounded-2xl p-4 border border-slate-100">
+        <div className="text-[11px] font-extrabold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+          <span>WHY THIS INSIGHT?</span>
         </div>
-      )}
-
-      <div className="mt-4 pt-3 flex items-center justify-between border-t border-slate-800/50">
-        {onExplain ? (
-          <button
-            onClick={onExplain}
-            className="text-xs font-medium text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
-          >
-            <Brain className="w-3.5 h-3.5" />
-            <span>Explain Factor Weights</span>
-          </button>
-        ) : (
-          <span className="text-[11px] text-slate-500 font-mono">Automated Decision Pipeline</span>
-        )}
-
-        {actionText && (
-          <button
-            onClick={onAction}
-            className="text-xs font-semibold text-slate-200 hover:text-white bg-slate-800/80 hover:bg-slate-700/80 px-3 py-1.5 rounded-xl border border-slate-700 flex items-center gap-1.5 transition-all shadow-sm"
-          >
-            <span>{actionText}</span>
-            <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
-          </button>
-        )}
+        <ul className="space-y-1.5">
+          {whyPoints.map((point, index) => (
+            <li key={index} className="flex items-start gap-2 text-xs text-slate-700">
+              <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 shrink-0 mt-1.5" />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

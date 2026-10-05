@@ -166,25 +166,25 @@ export default function AdminAnalyzeFormPage() {
   const liveMetrics = adminAnalysisService.analyzeUniversityMetrics(formData);
 
   return (
-    <div className="min-h-screen bg-[#050814] text-slate-100 flex flex-col justify-between selection:bg-blue-500/30 selection:text-blue-200">
+    <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex flex-col justify-between aurora-bg-mesh selection:bg-cyan-500/20 selection:text-cyan-900">
       <div className="max-w-6xl mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-6">
         {/* TOP BAR / MODE HEADER */}
-        <div className="glass-panel rounded-2xl p-5 border border-blue-500/30 bg-slate-950/80 backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+        <div className="glass-panel rounded-[24px] p-5 border border-cyan-100 bg-white/95 backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-600 flex items-center justify-center text-white shadow-[0_0_20px_rgba(59,130,246,0.4)] shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-md shadow-cyan-500/20 shrink-0">
               <Building2 className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-blue-300 font-bold px-2 py-0.5 rounded-full bg-blue-950/80 border border-blue-500/40">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-800 font-bold px-2.5 py-0.5 rounded-full bg-cyan-50 border border-cyan-200">
                   Administrator Personal Mode
                 </span>
-                <span className="text-xs text-slate-400">Institutional Intelligence Wizard</span>
+                <span className="text-xs text-slate-500 font-medium">Institutional Intelligence Wizard</span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-white mt-0.5">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">
                 Analyze My University Data
               </h1>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 font-medium">
                 Enter university or department-level data to generate personalized institutional insights.
               </p>
             </div>
@@ -193,7 +193,7 @@ export default function AdminAnalyzeFormPage() {
           <div className="flex items-center gap-2 self-end sm:self-center">
             <button
               onClick={handleSaveDraft}
-              className="px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:text-white glass-panel hover:bg-slate-800 transition-colors flex items-center gap-1.5 border border-slate-700"
+              className="px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 transition-colors flex items-center gap-1.5 border border-slate-200 shadow-2xs"
               title="Save draft"
             >
               <Save className="w-3.5 h-3.5 text-slate-400" />
@@ -201,7 +201,7 @@ export default function AdminAnalyzeFormPage() {
             </button>
             <button
               onClick={handleResetToSample}
-              className="px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:text-white glass-panel hover:bg-slate-800 transition-colors flex items-center gap-1.5 border border-slate-700"
+              className="px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 transition-colors flex items-center gap-1.5 border border-slate-200 shadow-2xs"
               title="Reset to default sample"
             >
               <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
@@ -209,7 +209,7 @@ export default function AdminAnalyzeFormPage() {
             </button>
             <Link
               to="/admin"
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-blue-300 bg-blue-950/60 hover:bg-blue-900/80 border border-blue-500/40 transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-cyan-800 bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 transition-colors flex items-center gap-1.5"
             >
               <span>Explore Demo Mode</span>
             </Link>
@@ -217,7 +217,7 @@ export default function AdminAnalyzeFormPage() {
         </div>
 
         {/* STEP PROGRESS INDICATOR */}
-        <div className="glass-panel rounded-2xl p-4 border border-slate-800/80 bg-slate-900/60 shadow-lg">
+        <div className="glass-panel rounded-2xl p-4 border border-slate-200/90 bg-white/95 shadow-sm">
           <div className="flex items-center justify-between text-xs font-medium mb-3">
             {[
               { num: 1, label: 'University Info' },
@@ -233,7 +233,7 @@ export default function AdminAnalyzeFormPage() {
                   currentStep === st.num
                     ? 'text-blue-400 font-bold'
                     : currentStep > st.num
-                    ? 'text-slate-300'
+                    ? 'text-slate-700'
                     : 'text-slate-500'
                 }`}
               >
@@ -242,8 +242,8 @@ export default function AdminAnalyzeFormPage() {
                     currentStep === st.num
                       ? 'bg-blue-600 text-white shadow-[0_0_10px_rgba(59,130,246,0.5)]'
                       : currentStep > st.num
-                      ? 'bg-blue-950/80 text-blue-300 border border-blue-500/40'
-                      : 'bg-slate-800 text-slate-400'
+                      ? 'bg-cyan-50 text-cyan-700 border border-cyan-200'
+                      : 'bg-slate-100 text-slate-500'
                   }`}
                 >
                   {st.num}
@@ -253,7 +253,7 @@ export default function AdminAnalyzeFormPage() {
             ))}
           </div>
 
-          <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+          <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
             <div
               className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full transition-all duration-300"
               style={{ width: `${(currentStep / 5) * 100}%` }}
@@ -262,7 +262,7 @@ export default function AdminAnalyzeFormPage() {
         </div>
 
         {/* STEP CONTAINER */}
-        <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800/80 bg-slate-900/70 shadow-2xl relative min-h-[480px]">
+        <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-200/90 bg-white/95 shadow-sm relative min-h-[480px]">
           <AnimatePresence mode="wait">
             {/* STEP 1: UNIVERSITY INFORMATION */}
             {currentStep === 1 && (
@@ -275,18 +275,18 @@ export default function AdminAnalyzeFormPage() {
                 className="space-y-6"
               >
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
                     <Building2 className="w-5 h-5 text-blue-400" />
                     <span>University Institutional Information</span>
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-500 font-medium mt-1">
                     Provide the university or college identity, campus details, and academic calendar parameters.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2">
-                    <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                    <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                       University / College Name *
                     </label>
                     <input
@@ -298,13 +298,13 @@ export default function AdminAnalyzeFormPage() {
                           universityInfo: { ...formData.universityInfo, universityName: e.target.value }
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-blue-500 transition-colors"
                       placeholder="e.g. Apex National Institute of Technology"
                     />
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                    <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                       Academic Year *
                     </label>
                     <input
@@ -316,13 +316,13 @@ export default function AdminAnalyzeFormPage() {
                           universityInfo: { ...formData.universityInfo, academicYear: e.target.value }
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-blue-500"
                       placeholder="e.g. 2025-2026"
                     />
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                    <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                       Campus / Institutional Location
                     </label>
                     <input
@@ -334,14 +334,14 @@ export default function AdminAnalyzeFormPage() {
                           universityInfo: { ...formData.universityInfo, campusLocation: e.target.value }
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-blue-500"
                       placeholder="e.g. Central University Campus"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                      <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                         Total Enrolled Students
                       </label>
                       <input
@@ -353,13 +353,13 @@ export default function AdminAnalyzeFormPage() {
                             universityInfo: { ...formData.universityInfo, numberOfStudents: Number(e.target.value) }
                           })
                         }
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500 font-mono"
+                        className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-blue-500 font-mono"
                         placeholder="e.g. 420"
                       />
                     </div>
 
                     <div>
-                      <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                      <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                         Total Faculty Members
                       </label>
                       <input
@@ -371,14 +371,14 @@ export default function AdminAnalyzeFormPage() {
                             universityInfo: { ...formData.universityInfo, numberOfFaculty: Number(e.target.value) }
                           })
                         }
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500 font-mono"
+                        className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-blue-500 font-mono"
                         placeholder="e.g. 32"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                    <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                       Program Categories
                     </label>
                     <input
@@ -390,7 +390,7 @@ export default function AdminAnalyzeFormPage() {
                           universityInfo: { ...formData.universityInfo, programCategories: e.target.value }
                         })
                       }
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm focus:outline-none focus:border-blue-500"
                       placeholder="e.g. Computing, Engineering, Management"
                     />
                   </div>
@@ -424,11 +424,11 @@ export default function AdminAnalyzeFormPage() {
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                    <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
                       <Layers className="w-5 h-5 text-blue-400" />
                       <span>Academic Departments</span>
                     </h2>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-slate-500 font-medium">
                       Add, edit, or remove departments comprising the institution.
                     </p>
                   </div>
@@ -443,9 +443,9 @@ export default function AdminAnalyzeFormPage() {
                 </div>
 
                 {/* Departments Table */}
-                <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/60 max-h-[380px] overflow-y-auto">
+                <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-slate-50/60 max-h-[380px] overflow-y-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-900/90 text-slate-400 uppercase font-mono text-[10px] sticky top-0 z-10 border-b border-slate-800">
+                    <thead className="bg-slate-50/90 text-slate-400 uppercase font-mono text-[10px] sticky top-0 z-10 border-b border-slate-200">
                       <tr>
                         <th className="p-3">Code</th>
                         <th className="p-3">Department Full Name</th>
@@ -455,15 +455,15 @@ export default function AdminAnalyzeFormPage() {
                         <th className="p-3 text-right">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800/80 text-slate-300">
+                    <tbody className="divide-y divide-slate-100/80 text-slate-700">
                       {formData.departments.map((d) => (
-                        <tr key={d.id} className="hover:bg-slate-900/60 transition-colors">
+                        <tr key={d.id} className="hover:bg-slate-50/60 transition-colors">
                           <td className="p-3 font-mono">
                             <input
                               type="text"
                               value={d.code}
                               onChange={(e) => handleUpdateDeptField(d.id, 'code', e.target.value)}
-                              className="w-20 px-2 py-1 rounded bg-slate-900 border border-slate-700 text-blue-300 font-bold focus:outline-none focus:border-blue-500"
+                              className="w-20 px-2 py-1 rounded bg-slate-50 border border-slate-200 text-blue-300 font-bold focus:outline-none focus:border-blue-500"
                             />
                           </td>
                           <td className="p-3">
@@ -471,7 +471,7 @@ export default function AdminAnalyzeFormPage() {
                               type="text"
                               value={d.name}
                               onChange={(e) => handleUpdateDeptField(d.id, 'name', e.target.value)}
-                              className="w-full px-2 py-1 rounded bg-slate-900 border border-slate-700 text-white font-medium focus:outline-none focus:border-blue-500 text-xs"
+                              className="w-full px-2 py-1 rounded bg-slate-50 border border-slate-200 text-white font-medium focus:outline-none focus:border-blue-500 text-xs"
                             />
                           </td>
                           <td className="p-3">
@@ -482,7 +482,7 @@ export default function AdminAnalyzeFormPage() {
                               onChange={(e) =>
                                 handleUpdateDeptField(d.id, 'studentsCount', Number(e.target.value))
                               }
-                              className="w-20 px-2 py-1 rounded bg-slate-900 border border-slate-700 text-white font-mono focus:outline-none focus:border-blue-500"
+                              className="w-20 px-2 py-1 rounded bg-slate-50 border border-slate-200 text-white font-mono focus:outline-none focus:border-blue-500"
                             />
                           </td>
                           <td className="p-3">
@@ -493,7 +493,7 @@ export default function AdminAnalyzeFormPage() {
                               onChange={(e) =>
                                 handleUpdateDeptField(d.id, 'facultyCount', Number(e.target.value))
                               }
-                              className="w-16 px-2 py-1 rounded bg-slate-900 border border-slate-700 text-white font-mono focus:outline-none focus:border-blue-500"
+                              className="w-16 px-2 py-1 rounded bg-slate-50 border border-slate-200 text-white font-mono focus:outline-none focus:border-blue-500"
                             />
                           </td>
                           <td className="p-3">
@@ -501,7 +501,7 @@ export default function AdminAnalyzeFormPage() {
                               type="text"
                               value={d.headOfDepartment || ''}
                               onChange={(e) => handleUpdateDeptField(d.id, 'headOfDepartment', e.target.value)}
-                              className="w-full px-2 py-1 rounded bg-slate-900 border border-slate-700 text-slate-300 focus:outline-none focus:border-blue-500 text-xs"
+                              className="w-full px-2 py-1 rounded bg-slate-50 border border-slate-200 text-slate-700 focus:outline-none focus:border-blue-500 text-xs"
                               placeholder="e.g. Dr. Faculty Lead"
                             />
                           </td>
@@ -533,11 +533,11 @@ export default function AdminAnalyzeFormPage() {
                 className="space-y-5"
               >
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-blue-400" />
                     <span>Department Performance & Telemetry</span>
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 font-medium">
                     Input average score, attendance %, assignment completion, and count of students requiring attention.
                   </p>
                 </div>
@@ -546,7 +546,7 @@ export default function AdminAnalyzeFormPage() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-blue-950/40 border border-blue-500/30 text-xs">
                   <div>
                     <span className="text-[10px] uppercase font-mono text-blue-300">University Avg Score</span>
-                    <span className="text-lg font-bold text-white block mt-0.5">
+                    <span className="text-lg font-bold text-slate-900 block mt-0.5">
                       {liveMetrics.kpis.avgPerformance}%
                     </span>
                   </div>
@@ -571,9 +571,9 @@ export default function AdminAnalyzeFormPage() {
                 </div>
 
                 {/* Metrics Table */}
-                <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/60 max-h-[350px] overflow-y-auto">
+                <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-slate-50/60 max-h-[350px] overflow-y-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-900/90 text-slate-400 uppercase font-mono text-[10px] sticky top-0 z-10 border-b border-slate-800">
+                    <thead className="bg-slate-50/90 text-slate-400 uppercase font-mono text-[10px] sticky top-0 z-10 border-b border-slate-200">
                       <tr>
                         <th className="p-3">Department</th>
                         <th className="p-3">Avg Performance (%)</th>
@@ -582,9 +582,9 @@ export default function AdminAnalyzeFormPage() {
                         <th className="p-3">Attention Count</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800/80 text-slate-300">
+                    <tbody className="divide-y divide-slate-100/80 text-slate-700">
                       {formData.departments.map((d) => (
-                        <tr key={d.id} className="hover:bg-slate-900/60">
+                        <tr key={d.id} className="hover:bg-slate-50/60">
                           <td className="p-3">
                             <span className="font-bold text-white block">{d.code}</span>
                             <span className="text-[10px] text-slate-400 truncate max-w-xs block">{d.name}</span>
@@ -598,7 +598,7 @@ export default function AdminAnalyzeFormPage() {
                               onChange={(e) =>
                                 handleUpdateDeptField(d.id, 'avgPerformance', Number(e.target.value))
                               }
-                              className="w-20 px-2 py-1 rounded bg-slate-900 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-blue-500"
+                              className="w-20 px-2 py-1 rounded bg-slate-50 border border-slate-200 text-white font-mono text-xs focus:outline-none focus:border-blue-500"
                             />
                           </td>
                           <td className="p-3">
@@ -610,7 +610,7 @@ export default function AdminAnalyzeFormPage() {
                               onChange={(e) =>
                                 handleUpdateDeptField(d.id, 'avgAttendance', Number(e.target.value))
                               }
-                              className="w-20 px-2 py-1 rounded bg-slate-900 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-blue-500"
+                              className="w-20 px-2 py-1 rounded bg-slate-50 border border-slate-200 text-white font-mono text-xs focus:outline-none focus:border-blue-500"
                             />
                           </td>
                           <td className="p-3">
@@ -622,7 +622,7 @@ export default function AdminAnalyzeFormPage() {
                               onChange={(e) =>
                                 handleUpdateDeptField(d.id, 'assignmentCompletion', Number(e.target.value))
                               }
-                              className="w-20 px-2 py-1 rounded bg-slate-900 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-blue-500"
+                              className="w-20 px-2 py-1 rounded bg-slate-50 border border-slate-200 text-white font-mono text-xs focus:outline-none focus:border-blue-500"
                             />
                           </td>
                           <td className="p-3">
@@ -637,7 +637,7 @@ export default function AdminAnalyzeFormPage() {
                                   Number(e.target.value)
                                 )
                               }
-                              className="w-20 px-2 py-1 rounded bg-slate-900 border border-slate-700 text-amber-300 font-mono text-xs focus:outline-none focus:border-blue-500"
+                              className="w-20 px-2 py-1 rounded bg-slate-50 border border-slate-200 text-amber-300 font-mono text-xs focus:outline-none focus:border-blue-500"
                             />
                           </td>
                         </tr>
@@ -659,18 +659,18 @@ export default function AdminAnalyzeFormPage() {
                 className="space-y-6"
               >
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
                     <GraduationCap className="w-5 h-5 text-blue-400" />
                     <span>University Academic Standards & Industry Skills</span>
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 font-medium">
                     Enter macro pass rates, institution-wide submission bottlenecks, and optional technology skills data.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">
+                  <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
+                    <label className="text-xs font-semibold text-slate-700 block mb-1">
                       Expected Pass Percentage (%)
                     </label>
                     <input
@@ -687,12 +687,12 @@ export default function AdminAnalyzeFormPage() {
                           }
                         })
                       }
-                      className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-sm focus:outline-none focus:border-blue-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-white font-mono text-sm focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">
+                  <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
+                    <label className="text-xs font-semibold text-slate-700 block mb-1">
                       Attendance Benchmark Target (%)
                     </label>
                     <input
@@ -709,12 +709,12 @@ export default function AdminAnalyzeFormPage() {
                           }
                         })
                       }
-                      className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-sm focus:outline-none focus:border-blue-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-white font-mono text-sm focus:outline-none focus:border-blue-500"
                     />
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
-                    <label className="text-xs font-semibold text-slate-300 block mb-1">
+                  <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
+                    <label className="text-xs font-semibold text-slate-700 block mb-1">
                       Pending Coursework Count
                     </label>
                     <input
@@ -730,16 +730,16 @@ export default function AdminAnalyzeFormPage() {
                           }
                         })
                       }
-                      className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-sm focus:outline-none focus:border-blue-500"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-white font-mono text-sm focus:outline-none focus:border-blue-500"
                     />
                   </div>
                 </div>
 
                 {/* Optional Skills Section */}
-                <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+                <div className="p-5 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                      <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                         <Cpu className="w-4 h-4 text-cyan-400" />
                         <span>Optional Industry Skill Readiness Benchmarks</span>
                       </h3>
@@ -753,7 +753,7 @@ export default function AdminAnalyzeFormPage() {
                     {formData.skillsData.map((sk, idx) => (
                       <div
                         key={idx}
-                        className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between gap-3 text-xs"
+                        className="p-3 rounded-xl bg-slate-50/90 border border-slate-200 flex items-center justify-between gap-3 text-xs"
                       >
                         <div className="flex-1">
                           <span className="font-semibold text-slate-200 block">{sk.name}</span>
@@ -774,7 +774,7 @@ export default function AdminAnalyzeFormPage() {
                                 )
                               }));
                             }}
-                            className="w-14 px-2 py-1 rounded bg-slate-950 border border-slate-700 text-white font-mono text-xs focus:outline-none focus:border-blue-500"
+                            className="w-14 px-2 py-1 rounded bg-white border border-slate-200 text-slate-800 font-mono text-xs focus:outline-none focus:border-blue-500"
                           />
                           <span className="text-[10px] text-slate-400 font-mono">%</span>
                         </div>
@@ -796,19 +796,19 @@ export default function AdminAnalyzeFormPage() {
                 className="space-y-6"
               >
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-blue-400" />
                     <span>Review & Institutional Analysis</span>
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 font-medium">
                     Verify entered university records before generating institutional intelligence.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
+                  <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400 block">Institution</span>
-                    <span className="text-sm font-bold text-white block mt-1 truncate">
+                    <span className="text-sm font-bold text-slate-900 block mt-1 truncate">
                       {formData.universityInfo.universityName}
                     </span>
                     <span className="text-xs text-blue-400 font-mono">
@@ -816,15 +816,15 @@ export default function AdminAnalyzeFormPage() {
                     </span>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
+                  <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400 block">Overall Performance</span>
                     <span className="text-2xl font-black text-cyan-400 block mt-1">
                       {liveMetrics.kpis.avgPerformance}%
                     </span>
-                    <span className="text-xs text-slate-400">Pass Rate: {formData.universityAcademic.passPercentage}%</span>
+                    <span className="text-xs text-slate-500 font-medium">Pass Rate: {formData.universityAcademic.passPercentage}%</span>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
+                  <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400 block">Overall Attendance</span>
                     <span className="text-2xl font-black text-emerald-400 block mt-1">
                       {liveMetrics.kpis.avgAttendance}%
@@ -834,29 +834,29 @@ export default function AdminAnalyzeFormPage() {
                     </span>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
+                  <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
                     <span className="text-[10px] font-mono uppercase text-slate-400 block">Academic Support</span>
                     <span className="text-2xl font-black text-amber-400 block mt-1">
                       {liveMetrics.kpis.totalAttentionCount}
                     </span>
-                    <span className="text-xs text-slate-400">Students Flagged</span>
+                    <span className="text-xs text-slate-500 font-medium">Students Flagged</span>
                   </div>
                 </div>
 
                 {/* Final CTA Bar */}
                 <div className="p-6 rounded-3xl bg-gradient-to-r from-blue-950/60 via-indigo-950/60 to-slate-900/90 border-2 border-blue-500/50 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div>
-                    <h3 className="text-base font-bold text-white flex items-center gap-2">
+                    <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                       <Sparkles className="w-5 h-5 text-blue-400" />
                       <span>Ready to Generate University Intelligence</span>
                     </h3>
-                    <p className="text-xs text-slate-300 mt-0.5">
+                    <p className="text-xs text-slate-700 mt-0.5">
                       Process {formData.departments.length} department datasets across {liveMetrics.kpis.totalStudents} enrolled students.
                     </p>
                   </div>
                   <button
                     onClick={handleStartAnalysis}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-2xl text-sm font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-[0_0_25px_rgba(59,130,246,0.4)] transition-all flex items-center justify-center gap-2 shrink-0 group"
+                    className="w-full sm:w-auto px-8 py-3.5 rounded-2xl text-sm font-bold text-slate-900 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-[0_0_25px_rgba(59,130,246,0.4)] transition-all flex items-center justify-center gap-2 shrink-0 group"
                   >
                     <span>Analyze My University</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -867,14 +867,14 @@ export default function AdminAnalyzeFormPage() {
           </AnimatePresence>
 
           {/* BOTTOM STEP CONTROLS */}
-          <div className="mt-8 pt-5 border-t border-slate-800 flex items-center justify-between">
+          <div className="mt-8 pt-5 border-t border-slate-200 flex items-center justify-between">
             <button
               onClick={handleBack}
               disabled={currentStep === 1}
               className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
                 currentStep === 1
                   ? 'text-slate-600 cursor-not-allowed'
-                  : 'text-slate-300 hover:text-white glass-panel hover:bg-slate-800'
+                  : 'text-slate-700 hover:text-white glass-panel hover:bg-slate-800'
               }`}
             >
               <ArrowLeft className="w-3.5 h-3.5" />
@@ -911,10 +911,10 @@ export default function AdminAnalyzeFormPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[#050814]/90 backdrop-blur-xl flex flex-col items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-white/95 backdrop-blur-xl flex flex-col items-center justify-center p-4"
           >
-            <div className="w-full max-w-md p-6 rounded-3xl glass-panel border border-blue-500/40 bg-slate-950/90 shadow-2xl text-center space-y-6">
-              <div className="w-16 h-16 mx-auto rounded-3xl bg-blue-500/20 border border-blue-500/50 flex items-center justify-center text-blue-400 animate-pulse shadow-[0_0_25px_rgba(59,130,246,0.4)]">
+            <div className="w-full max-w-md p-6 rounded-[26px] glass-panel border border-cyan-200 bg-white shadow-2xl text-center space-y-6">
+              <div className="w-16 h-16 mx-auto rounded-3xl bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-600 animate-pulse shadow-md">
                 <BrainCircuit className="w-8 h-8" />
               </div>
 
@@ -925,7 +925,7 @@ export default function AdminAnalyzeFormPage() {
                 <h3 className="text-xl font-extrabold text-white mt-3">
                   Generating Institutional Intelligence
                 </h3>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-slate-500 font-medium mt-1">
                   Synthesizing university and departmental telemetry models.
                 </p>
               </div>
@@ -951,7 +951,7 @@ export default function AdminAnalyzeFormPage() {
                       ) : isCurrent ? (
                         <div className="w-4 h-4 rounded-full border-2 border-blue-400 border-t-transparent animate-spin shrink-0" />
                       ) : (
-                        <div className="w-4 h-4 rounded-full border border-slate-700 shrink-0" />
+                        <div className="w-4 h-4 rounded-full border border-slate-200 shrink-0" />
                       )}
                       <span className="truncate">{phase}</span>
                     </div>

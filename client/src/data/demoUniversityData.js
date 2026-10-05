@@ -1,3 +1,4 @@
+
 /**
  * CampusMind X - Demo University LMS Data
  * Provides realistic academic, attendance, assignment, and curriculum payloads
@@ -88,13 +89,13 @@ export const SUPPORTED_UNIVERSITIES = [
 
 export const DEMO_LMS_PAYLOAD = {
   student: {
-    name: 'Aarav Sharma',
+    name: 'Hariom Anand',
     admissionId: 'GU2024-BCA1042',
     university: 'Galgotias University (LMS Portal)',
     program: 'Bachelor of Computer Applications (BCA)',
     semester: '5th Semester',
     academicYear: '2025-2026',
-    email: 'aarav.sharma@campus.edu',
+    email: 'hariom.anand@campus.edu',
     section: 'A',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
   },

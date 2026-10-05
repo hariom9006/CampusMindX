@@ -111,7 +111,7 @@ The database contains **13 primary collections**:
 
 ## 4. Seeding & Demo Data
 The database automatically seeds when empty via [`server/src/seed.js`](file:///c:/Users/Dell/Desktop/CampusMind%20X/server/src/seed.js):
-- **Core Demo Student**: Aarav Sharma (`22BCA1042`), BCA Semester 5.
+- **Core Demo Student**: Hariom Anand (`22BCA1042`), BCA Semester 5.
 - **Core Faculty Mentor**: Dr. Sunita Kulkarni (`FAC-2018-04`), Department of Computing & IT.
 - **Core University Admin**: Dean of Academic Affairs (`admin@campus.edu.in`).
 - **Additional Cohort Records**: 4 diverse student profiles (Priya Patel, Rohan Gupta, Ananya Nair, Vikram Singh) spanning Low, Medium, and High academic support tiers.

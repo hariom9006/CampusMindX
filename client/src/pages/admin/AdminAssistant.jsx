@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bot, Sparkles, Building2, ShieldCheck, TrendingUp, BarChart3 } from 'lucide-react';
+import { Bot, Sparkles, Building2, ShieldCheck, TrendingUp } from 'lucide-react';
 import AIChat from '../../components/AIChat';
 
 export default function AdminAssistant() {
@@ -9,31 +9,28 @@ export default function AdminAssistant() {
   ];
 
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-blue-950/80 text-blue-300 border border-blue-500/30 font-semibold">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-cyan-700 bg-cyan-50 border border-cyan-200 px-3 py-0.5 rounded-full font-semibold">
               Institutional Intelligence
             </span>
-            <span className="text-[10px] font-mono text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/30">
-              FERPA Compliant Privacy Protected
-            </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight mt-1.5">
-            University Executive AI Assistant
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
+            University Executive AI
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Query university-wide student retention, macro predictive risk distributions, and comparative department performance benchmarks.
+          <p className="text-sm sm:text-base text-slate-500 font-medium mt-1">
+            Query university-wide student retention, macro predictive risk distributions, and department performance benchmarks.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2.5">
-            <Building2 className="w-4 h-4 text-blue-400" />
-            <span className="text-xs text-slate-400">Authority:</span>
-            <span className="text-xs font-bold text-white">Office of Academic Affairs</span>
+          <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs flex items-center gap-2.5">
+            <Building2 className="w-4 h-4 text-cyan-600" />
+            <span className="text-xs text-slate-500 font-medium">Authority:</span>
+            <span className="text-xs font-bold text-slate-900">Office of Academic Affairs</span>
           </div>
         </div>
       </div>
@@ -45,51 +42,52 @@ export default function AdminAssistant() {
           <AIChat
             role="admin"
             initialPrompts={adminPrompts}
-            title="Institutional Intelligence Assistant"
-            subtitle="Context: Office of Academic Affairs • Campus-Wide Analytics"
+            title="CampusMind AI • Institutional Intelligence"
+            subtitle="Office of Academic Affairs • Campus-Wide Analytics"
           />
         </div>
 
-        {/* Sidebar Context & Institutional Metrics */}
+        {/* Sidebar Context */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="glass-panel rounded-2xl p-5 border border-blue-500/30">
-            <div className="flex items-center gap-2 text-blue-300 font-bold text-sm mb-3">
-              <TrendingUp className="w-4 h-4 text-blue-400" />
+          <div className="glass-panel rounded-[24px] p-5 border border-cyan-100 bg-white/95 shadow-xs">
+            <div className="flex items-center gap-2 text-cyan-700 font-bold text-sm mb-3">
+              <TrendingUp className="w-4 h-4 text-cyan-600" />
               <span>Institutional Overview</span>
             </div>
 
-            <div className="space-y-2.5 text-xs">
-              <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex justify-between">
-                <span className="text-slate-400">Total Enrollment:</span>
-                <span className="font-mono font-bold text-cyan-400">1,420 Students</span>
+            <div className="space-y-2 text-xs">
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex justify-between">
+                <span className="text-slate-500">Total Enrolled:</span>
+                <span className="font-bold text-slate-900">1,640 Students</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex justify-between">
-                <span className="text-slate-400">Retention Rate:</span>
-                <span className="font-mono font-bold text-emerald-400">94.2%</span>
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex justify-between">
+                <span className="text-slate-500">Academic Health:</span>
+                <span className="font-mono font-bold text-emerald-600">91.4% Index</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex justify-between">
-                <span className="text-slate-400">Academic Departments:</span>
-                <span className="font-semibold text-white">8 Schools</span>
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex justify-between">
+                <span className="text-slate-500">Placement Readiness:</span>
+                <span className="font-mono font-bold text-indigo-600">87.2%</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex justify-between">
-                <span className="text-slate-400">High Risk Cohort:</span>
-                <span className="font-mono font-bold text-amber-400">10% (143 students)</span>
-              </div>
-              <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex justify-between">
-                <span className="text-slate-400">Active Interventions:</span>
-                <span className="font-mono font-bold text-purple-300">128 Campus-wide</span>
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex justify-between">
+                <span className="text-slate-500">Support Signals:</span>
+                <span className="font-mono font-bold text-pink-600">74 Campus-wide</span>
               </div>
             </div>
           </div>
 
-          <div className="glass-panel rounded-2xl p-5 border border-slate-800">
-            <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-              <span>Data Protection Guarantee</span>
+          <div className="glass-panel rounded-[24px] p-5 border border-slate-200/80 bg-white/95 shadow-xs">
+            <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-600" />
+              <span>Frequent Inquiries</span>
             </h4>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
-              Institutional executive queries deliver aggregate distributions and school-level analytics without revealing unnecessary private student identifiable records.
-            </p>
+            <div className="space-y-2 text-xs text-slate-700">
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 font-medium">
+                "What is the university academic health?"
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 font-medium">
+                "Which department has the highest retention and performance?"
+              </div>
+            </div>
           </div>
         </div>
       </div>

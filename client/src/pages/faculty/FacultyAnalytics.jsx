@@ -31,22 +31,22 @@ export default function FacultyAnalytics() {
   ];
 
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
+    <div className="space-y-8 animate-fadeIn pb-16">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-purple-950/80 text-purple-300 border border-purple-500/30">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-50 border border-purple-200 px-3 py-0.5 rounded-full">
               Department Telemetry
             </span>
-            <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-500/30">
+            <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-200">
               Pass Rate Predictive Modeling
             </span>
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight mt-1.5">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
             Cohort Performance Analytics
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-sm sm:text-base text-slate-500 font-medium mt-1">
             Aggregated pass probability distributions and course bottleneck diagnostics for BCA Semester 5.
           </p>
         </div>
@@ -58,96 +58,96 @@ export default function FacultyAnalytics() {
           title="Predicted Cohort Pass Rate"
           value="84.2"
           unit="%"
-          glowColor="purple"
-          trend={{ direction: 'up', label: '+3.1% after clinic' }}
+          variant="indigo"
+          trend={{ direction: 'up', label: '+4.1% YoY' }}
           icon={TrendingUp}
         />
         <StatCard
-          title="Critical Bottleneck Course"
-          value="DSA II"
-          unit=""
-          glowColor="rose"
-          subtitle="18 students flagged at risk"
+          title="High Bottleneck Courses"
+          value="2"
+          unit="Courses"
+          variant="pink"
+          trend={{ direction: 'down', label: 'Networks & DSA II' }}
           icon={AlertTriangle}
         />
         <StatCard
-          title="Attendance Compliance"
-          value="74.5"
-          unit="%"
-          glowColor="amber"
-          trend={{ direction: 'neutral', label: 'Threshold: 75%' }}
+          title="Mean Cumulative GPA"
+          value="7.28"
+          unit="/ 10.0"
+          variant="violet"
+          subtitle="Department Benchmark: 7.00"
           icon={ChartIcon}
         />
         <StatCard
-          title="Intervention Efficacy"
-          value="88"
+          title="Cohort Attendance Mean"
+          value="79.4"
           unit="%"
-          glowColor="emerald"
-          subtitle="Turnaround rate post-remedial"
+          variant="cyan"
+          trend={{ direction: 'neutral', label: 'Mandatory: 75%' }}
           icon={ShieldCheck}
         />
       </div>
 
-      {/* AI Key Insight */}
-      <AIInsightCard
-        title="Predictive Bottleneck: BCA-505 Data Structures II"
-        description="Course-level gradient boosted tree analysis reveals that 18 out of 60 students in BCA Sem 5 have scored below 60% on continuous internal evaluations, creating a severe bottleneck for final semester graduation eligibility."
-        rationale="Graph algorithms and algorithmic analysis sub-modules account for 74% of missed assignment points."
-        impact="Intervention: Remedial Clinic Active"
-        type="warning"
-      />
+      {/* Charts Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Subject Pass Rate Forecasting */}
+        <div className="lg:col-span-7">
+          <ChartCard
+            title="Predicted Subject Pass Rates"
+            subtitle="LightGBM model inference across Sem 5 curriculum"
+            height="h-72"
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={subjectPassRateForecast} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+                <XAxis dataKey="subject" stroke="#94A3B8" fontSize={10} tickLine={false} />
+                <YAxis domain={[50, 100]} stroke="#94A3B8" fontSize={11} tickLine={false} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    borderColor: '#E2E8F0',
+                    borderRadius: '16px'
+                  }}
+                />
+                <Bar dataKey="passRate" name="Predicted Pass %" fill="#6366F1" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Pass Rate Forecast Bar Chart */}
-        <ChartCard
-          title="Course Pass Rate Forecast & At-Risk Counts"
-          subtitle="Predicted final clearance percentage per course"
-          height="h-72"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={subjectPassRateForecast} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-              <XAxis dataKey="subject" stroke="#64748b" tick={{ fontSize: 10 }} />
-              <YAxis domain={[0, 100]} stroke="#64748b" tick={{ fontSize: 11 }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#0b1222',
-                  borderColor: '#1e293b',
-                  borderRadius: '12px',
-                  fontSize: '12px'
-                }}
-              />
-              <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
-              <Bar dataKey="passRate" name="Forecast Pass Rate %" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="atRiskCount" name="At-Risk Students Count" fill="#ef4444" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
-
-        {/* GPA Stratification Curve */}
-        <ChartCard
-          title="Department GPA Distribution"
-          subtitle="420 enrolled students across School of Computing & IT"
-          height="h-72"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={dept.semesterPerformanceDist} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-              <XAxis dataKey="range" stroke="#64748b" tick={{ fontSize: 11 }} />
-              <YAxis stroke="#64748b" tick={{ fontSize: 11 }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#0b1222',
-                  borderColor: '#1e293b',
-                  borderRadius: '12px',
-                  fontSize: '12px'
-                }}
-              />
-              <Bar dataKey="count" name="Enrolled Students" fill="#06b6d4" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
+        {/* Cohort Grade Distribution */}
+        <div className="lg:col-span-5">
+          <ChartCard
+            title="Grade Distribution Histogram"
+            subtitle="Department of Computing continuous assessment"
+            height="h-72"
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={[
+                  { grade: 'A+ (90-100)', count: 8 },
+                  { grade: 'A (80-89)', count: 24 },
+                  { grade: 'B (70-79)', count: 18 },
+                  { grade: 'C (60-69)', count: 10 },
+                  { grade: 'F (<60)', count: 4 }
+                ]}
+                margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+                <XAxis dataKey="grade" stroke="#94A3B8" fontSize={10} tickLine={false} />
+                <YAxis stroke="#94A3B8" fontSize={11} tickLine={false} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    borderColor: '#E2E8F0',
+                    borderRadius: '16px'
+                  }}
+                />
+                <Bar dataKey="count" name="Students" fill="#8B5CF6" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        </div>
       </div>
     </div>
   );

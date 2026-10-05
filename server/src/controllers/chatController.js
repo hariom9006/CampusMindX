@@ -108,7 +108,7 @@ export const getChatHistory = async (req, res, next) => {
     } else if (req.user?.student) {
       query.student = req.user.student;
     } else {
-      // Find latest conversation for Aarav Sharma or general
+      // Find latest conversation for Hariom Anand or general
       const defaultStudent = await Student.findOne({ enrollmentNumber: '22BCA1042' });
       if (defaultStudent) query.student = defaultStudent._id;
     }

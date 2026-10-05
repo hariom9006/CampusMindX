@@ -5,8 +5,8 @@
 
 export const currentStudent = {
   id: "STD-2024-0582",
-  name: "Aarav Sharma",
-  email: "aarav.sharma@campus.edu.in",
+  name: "Hariom Anand",
+  email: "hariom.anand@campus.edu.in",
   avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
   program: "BCA (Bachelor of Computer Applications)",
   shortProgram: "BCA",

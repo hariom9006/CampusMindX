@@ -106,6 +106,32 @@ CampusMind-X/
 
 ---
 
+## 📱 Responsive & Adaptive Architecture
+
+CampusMind X is engineered with a **Responsive-First & Adaptive Design System** built to provide a premium, native-feeling experience across all screen sizes without compromising data density or analytical depth:
+
+| Device Category | Breakpoint Range | Architectural Behavior |
+| :--- | :--- | :--- |
+| **Small Mobile** | 320px – 374px | Ultra-compact cards, condensed charts, bottom tab bar, full-screen touch targets |
+| **Mobile** | 375px – 639px | Single-column fluid stack, slide-out drawer, bottom navigation, mobile card tables |
+| **Tablet / iPad** | 640px – 1023px | 2-column balanced layouts, compact collapsible navigation, medium telemetry |
+| **Laptop** | 1024px – 1279px | Multi-column analytics grid, persistent sidebar, rich visualization panels |
+| **Desktop & Large Monitors** | 1280px – 1920px+ | Full multi-column dashboard, centered container constraints (`max-w-7xl`), zero horizontal scroll |
+
+### Key Responsive Features:
+1. **Adaptive Navigation**:
+   - **Desktop**: Persistent sidebar with quick access to all portals and user workspace details.
+   - **Tablet**: Collapsible navigation drawer with backdrop blur.
+   - **Mobile**: Touch-optimized slide-out navigation drawer with top-level hamburger trigger + persistent **Bottom Navigation Bar** for high-frequency workflows (Home, Intelligence, Performance, Skills, AI Assistant, Profile).
+2. **Responsive Data Tables**:
+   - Complex tabular records (e.g. Faculty Cohort Monitoring, Coursework Registries) automatically convert into rich, touch-friendly **Mobile Cards** with risk badges, metrics, and instant action buttons below 768px (`md`).
+3. **Adaptive Charts & Data Visualizations**:
+   - Wrapped inside fluid `ResponsiveContainer` nodes with auto-calculated heights (`h-56` on mobile to `h-80` on desktop) and responsive tick counts to prevent axis crowding.
+4. **Adaptive Modals**:
+   - Render as centered floating dialogs on desktop/laptop viewports, and automatically morph into ergonomic **Bottom Sheets** on mobile (`items-end max-h-[92vh]`) with swipeable headers and internal scroll.
+
+---
+
 ## 🚀 Running the Project Locally
 
 ### Prerequisites

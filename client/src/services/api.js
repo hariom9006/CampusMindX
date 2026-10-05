@@ -41,6 +41,23 @@ export const apiService = {
   },
 
   // Auth APIs
+  async register(data) {
+    try {
+      const res = await fetch(`${API_BASE}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      if (json.success && json.token) {
+        this.setAuthToken(json.token);
+      }
+      return json;
+    } catch (err) {
+      return { success: false, message: 'Network error or server unavailable. Please try again.' };
+    }
+  },
+
   async login(email, password) {
     try {
       const res = await fetch(`${API_BASE}/auth/login`, {
@@ -54,8 +71,68 @@ export const apiService = {
       }
       return json;
     } catch (err) {
+      return { success: false, message: 'Network error or server unavailable. Please try again.' };
+    }
+  },
+
+  async getMe() {
+    try {
+      const token = this.getAuthToken();
+      if (!token) return { success: false, message: 'No token' };
+
+      const res = await fetch(`${API_BASE}/auth/me`, {
+        headers: this.getHeaders()
+      });
+      if (res.ok) {
+        return await res.json();
+      }
+      return { success: false, message: 'Session expired or invalid' };
+    } catch (err) {
       return { success: false, message: err.message };
     }
+  },
+
+  async updateProfile(data) {
+    try {
+      const res = await fetch(`${API_BASE}/auth/profile`, {
+        method: 'PUT',
+        headers: this.getHeaders(),
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+  },
+
+  async forgotPassword(email) {
+    try {
+      const res = await fetch(`${API_BASE}/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      return await res.json();
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+  },
+
+  async resetPassword(token, password) {
+    try {
+      const res = await fetch(`${API_BASE}/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, password })
+      });
+      return await res.json();
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+  },
+
+  logout() {
+    this.setAuthToken(null);
   },
 
   async demoLogin(role = 'student') {

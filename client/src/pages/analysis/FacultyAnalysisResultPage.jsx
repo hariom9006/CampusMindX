@@ -71,10 +71,10 @@ export default function FacultyAnalysisResultPage() {
 
   if (!facultyData || !analysis) {
     return (
-      <div className="min-h-screen bg-[#050814] text-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex items-center justify-center p-4 aurora-bg-mesh">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-medium text-slate-400">Loading class intelligence...</span>
+          <div className="w-10 h-10 border-2 border-purple-200 border-t-purple-600 rounded-full animate-spin" />
+          <span className="text-sm font-semibold text-slate-500">Loading class intelligence...</span>
         </div>
       </div>
     );
@@ -126,28 +126,28 @@ export default function FacultyAnalysisResultPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050814] text-slate-100 flex flex-col justify-between selection:bg-purple-500/30 selection:text-purple-200">
+    <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex flex-col justify-between aurora-bg-mesh selection:bg-purple-500/20 selection:text-purple-900">
       <div className="max-w-7xl mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-6">
         {/* TOP BAR / MODE HEADER */}
-        <div className="glass-panel rounded-2xl p-5 border border-purple-500/30 bg-slate-950/80 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
+        <div className="glass-panel rounded-[24px] p-5 border border-purple-100 bg-white/95 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
           <div className="flex items-center gap-3.5">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-cyan-600 flex items-center justify-center text-white shadow-[0_0_20px_rgba(168,85,247,0.4)] shrink-0">
               <Users className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 font-bold px-2 py-0.5 rounded-full bg-purple-950/80 border border-purple-500/40">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-purple-700 font-bold px-2.5 py-0.5 rounded-full bg-purple-50 border border-purple-200">
                   Faculty Personal Analysis
                 </span>
-                <span className="px-2 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-[10px] font-mono text-purple-300 font-semibold">
+                <span className="px-2 py-0.5 rounded-full bg-purple-50 border border-purple-200 text-[10px] font-mono text-purple-700 font-semibold">
                   Personalized Demo Analysis
                 </span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-white mt-1">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
                 My Class Intelligence
               </h1>
-              <p className="text-xs text-slate-300">
-                Welcome, <span className="font-bold text-white">{facultyData.facultyInfo.facultyName}</span> •{' '}
+              <p className="text-xs text-slate-600 font-medium">
+                Welcome, <span className="font-bold text-slate-900">{facultyData.facultyInfo.facultyName}</span> •{' '}
                 {facultyData.facultyInfo.subject} (Sem {facultyData.facultyInfo.semester} - Section {facultyData.facultyInfo.section})
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function FacultyAnalysisResultPage() {
           <div className="flex items-center gap-2.5 flex-wrap">
             <button
               onClick={() => navigate('/analyze-class')}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-2xs transition-colors flex items-center gap-1.5"
             >
               <Edit3 className="w-3.5 h-3.5 text-purple-400" />
               <span>Edit Class Data</span>
@@ -167,14 +167,14 @@ export default function FacultyAnalysisResultPage() {
                 setAnalysis(refreshed);
                 alert('Class intelligence re-analyzed.');
               }}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-purple-300 bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 transition-colors flex items-center gap-1.5"
             >
               <RotateCcw className="w-3.5 h-3.5 text-purple-400" />
               <span>Re-Analyze</span>
             </button>
             <Link
               to="/faculty"
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white glass-panel hover:bg-slate-800 border border-slate-700 transition-colors"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 shadow-2xs transition-colors"
             >
               Switch to Demo Mode
             </Link>
@@ -184,9 +184,9 @@ export default function FacultyAnalysisResultPage() {
         {/* 6 FACULTY KPI CARDS (STRICTLY CALCULATED FROM ENTERED DATA) */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
           {/* 1. Total Students */}
-          <div className="glass-panel rounded-2xl p-4 border border-slate-800 bg-slate-900/60 shadow-lg">
+          <div className="glass-panel rounded-2xl p-4 border border-slate-200/90 bg-white/95 shadow-sm">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Total Students</span>
-            <span className="text-2xl font-black text-white mt-1 block">
+            <span className="text-2xl font-black text-slate-900 mt-1 block">
               {academic.totalStudents}
             </span>
             <span className="text-[11px] text-purple-400 font-mono">
@@ -195,7 +195,7 @@ export default function FacultyAnalysisResultPage() {
           </div>
 
           {/* 2. Average Performance */}
-          <div className="glass-panel rounded-2xl p-4 border border-slate-800 bg-slate-900/60 shadow-lg">
+          <div className="glass-panel rounded-2xl p-4 border border-slate-200/90 bg-white/95 shadow-sm">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Average Performance</span>
             <span className="text-2xl font-black text-cyan-400 mt-1 block">
               {academic.classAverage}%
@@ -206,7 +206,7 @@ export default function FacultyAnalysisResultPage() {
           </div>
 
           {/* 3. Average Attendance */}
-          <div className="glass-panel rounded-2xl p-4 border border-slate-800 bg-slate-900/60 shadow-lg">
+          <div className="glass-panel rounded-2xl p-4 border border-slate-200/90 bg-white/95 shadow-sm">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Average Attendance</span>
             <span
               className={`text-2xl font-black mt-1 block ${
@@ -221,7 +221,7 @@ export default function FacultyAnalysisResultPage() {
           </div>
 
           {/* 4. Assignment Completion */}
-          <div className="glass-panel rounded-2xl p-4 border border-slate-800 bg-slate-900/60 shadow-lg">
+          <div className="glass-panel rounded-2xl p-4 border border-slate-200/90 bg-white/95 shadow-sm">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Assignment Rate</span>
             <span className="text-2xl font-black text-indigo-400 mt-1 block">
               {assignments.averageCompletion}%
@@ -260,7 +260,7 @@ export default function FacultyAnalysisResultPage() {
           <div className="lg:col-span-7 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-purple-400" />
                   <span>Class Performance Distribution</span>
                 </h3>
@@ -294,19 +294,19 @@ export default function FacultyAnalysisResultPage() {
             </div>
 
             <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800/80 text-xs">
-              <div className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div className="p-2.5 rounded-xl bg-slate-50/80 border border-slate-200">
                 <span className="text-[10px] text-slate-400 block">Highest Performer</span>
                 <span className="font-bold text-white truncate block">
                   {academic.highestStudent ? `${academic.highestStudent.name} (${academic.highestStudent.score}%)` : 'N/A'}
                 </span>
               </div>
-              <div className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div className="p-2.5 rounded-xl bg-slate-50/80 border border-slate-200">
                 <span className="text-[10px] text-slate-400 block">Lowest Performer</span>
                 <span className="font-bold text-white truncate block">
                   {academic.lowestStudent ? `${academic.lowestStudent.name} (${academic.lowestStudent.score}%)` : 'N/A'}
                 </span>
               </div>
-              <div className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div className="p-2.5 rounded-xl bg-slate-50/80 border border-slate-200">
                 <span className="text-[10px] text-slate-400 block">Below Pass Target</span>
                 <span className="font-bold text-amber-400 block">
                   {academic.studentsBelowTarget.length} Students (&lt; {thresholds.performanceTarget}%)
@@ -319,7 +319,7 @@ export default function FacultyAnalysisResultPage() {
           <div className="lg:col-span-5 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl flex flex-col justify-between space-y-4">
             <div>
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <CalendarCheck className="w-4 h-4 text-emerald-400" />
                   <span>Attendance Health Breakdown</span>
                 </h3>
@@ -373,7 +373,7 @@ export default function FacultyAnalysisResultPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4 text-amber-400" />
                   <span>Students Requiring Academic Attention</span>
                 </h3>
@@ -403,7 +403,7 @@ export default function FacultyAnalysisResultPage() {
                   <th className="p-3.5 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/80 text-slate-300">
+              <tbody className="divide-y divide-slate-100/80 text-slate-300">
                 {flaggedStudents.map((s) => (
                   <tr key={s.id} className="hover:bg-slate-900/50 transition-colors">
                     <td className="p-3.5 font-semibold text-white">{s.name}</td>
@@ -469,7 +469,7 @@ export default function FacultyAnalysisResultPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Topic Performance (6 cols) */}
           <div className="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <Target className="w-4 h-4 text-cyan-400" />
               <span>Curriculum Topic Mastery</span>
             </h3>
@@ -477,7 +477,7 @@ export default function FacultyAnalysisResultPage() {
             {topics && topics.topics ? (
               <div className="space-y-3">
                 {topics.topics.map((t, idx) => (
-                  <div key={idx} className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-1.5">
+                  <div key={idx} className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-1.5">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-semibold text-slate-200">{t.name}</span>
                       <span
@@ -513,7 +513,7 @@ export default function FacultyAnalysisResultPage() {
           {/* Dynamic Class Insights (6 cols) */}
           <div className="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-3.5">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-purple-400" />
                 <span>Class-Level Telemetry Insights</span>
               </h3>
@@ -523,7 +523,7 @@ export default function FacultyAnalysisResultPage() {
             </div>
 
             <div className="space-y-2.5 text-xs">
-              <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-1">
+              <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-1">
                 <span className="text-[10px] font-mono text-purple-400 uppercase font-bold block">
                   Academic Performance Insight
                 </span>
@@ -534,7 +534,7 @@ export default function FacultyAnalysisResultPage() {
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-1">
+              <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-1">
                 <span className="text-[10px] font-mono text-emerald-400 uppercase font-bold block">
                   Attendance Telemetry Insight
                 </span>
@@ -546,7 +546,7 @@ export default function FacultyAnalysisResultPage() {
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-1">
+              <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-1">
                 <span className="text-[10px] font-mono text-indigo-400 uppercase font-bold block">
                   Coursework & Tasks Insight
                 </span>
@@ -563,7 +563,7 @@ export default function FacultyAnalysisResultPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Recommended Faculty Actions (6 cols) */}
           <div className="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <Compass className="w-4 h-4 text-purple-400" />
               <span>Recommended Faculty Actions</span>
             </h3>
@@ -585,7 +585,7 @@ export default function FacultyAnalysisResultPage() {
                       {rec.priority} Priority
                     </span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">{rec.reason}</p>
+                  <p className="text-xs text-slate-600 font-medium leading-relaxed">{rec.reason}</p>
                   <div className="p-2.5 rounded-xl bg-purple-950/30 border border-purple-500/20 text-[11px] text-purple-300">
                     <span className="font-semibold block text-[10px] uppercase font-mono text-purple-400">
                       Suggested Action:
@@ -599,7 +599,7 @@ export default function FacultyAnalysisResultPage() {
 
           {/* My Class Action Plan (6 cols) */}
           <div className="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <CheckSquare className="w-4 h-4 text-indigo-400" />
               <span>My Class Action Plan</span>
             </h3>
@@ -613,7 +613,7 @@ export default function FacultyAnalysisResultPage() {
                   {actionPlan.thisWeek.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-start gap-2.5 text-xs"
+                      className="p-3 rounded-xl bg-slate-50/80 border border-slate-200 flex items-start gap-2.5 text-xs"
                     >
                       <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
                       <div>
@@ -633,7 +633,7 @@ export default function FacultyAnalysisResultPage() {
                   {actionPlan.nextWeek.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-start gap-2.5 text-xs"
+                      className="p-3 rounded-xl bg-slate-50/80 border border-slate-200 flex items-start gap-2.5 text-xs"
                     >
                       <Clock className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
                       <div>
@@ -656,7 +656,7 @@ export default function FacultyAnalysisResultPage() {
                 <Bot className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">CampusMind Faculty AI</h3>
+                <h3 className="text-base font-bold text-slate-900">CampusMind Faculty AI</h3>
                 <span className="text-[10px] font-mono text-purple-300">
                   Grounded in your entered {facultyData.facultyInfo.subject} data
                 </span>
@@ -688,7 +688,7 @@ export default function FacultyAnalysisResultPage() {
           </div>
 
           {/* Chat Messages Log */}
-          <div className="space-y-3 max-h-64 overflow-y-auto p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
+          <div className="space-y-3 max-h-64 overflow-y-auto p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
             {chatMessages.map((msg, idx) => (
               <div
                 key={idx}
@@ -719,7 +719,7 @@ export default function FacultyAnalysisResultPage() {
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
               placeholder="Ask anything about student attendance, scores, or revision plans..."
-              className="flex-1 px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
             />
             <button
               type="submit"
@@ -741,7 +741,7 @@ export default function FacultyAnalysisResultPage() {
                 <span className="text-[10px] font-mono uppercase tracking-wider text-purple-400 font-bold px-2 py-0.5 rounded-full bg-purple-950/80 border border-purple-500/40">
                   Explainable AI Telemetry
                 </span>
-                <h3 className="text-lg font-bold text-white mt-1">
+                <h3 className="text-lg font-bold text-slate-900 mt-1">
                   Why was {selectedStudentForModal.name} flagged?
                 </h3>
                 <span className="text-xs text-slate-400 font-mono">
@@ -759,7 +759,7 @@ export default function FacultyAnalysisResultPage() {
             {/* Factor Weights Banner */}
             <div className="p-4 rounded-2xl bg-purple-950/40 border border-purple-500/30 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-white">Rule-Based Composite Attribution</span>
+                <span className="font-bold text-slate-900">Rule-Based Composite Attribution</span>
                 <span className="text-[10px] font-mono text-purple-300 uppercase">
                   Demo Contribution Weights
                 </span>
@@ -826,7 +826,7 @@ export default function FacultyAnalysisResultPage() {
           <div className="max-w-md w-full p-6 rounded-3xl glass-panel border border-slate-800 bg-slate-950 shadow-2xl space-y-4 animate-fadeIn">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="text-base font-bold text-white">
+                <h3 className="text-base font-bold text-slate-900">
                   Supporting Data: {selectedStudentForModal.name}
                 </h3>
                 <span className="text-xs text-slate-400 font-mono">
@@ -841,24 +841,24 @@ export default function FacultyAnalysisResultPage() {
               </button>
             </div>
 
-            <div className="space-y-2 text-xs divide-y divide-slate-800/80">
+            <div className="space-y-2 text-xs divide-y divide-slate-100/80">
               <div className="flex justify-between py-1.5">
                 <span className="text-slate-400">Total Marks:</span>
-                <span className="font-bold text-white">
+                <span className="font-bold text-slate-900">
                   {selectedStudentForModal.totalMarks} / {selectedStudentForModal.maxMarks} (
                   {selectedStudentForModal.calculatedPerfPct}%)
                 </span>
               </div>
               <div className="flex justify-between py-1.5">
                 <span className="text-slate-400">Attendance:</span>
-                <span className="font-bold text-white">
+                <span className="font-bold text-slate-900">
                   {selectedStudentForModal.attendedClasses} / {selectedStudentForModal.totalClasses} (
                   {selectedStudentForModal.calculatedAttPct}%)
                 </span>
               </div>
               <div className="flex justify-between py-1.5">
                 <span className="text-slate-400">Completed Assignments:</span>
-                <span className="font-bold text-white">
+                <span className="font-bold text-slate-900">
                   {selectedStudentForModal.completedAssignments} / {selectedStudentForModal.totalAssignments}
                 </span>
               </div>

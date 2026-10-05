@@ -19,7 +19,9 @@ const UserSchema = new mongoose.Schema(
       default: 'student'
     },
     student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', default: null },
-    faculty: { type: mongoose.Schema.Types.ObjectId, ref: 'Faculty', default: null }
+    faculty: { type: mongoose.Schema.Types.ObjectId, ref: 'Faculty', default: null },
+    resetPasswordToken: { type: String, default: null },
+    resetPasswordExpire: { type: Date, default: null }
   },
   { timestamps: true }
 );

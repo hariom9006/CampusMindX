@@ -14,7 +14,7 @@ export const SAMPLE_CLOUD_DOCUMENTS = [
     fileSize: '320 KB',
     lastModified: 'Aug 24, 2026',
     extractedData: {
-      studentName: 'Aarav Sharma',
+      studentName: 'Hariom Anand',
       semester: 4,
       program: 'BCA',
       cgpa: 7.30,

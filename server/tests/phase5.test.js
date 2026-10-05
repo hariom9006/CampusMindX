@@ -193,7 +193,7 @@ test('CampusMind AI Assistant - Phase 5 Comprehensive Suite', async (t) => {
     assert.equal(res.status, 200);
     const json = await res.json();
     assert.equal(json.data.intent, 'INTENT_FACULTY_STUDENTS_NEED_ATTENTION');
-    assert.ok(json.data.reply.includes('Rohan Das') || json.data.reply.includes('Aarav Sharma'));
+    assert.ok(json.data.reply.includes('Rohan Das') || json.data.reply.includes('Hariom Anand') || json.data.reply.includes('Aarav Sharma'));
   });
 
   // 12. Faculty: Class attendance trend

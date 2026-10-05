@@ -68,10 +68,10 @@ export default function AdminAnalysisResultPage() {
 
   if (!adminData || !analysis) {
     return (
-      <div className="min-h-screen bg-[#050814] text-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex items-center justify-center p-4 aurora-bg-mesh">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-medium text-slate-400">Loading university intelligence...</span>
+          <div className="w-10 h-10 border-2 border-cyan-200 border-t-cyan-600 rounded-full animate-spin" />
+          <span className="text-sm font-semibold text-slate-500">Loading university intelligence...</span>
         </div>
       </div>
     );
@@ -105,28 +105,28 @@ export default function AdminAnalysisResultPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050814] text-slate-100 flex flex-col justify-between selection:bg-blue-500/30 selection:text-blue-200">
+    <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex flex-col justify-between aurora-bg-mesh selection:bg-cyan-500/20 selection:text-cyan-900">
       <div className="max-w-7xl mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-6">
         {/* TOP BAR / MODE HEADER */}
-        <div className="glass-panel rounded-2xl p-5 border border-blue-500/30 bg-slate-950/80 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
+        <div className="glass-panel rounded-[24px] p-5 border border-cyan-100 bg-white/95 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-600 flex items-center justify-center text-white shadow-[0_0_20px_rgba(59,130,246,0.4)] shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-md shadow-cyan-500/20 shrink-0">
               <Building2 className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-blue-300 font-bold px-2 py-0.5 rounded-full bg-blue-950/80 border border-blue-500/40">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-800 font-bold px-2.5 py-0.5 rounded-full bg-cyan-50 border border-cyan-200">
                   Administrator Personal Analysis
                 </span>
-                <span className="px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-[10px] font-mono text-blue-300 font-semibold">
+                <span className="px-2 py-0.5 rounded-full bg-cyan-50 border border-cyan-200 text-[10px] font-mono text-cyan-800 font-semibold">
                   Personalized Demo Analysis
                 </span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-white mt-1">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
                 My University Intelligence
               </h1>
-              <p className="text-xs text-slate-300">
-                Welcome, <span className="font-bold text-white">Central Academic Directorate</span> •{' '}
+              <p className="text-xs text-slate-600 font-medium">
+                Welcome, <span className="font-bold text-slate-900">Central Academic Directorate</span> •{' '}
                 {adminData.universityInfo.universityName} ({adminData.universityInfo.academicYear})
               </p>
             </div>
@@ -135,7 +135,7 @@ export default function AdminAnalysisResultPage() {
           <div className="flex items-center gap-2.5 flex-wrap">
             <button
               onClick={() => navigate('/analyze-university')}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-2xs transition-colors flex items-center gap-1.5"
             >
               <Edit3 className="w-3.5 h-3.5 text-blue-400" />
               <span>Edit University Data</span>
@@ -146,14 +146,14 @@ export default function AdminAnalysisResultPage() {
                 setAnalysis(refreshed);
                 alert('University intelligence re-analyzed.');
               }}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-blue-300 bg-blue-950/80 hover:bg-blue-900 border border-blue-500/40 transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-cyan-800 bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 transition-colors flex items-center gap-1.5"
             >
               <RotateCcw className="w-3.5 h-3.5 text-blue-400" />
               <span>Re-Analyze</span>
             </button>
             <Link
               to="/admin"
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white glass-panel hover:bg-slate-800 border border-slate-700 transition-colors"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 shadow-2xs transition-colors"
             >
               Switch to Demo Mode
             </Link>
@@ -163,35 +163,35 @@ export default function AdminAnalysisResultPage() {
         {/* 8 ADMIN KPI CARDS */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
           {/* 1. Total Students */}
-          <div className="glass-panel rounded-2xl p-3.5 border border-slate-800 bg-slate-900/60 shadow">
+          <div className="glass-panel rounded-2xl p-3.5 border border-slate-200/90 bg-white/95/60 shadow">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Enrolled Students</span>
             <span className="text-xl font-black text-white mt-1 block">{kpis.totalStudents}</span>
             <span className="text-[10px] text-blue-400 font-mono">University-Wide</span>
           </div>
 
           {/* 2. Total Faculty */}
-          <div className="glass-panel rounded-2xl p-3.5 border border-slate-800 bg-slate-900/60 shadow">
+          <div className="glass-panel rounded-2xl p-3.5 border border-slate-200/90 bg-white/95/60 shadow">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Faculty Members</span>
             <span className="text-xl font-black text-white mt-1 block">{kpis.totalFaculty}</span>
             <span className="text-[10px] text-slate-400">Instructional Staff</span>
           </div>
 
           {/* 3. Departments */}
-          <div className="glass-panel rounded-2xl p-3.5 border border-slate-800 bg-slate-900/60 shadow">
+          <div className="glass-panel rounded-2xl p-3.5 border border-slate-200/90 bg-white/95/60 shadow">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Departments</span>
             <span className="text-xl font-black text-purple-400 mt-1 block">{kpis.departmentCount}</span>
             <span className="text-[10px] text-purple-300/80">Academic Units</span>
           </div>
 
           {/* 4. Average Performance */}
-          <div className="glass-panel rounded-2xl p-3.5 border border-slate-800 bg-slate-900/60 shadow">
+          <div className="glass-panel rounded-2xl p-3.5 border border-slate-200/90 bg-white/95/60 shadow">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Avg Performance</span>
             <span className="text-xl font-black text-cyan-400 mt-1 block">{kpis.avgPerformance}%</span>
             <span className="text-[10px] text-slate-400">Pass: {kpis.passPercentage}%</span>
           </div>
 
           {/* 5. Average Attendance */}
-          <div className="glass-panel rounded-2xl p-3.5 border border-slate-800 bg-slate-900/60 shadow">
+          <div className="glass-panel rounded-2xl p-3.5 border border-slate-200/90 bg-white/95/60 shadow">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Avg Attendance</span>
             <span
               className={`text-xl font-black mt-1 block ${
@@ -204,7 +204,7 @@ export default function AdminAnalysisResultPage() {
           </div>
 
           {/* 6. Assignment Completion */}
-          <div className="glass-panel rounded-2xl p-3.5 border border-slate-800 bg-slate-900/60 shadow">
+          <div className="glass-panel rounded-2xl p-3.5 border border-slate-200/90 bg-white/95/60 shadow">
             <span className="text-[10px] font-mono uppercase text-slate-400 block">Assignment Rate</span>
             <span className="text-xl font-black text-indigo-400 mt-1 block">
               {kpis.avgAssignmentCompletion}%
@@ -220,7 +220,7 @@ export default function AdminAnalysisResultPage() {
           </div>
 
           {/* 8. Skill Readiness */}
-          <div className="glass-panel rounded-2xl p-3.5 border border-cyan-500/30 bg-cyan-950/20 shadow">
+          <div className="glass-panel rounded-2xl p-3.5 border border-cyan-500/30 bg-indigo-50/20 shadow">
             <span className="text-[10px] font-mono uppercase text-cyan-300 block">Skill Readiness</span>
             <span className="text-xl font-black text-cyan-300 mt-1 block">
               {kpis.skillReadiness !== null ? `${kpis.skillReadiness}%` : 'N/A'}
@@ -235,7 +235,7 @@ export default function AdminAnalysisResultPage() {
         <div className="glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <Layers className="w-4 h-4 text-blue-400" />
                 <span>Cross-Department Benchmark Telemetry</span>
               </h3>
@@ -277,7 +277,7 @@ export default function AdminAnalysisResultPage() {
         <div className="glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <Building2 className="w-4 h-4 text-blue-400" />
                 <span>Department Operational Roster</span>
               </h3>
@@ -304,7 +304,7 @@ export default function AdminAnalysisResultPage() {
                   <th className="p-3.5 text-right">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/80 text-slate-300">
+              <tbody className="divide-y divide-slate-100/80 text-slate-300">
                 {adminData.departments.map((d) => (
                   <tr key={d.id} className="hover:bg-slate-900/50 transition-colors">
                     <td className="p-3.5">
@@ -361,7 +361,7 @@ export default function AdminAnalysisResultPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Attendance Analysis (6 cols) */}
           <div className="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <CalendarCheck className="w-4 h-4 text-emerald-400" />
               <span>University Attendance Intelligence</span>
             </h3>
@@ -378,15 +378,15 @@ export default function AdminAnalysisResultPage() {
             </div>
 
             <div className="space-y-2 text-xs">
-              <div className="flex justify-between p-3 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div className="flex justify-between p-3 rounded-xl bg-slate-50/80 border border-slate-200">
                 <span className="text-slate-400">University Weighted Average:</span>
                 <span className="font-bold font-mono text-white">{kpis.avgAttendance}%</span>
               </div>
-              <div className="flex justify-between p-3 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div className="flex justify-between p-3 rounded-xl bg-slate-50/80 border border-slate-200">
                 <span className="text-slate-400">Departments Below Target:</span>
                 <span className="font-bold font-mono text-amber-400">{deptsBelowAttTarget.length}</span>
               </div>
-              <div className="flex justify-between p-3 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div className="flex justify-between p-3 rounded-xl bg-slate-50/80 border border-slate-200">
                 <span className="text-slate-400">Flagged Attendance Shortage Students:</span>
                 <span className="font-bold font-mono text-red-400">
                   {adminData.universityAcademic.attendanceBelowTargetCount}
@@ -398,7 +398,7 @@ export default function AdminAnalysisResultPage() {
           {/* Industry Skill Gap Intelligence (6 cols) */}
           <div className="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <Cpu className="w-4 h-4 text-cyan-400" />
                 <span>Industry Skill Gap Intelligence</span>
               </h3>
@@ -413,7 +413,7 @@ export default function AdminAnalysisResultPage() {
                   const target = Number(sk.targetLevel) || 75;
                   const gap = Math.max(0, target - sk.level);
                   return (
-                    <div key={idx} className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-1.5 text-xs">
+                    <div key={idx} className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-1.5 text-xs">
                       <div className="flex items-center justify-between">
                         <span className="font-semibold text-slate-200">{sk.name}</span>
                         <span className="font-mono text-[10px] text-slate-400">
@@ -461,10 +461,10 @@ export default function AdminAnalysisResultPage() {
               </span>
               <span className="text-xs text-slate-400 font-mono">XAI Feature Attribution</span>
             </div>
-            <h3 className="text-lg font-bold text-white">
+            <h3 className="text-lg font-bold text-slate-900">
               Why did CampusMind generate this university insight?
             </h3>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-600 font-medium leading-relaxed">
               Institutional flags and recommendations are transparently attributed across department-level attendance rates, academic passing scores, and coursework bottlenecks.
             </p>
           </div>
@@ -484,7 +484,7 @@ export default function AdminAnalysisResultPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Institutional Recommendations (6 cols) */}
           <div className="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <Shield className="w-4 h-4 text-blue-400" />
               <span>Recommended Institutional Actions</span>
             </h3>
@@ -504,7 +504,7 @@ export default function AdminAnalysisResultPage() {
                       {rec.priority} Priority
                     </span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">{rec.reason}</p>
+                  <p className="text-xs text-slate-600 font-medium leading-relaxed">{rec.reason}</p>
                   <div className="p-2.5 rounded-xl bg-blue-950/30 border border-blue-500/20 text-[11px] text-blue-300">
                     <span className="font-semibold block text-[10px] uppercase font-mono text-blue-400">
                       Policy Directive:
@@ -518,7 +518,7 @@ export default function AdminAnalysisResultPage() {
 
           {/* University Action Plan (6 cols) */}
           <div className="lg:col-span-6 glass-panel rounded-3xl p-6 border border-slate-800/80 bg-slate-900/60 shadow-xl space-y-4">
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
               <CheckSquare className="w-4 h-4 text-indigo-400" />
               <span>University Action Plan</span>
             </h3>
@@ -527,7 +527,7 @@ export default function AdminAnalysisResultPage() {
               {actionPlan.map((item) => (
                 <div
                   key={item.priority}
-                  className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-1.5 text-xs"
+                  className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-1.5 text-xs"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-white flex items-center gap-2">
@@ -536,7 +536,7 @@ export default function AdminAnalysisResultPage() {
                       </span>
                       <span>{item.title}</span>
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
                       {item.status}
                     </span>
                   </div>
@@ -556,7 +556,7 @@ export default function AdminAnalysisResultPage() {
                 <Bot className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">CampusMind University AI</h3>
+                <h3 className="text-base font-bold text-slate-900">CampusMind University AI</h3>
                 <span className="text-[10px] font-mono text-blue-300">
                   Grounded in entered institutional records for {adminData.universityInfo.universityName}
                 </span>
@@ -588,7 +588,7 @@ export default function AdminAnalysisResultPage() {
           </div>
 
           {/* Chat Messages */}
-          <div className="space-y-3 max-h-64 overflow-y-auto p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
+          <div className="space-y-3 max-h-64 overflow-y-auto p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
             {chatMessages.map((msg, idx) => (
               <div
                 key={idx}
@@ -619,7 +619,7 @@ export default function AdminAnalysisResultPage() {
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
               placeholder="Ask anything about departmental pass rates, attendance compliance, or resource priorities..."
-              className="flex-1 px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
             />
             <button
               type="submit"
@@ -641,7 +641,7 @@ export default function AdminAnalysisResultPage() {
                 <span className="text-[10px] font-mono uppercase tracking-wider text-blue-400 font-bold px-2 py-0.5 rounded-full bg-blue-950/80 border border-blue-500/40">
                   Explainable AI Telemetry
                 </span>
-                <h3 className="text-lg font-bold text-white mt-1">
+                <h3 className="text-lg font-bold text-slate-900 mt-1">
                   Why did CampusMind generate this university insight?
                 </h3>
               </div>
@@ -656,7 +656,7 @@ export default function AdminAnalysisResultPage() {
             {/* Factor Weights */}
             <div className="p-4 rounded-2xl bg-blue-950/40 border border-blue-500/30 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-white">Institutional Contribution Factors</span>
+                <span className="font-bold text-slate-900">Institutional Contribution Factors</span>
                 <span className="text-[10px] font-mono text-blue-300 uppercase">
                   Demo Contribution Weights
                 </span>
@@ -717,7 +717,7 @@ export default function AdminAnalysisResultPage() {
           <div className="max-w-md w-full p-6 rounded-3xl glass-panel border border-slate-800 bg-slate-950 shadow-2xl space-y-4 animate-fadeIn">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="text-base font-bold text-white">University Supporting Telemetry</h3>
+                <h3 className="text-base font-bold text-slate-900">University Supporting Telemetry</h3>
                 <span className="text-xs text-slate-400 font-mono">
                   {adminData.universityInfo.universityName}
                 </span>
@@ -730,14 +730,14 @@ export default function AdminAnalysisResultPage() {
               </button>
             </div>
 
-            <div className="space-y-2 text-xs divide-y divide-slate-800/80">
+            <div className="space-y-2 text-xs divide-y divide-slate-100/80">
               <div className="flex justify-between py-1.5">
                 <span className="text-slate-400">Enrolled Students:</span>
-                <span className="font-bold text-white">{kpis.totalStudents}</span>
+                <span className="font-bold text-slate-900">{kpis.totalStudents}</span>
               </div>
               <div className="flex justify-between py-1.5">
                 <span className="text-slate-400">Total Faculty:</span>
-                <span className="font-bold text-white">{kpis.totalFaculty}</span>
+                <span className="font-bold text-slate-900">{kpis.totalFaculty}</span>
               </div>
               <div className="flex justify-between py-1.5">
                 <span className="text-slate-400">Departments Below Target:</span>

@@ -120,7 +120,7 @@ class CampusMindAiService {
       student = await Student.findById(studentId);
     }
     if (!student) {
-      student = await Student.findOne({ enrollmentNumber: '22BCA1042' }); // Default Aarav Sharma
+      student = await Student.findOne({ enrollmentNumber: '22BCA1042' }); // Default Hariom Anand
     }
 
     if (!student) {
@@ -484,7 +484,7 @@ class CampusMindAiService {
 
   async buildAcademicTrendResponse(student) {
     return {
-      reply: `### Academic Performance Trend: Aarav Sharma\n\nHere is your semester-by-semester CGPA trajectory:\n\n- **Semester 1:** 7.10 CGPA (Foundations)\n- **Semester 2:** 7.30 CGPA (+0.20)\n- **Semester 3:** 7.50 CGPA (+0.20)\n- **Semester 4:** 7.60 CGPA (+0.10)\n- **Semester 5 (Current):** **7.42 CGPA** (-0.18 dip)\n- **Semester 5 (AI Predicted):** **7.20 CGPA** (Ridge Regression Model, Confidence: 89%)\n\n### Trend Interpretation:\nYour academic trajectory showed steady improvement through Semesters 1–4. The slight dip in Semester 5 (7.42 current, projected 7.20) is primarily correlated with Data Structures II internal scores (58%) and attendance drops in Computer Networks. Implementing the suggested remedial clinics can help restore your trajectory above 7.50+.`,
+      reply: `### Academic Performance Trend: Hariom Anand\n\nHere is your semester-by-semester CGPA trajectory:\n\n- **Semester 1:** 7.10 CGPA (Foundations)\n- **Semester 2:** 7.30 CGPA (+0.20)\n- **Semester 3:** 7.50 CGPA (+0.20)\n- **Semester 4:** 7.60 CGPA (+0.10)\n- **Semester 5 (Current):** **7.42 CGPA** (-0.18 dip)\n- **Semester 5 (AI Predicted):** **7.20 CGPA** (Ridge Regression Model, Confidence: 89%)\n\n### Trend Interpretation:\nYour academic trajectory showed steady improvement through Semesters 1–4. The slight dip in Semester 5 (7.42 current, projected 7.20) is primarily correlated with Data Structures II internal scores (58%) and attendance drops in Computer Networks. Implementing the suggested remedial clinics can help restore your trajectory above 7.50+.`,
       intent: INTENTS.ACADEMIC_TREND,
       confidence: 0.96,
       factors: [

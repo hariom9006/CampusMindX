@@ -84,7 +84,7 @@ All 20 test cases run in the automated test suite [`server/tests/phase5.test.js`
 8. `What are my pending assignments?` → `INTENT_ASSIGNMENTS` *(Flags Dijkstra overdue and Full Stack auth pending)*
 9. `What is my academic risk level and prediction?` → `INTENT_PREDICTION_RISK` *(Returns Medium Support Indicator / 48% Risk Score)*
 10. `What is my career goal and roadmap?` → `INTENT_CAREER_ROADMAP` *(Returns 12-week roadmap milestones)*
-11. `Which students need attention?` → `INTENT_FACULTY_STUDENTS_NEED_ATTENTION` *(Lists Rohan Das & Aarav Sharma with drivers)*
+11. `Which students need attention?` → `INTENT_FACULTY_STUDENTS_NEED_ATTENTION` *(Lists Rohan Das & Hariom Anand with drivers)*
 12. `What is the class attendance trend?` → `INTENT_FACULTY_ATTENDANCE_TREND` *(Returns 74.5% cohort average and course breakdown)*
 13. `Which subject has the lowest average performance?` → `INTENT_FACULTY_LOWEST_PERFORMING_SUBJECT` *(Identifies Computer Networks 64.2%)*
 14. `What is the university academic health?` → `INTENT_ADMIN_UNIVERSITY_OVERVIEW` *(Returns 1,420 students, 94.2% retention)*

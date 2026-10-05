@@ -31,7 +31,7 @@ export const recommendationEngineService = {
       // Fallback stub student for disconnected testing
       student = {
         _id: 'mock-student-id',
-        name: 'Aarav Sharma',
+        name: 'Hariom Anand',
         enrollmentNumber: '22BCA1042',
         careerGoal: 'Full Stack Developer',
         attendance: 68,

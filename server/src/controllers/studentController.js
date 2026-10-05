@@ -77,7 +77,7 @@ export const getStudentById = async (req, res, next) => {
     if (!student) {
       // Fallback: check if id matches mock ID format like STD-2024-0582
       student = await Student.findOne({
-        $or: [{ enrollmentNumber: '22BCA1042' }, { name: 'Aarav Sharma' }]
+        $or: [{ enrollmentNumber: '22BCA1042' }, { name: 'Hariom Anand' }, { name: 'Aarav Sharma' }]
       })
         .populate('department')
         .populate('advisor')

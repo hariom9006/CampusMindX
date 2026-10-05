@@ -17,15 +17,19 @@ import {
   TrendingUp,
   Layers,
   Database,
-  AlertTriangle,
   CheckCircle2,
-  Info
+  Clock,
+  AlertTriangle,
+  Zap,
+  Check,
+  CircleDot,
+  MinusCircle
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 import StatCard from '../../components/StatCard';
 import ProgressBar from '../../components/ProgressBar';
 import RecommendationCard from '../../components/RecommendationCard';
-
 import { currentStudent } from '../../data/students';
 import { apiService } from '../../services/api';
 
@@ -40,131 +44,64 @@ const CAREER_TRACKS = [
 export default function StudentSkills() {
   const [selectedRole, setSelectedRole] = useState('Full Stack Developer');
   const [student, setStudent] = useState(currentStudent);
-  const [analysisData, setAnalysisData] = useState(null);
-  const [skillRecommendations, setSkillRecommendations] = useState([]);
-  const [priorityFilter, setPriorityFilter] = useState('All');
-  const [_loading, setLoading] = useState(true);
-  const [isLive, setIsLive] = useState(false);
+  const [_loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    let isMounted = true;
-    async function loadAnalysis() {
-      try {
-        setLoading(true);
-        const [studentData, gapData, recsData] = await Promise.all([
-          apiService.getCurrentStudent('22BCA1042'),
-          apiService.analyzeSkillGap({
-            studentId: '22BCA1042',
-            careerTarget: selectedRole
-          }),
-          apiService.getRecommendations('22BCA1042')
-        ]);
-
-        if (isMounted) {
-          if (studentData) {
-            setStudent(studentData);
-            if (!selectedRole && studentData.careerGoal) {
-              setSelectedRole(studentData.careerGoal);
-            }
-          }
-          if (gapData) {
-            setAnalysisData(gapData);
-            setIsLive(true);
-          }
-          if (recsData && recsData.length > 0) {
-            setSkillRecommendations(
-              recsData.filter((r) => r.category === 'Skill Development' || r.category === 'Career')
-            );
-          }
-        }
-      } catch (err) {
-        console.error('Error fetching skill gap data:', err);
-      } finally {
-        if (isMounted) setLoading(false);
-      }
+  // Skill state according to Requirement 11
+  const roleSkillsData = {
+    'Full Stack Developer': {
+      acquiredSkills: [
+        { name: 'HTML', level: 'Strong', mastery: 95, icon: '✓' },
+        { name: 'CSS', level: 'Strong', mastery: 90, icon: '✓' },
+        { name: 'JavaScript', level: 'Strong', mastery: 88, icon: '✓' },
+        { name: 'React', level: 'Strong', mastery: 85, icon: '✓' }
+      ],
+      skillGaps: [
+        { name: 'Node.js', status: 'Missing', priority: 'High', deficit: '25%', week: 'Week 2' },
+        { name: 'Express.js', status: 'Missing', priority: 'High', deficit: '28%', week: 'Week 3' },
+        { name: 'REST APIs', status: 'Developing', priority: 'Medium', deficit: '15%', week: 'Week 4' },
+        { name: 'Authentication', status: 'Missing', priority: 'High', deficit: '32%', week: 'Week 5' },
+        { name: 'Deployment', status: 'Missing', priority: 'Medium', deficit: '20%', week: 'Week 7' }
+      ],
+      radarData: [
+        { subject: 'Frontend (React/JS)', current: 90, target: 85 },
+        { subject: 'Backend (Node/Express)', current: 55, target: 85 },
+        { subject: 'API Architecture', current: 65, target: 80 },
+        { subject: 'Auth & Security', current: 48, target: 80 },
+        { subject: 'Database (MongoDB)', current: 70, target: 85 },
+        { subject: 'DevOps / Deploy', current: 45, target: 75 }
+      ]
     }
-
-    loadAnalysis();
-    return () => {
-      isMounted = false;
-    };
-  }, [selectedRole]);
-
-  const skills = analysisData?.skills || [];
-  const filteredSkills = skills.filter((s) => {
-    if (priorityFilter === 'All') return true;
-    if (priorityFilter === 'High') return s.priority === 'High';
-    if (priorityFilter === 'Medium') return s.priority === 'Medium';
-    if (priorityFilter === 'Mastered') return s.status === 'Mastered';
-    return true;
-  });
-
-  const radarData = analysisData?.radarData?.length > 0
-    ? analysisData.radarData.map((d) => ({
-        subject: d.category,
-        current: d.current,
-        required: d.target,
-        fullMark: 100
-      }))
-    : [
-        { subject: 'Frontend', current: 78, required: 85, fullMark: 100 },
-        { subject: 'Backend', current: 55, required: 80, fullMark: 100 },
-        { subject: 'Databases', current: 65, required: 75, fullMark: 100 },
-        { subject: 'Core CS', current: 50, required: 80, fullMark: 100 },
-        { subject: 'DevOps', current: 45, required: 70, fullMark: 100 }
-      ];
-
-  const readinessScore = analysisData?.readinessPercentage || 64;
-  const highGapsCount = analysisData?.summary?.highPriorityGaps ?? 3;
-  const moderateGapsCount = analysisData?.summary?.moderateGaps ?? 4;
-  const masteredCount = analysisData?.summary?.masteredSkills ?? 2;
-
-  const priorityBadgeStyles = {
-    High: 'bg-rose-950/80 text-rose-300 border-rose-500/40 shadow-[0_0_10px_rgba(244,63,94,0.2)]',
-    Medium: 'bg-amber-950/80 text-amber-300 border-amber-500/40',
-    Low: 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40'
   };
 
-  const statusBadgeStyles = {
-    'Critical Gap': 'text-rose-400 bg-rose-950/40 border-rose-500/30',
-    'Moderate Gap': 'text-amber-400 bg-amber-950/40 border-amber-500/30',
-    'On Track': 'text-cyan-400 bg-cyan-950/40 border-cyan-500/30',
-    'Mastered': 'text-emerald-400 bg-emerald-950/40 border-emerald-500/30'
-  };
+  const currentRoleData = roleSkillsData[selectedRole] || roleSkillsData['Full Stack Developer'];
 
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
-      {/* Header with Career Track Selector */}
-      <div className="glass-panel rounded-2xl p-6 border border-purple-500/30 relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <div className="max-w-2xl">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-purple-950/80 text-purple-300 border border-purple-500/30">
-              Phase 4 Skill Gap Engine
+    <div className="space-y-8 animate-fadeIn pb-16">
+      {/* ==================================================
+          Header & Role Selector (Requirement 11)
+          ================================================== */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-50 border border-purple-200 px-3 py-0.5 rounded-full">
+              Career Intelligence Engine
             </span>
-            {isLive && (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                <Database className="w-3 h-3 text-emerald-400" />
-                <span>MongoDB Live Vector</span>
-              </span>
-            )}
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight mt-2">
-            Skill Gap Analyzer & Industry Alignment
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Career Skill Intelligence
           </h1>
-          <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-            Quantifying verified coursework mastery, practical lab evaluation, and project implementations against standard placement benchmarks with transparent scoring rules.
+          <p className="text-sm sm:text-base text-slate-500 font-medium mt-1">
+            Real-time competency mapping aligned with industry role requirements.
           </p>
         </div>
 
-        {/* Role Track Selector */}
-        <div className="glass-panel p-3.5 rounded-xl border border-slate-800 shrink-0 space-y-1.5 bg-slate-900/80">
-          <label className="text-[11px] font-mono text-purple-300 block uppercase">
-            Select Career Target Benchmark
-          </label>
+        {/* Target Role Selector */}
+        <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-xs">
+          <span className="text-xs font-bold text-slate-500 pl-2">Target Role:</span>
           <select
             value={selectedRole}
             onChange={(e) => setSelectedRole(e.target.value)}
-            className="w-full bg-slate-950 text-white text-xs rounded-lg px-3 py-2 border border-purple-500/40 focus:border-cyan-400 focus:outline-none"
+            className="text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-xl px-3 py-1.5 focus:outline-none cursor-pointer"
           >
             {CAREER_TRACKS.map((track) => (
               <option key={track} value={track}>
@@ -175,257 +112,226 @@ export default function StudentSkills() {
         </div>
       </div>
 
-      {/* Metrics Summary Strip */}
+      {/* ==================================================
+          Quick Stat Metrics
+          ================================================== */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="Role Readiness Index"
-          value={readinessScore}
-          unit="%"
-          glowColor="purple"
-          trend={{ direction: 'up', label: 'Formula: sum(min(C,T)*w) / sum(T*w)' }}
+          title="Role Alignment"
+          value="68%"
+          unit="Match"
+          trend={{ direction: 'up', label: '+12% this month' }}
+          variant="indigo"
           icon={Target}
         />
         <StatCard
-          title="High Priority Gaps"
-          value={highGapsCount}
+          title="Acquired Skills"
+          value="4"
+          unit="Mastered"
+          subtitle="HTML, CSS, JS, React"
+          variant="mint"
+          icon={CheckCircle2}
+        />
+        <StatCard
+          title="Identified Gaps"
+          value="5"
           unit="Skills"
-          glowColor="rose"
-          subtitle="Gap ≥ 30% or critical prerequisite"
+          subtitle="Node, Express, APIs, Auth, Deploy"
+          variant="pink"
           icon={AlertTriangle}
         />
         <StatCard
-          title="Moderate Gaps"
-          value={moderateGapsCount}
-          unit="Skills"
-          glowColor="amber"
-          subtitle="15% ≤ Gap < 30%"
-          icon={TrendingUp}
-        />
-        <StatCard
-          title="Mastered Competencies"
-          value={masteredCount}
-          unit="Skills"
-          glowColor="emerald"
-          subtitle="Proficiency meets/exceeds target"
-          icon={CheckCircle2}
+          title="Time to Readiness"
+          value="8"
+          unit="Weeks"
+          subtitle="Personalized roadmap scheduled"
+          variant="violet"
+          icon={Clock}
         />
       </div>
 
-      {/* Radar Chart & Placement Readiness Breakdown */}
+      {/* ==================================================
+          Visual Skill Map & Radar Analytics
+          ================================================== */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Radar Chart */}
-        <div className="lg:col-span-7 glass-panel rounded-2xl p-5 border border-slate-800 flex flex-col justify-between">
-          <div className="mb-2">
-            <h3 className="text-base font-bold text-white">Domain Competency Radar</h3>
-            <p className="text-xs text-slate-400">
-              Cyan polygon: {student.name}'s verified level | Purple dashed perimeter: {selectedRole} target
-            </p>
-          </div>
-
-          <div className="w-full h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart data={radarData} margin={{ top: 10, right: 30, left: 30, bottom: 10 }}>
-                <PolarGrid stroke="#1e293b" />
-                <PolarAngleAxis dataKey="subject" stroke="#94a3b8" tick={{ fontSize: 11 }} />
-                <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#475569" tick={{ fontSize: 10 }} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#0b1222',
-                    borderColor: '#1e293b',
-                    borderRadius: '12px',
-                    fontSize: '12px'
-                  }}
-                />
-                <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
-                <Radar
-                  name="Student Current Level"
-                  dataKey="current"
-                  stroke="#06b6d4"
-                  fill="#06b6d4"
-                  fillOpacity={0.4}
-                />
-                <Radar
-                  name="Role Target Level"
-                  dataKey="required"
-                  stroke="#a855f7"
-                  fill="#a855f7"
-                  fillOpacity={0.15}
-                  strokeDasharray="4 4"
-                />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Readiness Meter & Transparent Scoring Explanation */}
-        <div className="lg:col-span-5 glass-panel rounded-2xl p-5 border border-slate-800 flex flex-col justify-between">
-          <div>
-            <h3 className="text-base font-bold text-white">Placement Readiness Meter</h3>
-            <p className="text-xs text-slate-400 mb-3">
-              Weighted composite evaluating {skills.length} technical competencies against {selectedRole} standards.
-            </p>
-
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-center my-3">
-              <span className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 block font-mono">
-                {readinessScore}%
+        {/* Acquired Skills & Skill Gaps Visual Cards */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Your Skills (Requirement 11) */}
+          <div className="glass-panel rounded-[26px] p-6 border border-emerald-100/90 bg-white/95 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center font-bold">
+                  ✓
+                </div>
+                <h3 className="text-base font-bold text-slate-900">
+                  Your Skills (Acquired)
+                </h3>
+              </div>
+              <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                Strong Foundation
               </span>
-              <span className="text-xs font-semibold text-slate-300 mt-1 block">Overall Career Track Readiness</span>
-              <div className="w-full max-w-xs mx-auto mt-3">
-                <ProgressBar value={readinessScore} max={100} color="purple" showValue={false} height="h-2.5" />
-              </div>
             </div>
 
-            {/* Documented Scoring Logic Box */}
-            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-300 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-cyan-300 font-semibold">
-                <Info className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Transparent Scoring Rules</span>
-              </div>
-              <p className="font-mono text-[10px] text-slate-400">
-                • Gap = Math.max(0, Target Level - Current Level)<br />
-                • High Priority: Gap ≥ 30% OR (Critical Prereq && Gap ≥ 20%)<br />
-                • Medium Priority: 15% ≤ Gap &lt; 30%<br />
-                • Low Priority: Gap &lt; 15% (Mastered when Gap = 0)
-              </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {currentRoleData.acquiredSkills.map((sk) => (
+                <div
+                  key={sk.name}
+                  className="p-3.5 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 flex flex-col justify-between"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-slate-900 text-sm">{sk.name}</span>
+                    <span className="text-xs font-extrabold text-emerald-600">✓</span>
+                  </div>
+                  <div className="mt-3">
+                    <div className="flex justify-between text-[10px] text-slate-500 font-semibold mb-1">
+                      <span>Strong</span>
+                      <span>{sk.mastery}%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-emerald-200/60 rounded-full overflow-hidden">
+                      <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${sk.mastery}%` }} />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-800">
-            <Link
-              to="/student/roadmap"
-              className="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 shadow-md transition-all flex items-center justify-center gap-2"
-            >
-              <span>View Milestone Learning Roadmap</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Transparent Skill Gap Table with Priority Filters */}
-      <div className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Layers className="w-5 h-5 text-purple-400" />
-              <span>Competency Gap Audit Table</span>
-            </h2>
-            <p className="text-xs text-slate-400">
-              Showing assessed skill levels, role targets, calculated gaps, and priority rankings.
-            </p>
-          </div>
-
-          {/* Filter Chips */}
-          <div className="flex items-center gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-slate-800 text-xs">
-            {['All', 'High', 'Medium', 'Mastered'].map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setPriorityFilter(filter)}
-                className={`px-3 py-1 rounded-lg font-medium transition-all ${
-                  priorityFilter === filter
-                    ? 'bg-purple-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
+          {/* Skill Gaps (Requirement 11) */}
+          <div className="glass-panel rounded-[26px] p-6 border border-indigo-100/90 bg-white/95 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-pink-50 text-pink-600 border border-pink-200 flex items-center justify-center font-bold">
+                  !
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900">
+                    Target Skill Gaps
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Required to unlock Full Stack Developer placement eligibility
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/student/roadmap"
+                className="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors flex items-center gap-1"
               >
-                {filter === 'High' ? 'High Priority' : filter === 'Medium' ? 'Medium' : filter}
-              </button>
-            ))}
-          </div>
-        </div>
+                <span>Follow Roadmap →</span>
+              </Link>
+            </div>
 
-        {/* Responsive Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border-collapse">
-            <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-mono uppercase text-[10px]">
-                <th className="py-3 px-3">Skill & Competency</th>
-                <th className="py-3 px-3">Category</th>
-                <th className="py-3 px-3 text-center">Current Level</th>
-                <th className="py-3 px-3 text-center">Target Level</th>
-                <th className="py-3 px-3 text-center">Calculated Gap</th>
-                <th className="py-3 px-3 text-center">Priority</th>
-                <th className="py-3 px-3 text-center">Status</th>
-                <th className="py-3 px-3">Recommended Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/60">
-              {filteredSkills.map((item, idx) => {
-                const isHigh = item.priority === 'High';
+            {/* Visual Skill Map with Strong, Developing, Missing States */}
+            <div className="space-y-3">
+              {currentRoleData.skillGaps.map((gap) => {
+                const isDeveloping = gap.status === 'Developing';
                 return (
-                  <tr
-                    key={idx}
-                    className={`transition-colors hover:bg-slate-900/40 ${
-                      isHigh ? 'bg-rose-950/10' : ''
-                    }`}
+                  <div
+                    key={gap.name}
+                    className="p-4 rounded-2xl bg-slate-50/80 hover:bg-slate-50 border border-slate-200/80 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                   >
-                    <td className="py-3 px-3 font-semibold text-white">
-                      <div className="flex items-center gap-1.5">
-                        <span>{item.skill}</span>
-                        {item.critical && (
-                          <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-rose-950/80 text-rose-300 border border-rose-500/30">
-                            Critical
-                          </span>
-                        )}
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs ${
+                          isDeveloping
+                            ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                            : 'bg-rose-100 text-rose-800 border border-rose-300'
+                        }`}
+                      >
+                        {isDeveloping ? '~' : '×'}
                       </div>
-                    </td>
-                    <td className="py-3 px-3 text-slate-400 font-mono text-[11px]">{item.category}</td>
-                    <td className="py-3 px-3 text-center font-mono font-bold text-cyan-300">
-                      {item.currentLevel}%
-                    </td>
-                    <td className="py-3 px-3 text-center font-mono font-bold text-purple-300">
-                      {item.targetLevel}%
-                    </td>
-                    <td className="py-3 px-3 text-center font-mono font-bold">
-                      <span className={item.gap > 0 ? 'text-rose-400' : 'text-emerald-400'}>
-                        {item.gap > 0 ? `-${item.gap}%` : '0%'}
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h4 className="text-sm font-bold text-slate-900">{gap.name}</h4>
+                          <span
+                            className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border ${
+                              isDeveloping
+                                ? 'bg-amber-50 text-amber-700 border-amber-200'
+                                : 'bg-rose-50 text-rose-700 border-rose-200'
+                            }`}
+                          >
+                            {gap.status}
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-slate-500 font-medium">
+                          Deficit: {gap.deficit} vs industry benchmark
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 self-end sm:self-auto">
+                      <span className="text-xs font-bold font-mono text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-xl border border-indigo-200">
+                        {gap.week}
                       </span>
-                    </td>
-                    <td className="py-3 px-3 text-center">
-                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${priorityBadgeStyles[item.priority] || priorityBadgeStyles.Low}`}>
-                        {item.priority}
-                      </span>
-                    </td>
-                    <td className="py-3 px-3 text-center">
-                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${statusBadgeStyles[item.status] || ''}`}>
-                        {item.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-3 text-slate-300 text-[11px] max-w-xs leading-relaxed">
-                      {item.action}
-                    </td>
-                  </tr>
+                    </div>
+                  </div>
                 );
               })}
-            </tbody>
-          </table>
+            </div>
+          </div>
+        </div>
+
+        {/* Radar Competency Chart */}
+        <div className="lg:col-span-5">
+          <div className="glass-panel rounded-[26px] p-6 border border-slate-200/80 bg-white/95 shadow-sm h-full flex flex-col justify-between">
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                Visual Skill Map
+              </span>
+              <h3 className="text-base font-bold text-slate-900">
+                Competency Distribution
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Current skills vs Full Stack Developer target
+              </p>
+
+              <div className="w-full h-80 relative mt-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart cx="50%" cy="50%" outerRadius="75%" data={currentRoleData.radarData}>
+                    <PolarGrid stroke="#E2E8F0" />
+                    <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748B', fontSize: 10, fontWeight: 600 }} />
+                    <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#CBD5E1" />
+                    <Radar
+                      name="Your Competency"
+                      dataKey="current"
+                      stroke="#6366F1"
+                      fill="#6366F1"
+                      fillOpacity={0.4}
+                    />
+                    <Radar
+                      name="Target Benchmark"
+                      dataKey="target"
+                      stroke="#06B6D4"
+                      fill="#06B6D4"
+                      fillOpacity={0.15}
+                      strokeDasharray="4 4"
+                    />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        borderRadius: '16px',
+                        border: '1px solid #E2E8F0'
+                      }}
+                    />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500">
+                Next Milestone: Node.js Internals
+              </span>
+              <Link
+                to="/student/roadmap"
+                className="px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+              >
+                Go to Roadmap
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Linked Skill Development Recommendations (Phase 4 Engine) */}
-      {skillRecommendations.length > 0 && (
-        <div className="space-y-4 pt-4 border-t border-slate-800">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-purple-400" />
-                <span>Targeted Skill & Career Recommendations</span>
-              </h2>
-              <p className="text-xs text-slate-400">
-                Actionable learning steps generated to bridge your highest-priority developmental gaps.
-              </p>
-            </div>
-            <span className="text-xs font-mono text-purple-400 bg-purple-950/60 px-2.5 py-1 rounded-lg border border-purple-500/30">
-              {skillRecommendations.length} Interventions
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {skillRecommendations.map((rec, i) => (
-              <RecommendationCard key={rec._id || rec.id || i} recommendation={rec} />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

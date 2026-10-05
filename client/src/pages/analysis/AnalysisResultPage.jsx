@@ -129,10 +129,10 @@ export default function AnalysisResultPage() {
 
   if (!studentData || !analysis) {
     return (
-      <div className="min-h-screen bg-[#050814] text-slate-100 flex items-center justify-center p-6">
+      <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex items-center justify-center p-6 aurora-bg-mesh">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-2 border-cyan-500/20 border-t-cyan-400 rounded-full animate-spin" />
-          <span className="text-xs font-mono text-slate-400">Loading your personal analysis...</span>
+          <div className="w-10 h-10 border-2 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+          <span className="text-xs font-semibold text-slate-500">Loading your personal analysis...</span>
         </div>
       </div>
     );
@@ -164,28 +164,28 @@ export default function AnalysisResultPage() {
 
 
   return (
-    <div className="min-h-screen bg-[#050814] text-slate-100 flex flex-col justify-between selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex flex-col justify-between aurora-bg-mesh selection:bg-indigo-500/20 selection:text-indigo-900">
       <div className="max-w-7xl mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-6">
         {/* TOP BAR / MODE HEADER */}
-        <div className="glass-panel rounded-2xl p-5 border border-cyan-500/30 bg-slate-950/80 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
+        <div className="glass-panel rounded-[24px] p-5 border border-indigo-100 bg-white/95 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-purple-600 flex items-center justify-center text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 shrink-0">
               <User className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                   My CampusMind Analysis
                 </h1>
-                <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/40 shadow-[0_0_10px_rgba(6,182,212,0.2)]">
+                <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 bg-indigo-50 border border-indigo-200">
                   Personalized Demo Analysis
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-800">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                   Personal Mode
                 </span>
               </div>
-              <p className="text-xs text-slate-300 mt-0.5">
-                Welcome, <strong className="text-cyan-300 font-bold">{studentData.name}</strong>. Here is your personalized analysis based strictly on the information you provided.
+              <p className="text-xs text-slate-600 font-medium mt-0.5">
+                Welcome, <strong className="text-indigo-700 font-bold">{studentData.name}</strong>. Here is your personalized analysis based strictly on the information you provided.
               </p>
             </div>
           </div>
@@ -193,7 +193,7 @@ export default function AnalysisResultPage() {
           <div className="flex items-center gap-2.5 flex-wrap">
             <button
               onClick={() => navigate('/analyze')}
-              className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-500 text-xs font-semibold text-slate-200 hover:text-white flex items-center gap-1.5 transition-all"
+              className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-900 flex items-center gap-1.5 shadow-2xs transition-all"
             >
               <Edit3 className="w-3.5 h-3.5 text-cyan-400" />
               <span>Edit My Data</span>
@@ -319,7 +319,7 @@ export default function AnalysisResultPage() {
                   CampusMind Personalized Insight
                 </h3>
               </div>
-              <p className="text-sm font-semibold text-white leading-relaxed">
+              <p className="text-sm font-semibold text-slate-900 leading-relaxed">
                 &quot;{insights.summary}&quot;
               </p>
               <p className="text-xs text-slate-400">
@@ -351,7 +351,7 @@ export default function AnalysisResultPage() {
           <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-slate-950/60 space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-cyan-400" />
                   <span>Academic Performance Overview</span>
                 </h3>
@@ -440,7 +440,7 @@ export default function AnalysisResultPage() {
           <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-slate-950/60 space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                   <CalendarCheck className="w-4 h-4 text-blue-400" />
                   <span>Attendance Telemetry</span>
                 </h3>
@@ -540,7 +540,7 @@ export default function AnalysisResultPage() {
         <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-slate-950/60 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <CheckSquare className="w-4 h-4 text-emerald-400" />
                 <span>Assignment & Continuous Assessment Performance</span>
               </h3>
@@ -587,7 +587,7 @@ export default function AnalysisResultPage() {
             <div>
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4 text-purple-400" />
-                <h3 className="text-sm font-bold text-white">
+                <h3 className="text-sm font-bold text-slate-900">
                   Career Skill Gap Analysis ({studentData.careerGoal})
                 </h3>
               </div>
@@ -604,8 +604,8 @@ export default function AnalysisResultPage() {
 
           {skills.hasData ? (
             <div className="space-y-4">
-              <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/40">
-                <table className="w-full text-left text-xs text-slate-300">
+              <div className="overflow-x-auto rounded-xl border border-slate-200/90 bg-white/95/40">
+                <table className="w-full text-left text-xs text-slate-600 font-medium">
                   <thead className="bg-slate-900/90 text-slate-400 font-semibold border-b border-slate-800">
                     <tr>
                       <th className="py-2.5 px-3">Competency / Skill</th>
@@ -616,13 +616,13 @@ export default function AnalysisResultPage() {
                       <th className="py-2.5 px-3 text-center">Priority</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60 font-medium">
+                  <tbody className="divide-y divide-slate-100/60 font-medium">
                     {skills.skills.map((item, idx) => (
                       <tr key={idx} className="hover:bg-slate-800/20">
                         <td className="py-2.5 px-3 font-semibold text-white flex items-center gap-1.5">
                           <span>{item.skill}</span>
                           {item.essential && (
-                            <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/30">
+                            <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-indigo-50 text-cyan-300 border border-cyan-500/30">
                               Core
                             </span>
                           )}
@@ -715,7 +715,7 @@ export default function AnalysisResultPage() {
         {/* PERSONALIZED RECOMMENDATIONS (What Should You Focus On?) */}
         <div className="space-y-4">
           <div>
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-cyan-400" />
               <span>What Should You Focus On?</span>
             </h2>
@@ -747,15 +747,15 @@ export default function AnalysisResultPage() {
                   </span>
                 </div>
 
-                <h4 className="text-sm font-bold text-white">{rec.title}</h4>
-                <p className="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                <h4 className="text-sm font-bold text-slate-900">{rec.title}</h4>
+                <p className="text-xs text-slate-600 font-medium leading-relaxed bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
                   <strong className="text-slate-400 block mb-0.5 text-[10px] uppercase font-mono">Why this recommendation?</strong>
                   {rec.reason}
                 </p>
 
                 <div className="space-y-1.5 pt-1">
                   <span className="text-[10px] font-mono uppercase text-slate-400">Concrete Action Plan:</span>
-                  <ul className="space-y-1 text-xs text-slate-300">
+                  <ul className="space-y-1 text-xs text-slate-600 font-medium">
                     {rec.actionPlan.map((action, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="text-cyan-400 font-bold">•</span>
@@ -773,7 +773,7 @@ export default function AnalysisResultPage() {
         <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-slate-950/60 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <Compass className="w-4 h-4 text-cyan-400" />
                 <span>Personalized Learning Roadmap ({studentData.careerGoal})</span>
               </h3>
@@ -781,7 +781,7 @@ export default function AnalysisResultPage() {
                 Dynamic 6-week curriculum generated directly from your identified skill gaps.
               </p>
             </div>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/30">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-50 text-cyan-300 border border-cyan-500/30">
               6 Weeks
             </span>
           </div>
@@ -810,7 +810,7 @@ export default function AnalysisResultPage() {
         <div className="glass-panel p-5 rounded-2xl border border-slate-800 bg-slate-950/60 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <Clock className="w-4 h-4 text-purple-400" />
                 <span>My Weekly Study Plan</span>
               </h3>
@@ -839,11 +839,11 @@ export default function AnalysisResultPage() {
         <div className="glass-panel p-5 rounded-2xl border border-cyan-500/30 bg-slate-950/80 space-y-4 shadow-xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-cyan-950 border border-cyan-500/40 text-cyan-400">
+              <div className="p-2 rounded-xl bg-indigo-50 border border-cyan-500/40 text-cyan-400">
                 <Bot className="w-5 h-5 animate-pulse" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white">CampusMind AI Personal Assistant</h3>
+                <h3 className="text-sm font-bold text-slate-900">CampusMind AI Personal Assistant</h3>
                 <p className="text-xs text-slate-400">
                   Ask questions about your entered marks, attendance clearance, and target skills.
                 </p>
@@ -883,7 +883,7 @@ export default function AnalysisResultPage() {
                 className={`flex gap-2.5 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.sender === 'assistant' && (
-                  <div className="w-6 h-6 rounded-lg bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0 mt-0.5">
+                  <div className="w-6 h-6 rounded-lg bg-indigo-50 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0 mt-0.5">
                     <Bot className="w-3.5 h-3.5" />
                   </div>
                 )}
@@ -920,7 +920,7 @@ export default function AnalysisResultPage() {
         </div>
 
         {/* BOTTOM ACTION BAR */}
-        <div className="flex items-center justify-between p-4 rounded-xl bg-slate-950/60 border border-slate-800 text-xs">
+        <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50/80 border border-slate-200 text-xs">
           <div className="flex items-center gap-2 text-slate-400">
             <span>Need to update your marks or attendance?</span>
           </div>
@@ -944,7 +944,7 @@ export default function AnalysisResultPage() {
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <BrainCircuit className="w-5 h-5 text-cyan-400" />
-                <h3 className="text-base font-bold text-white">Why did CampusMind generate this result?</h3>
+                <h3 className="text-base font-bold text-slate-900">Why did CampusMind generate this result?</h3>
               </div>
               <button
                 onClick={() => setExplainModalOpen(false)}
@@ -955,7 +955,7 @@ export default function AnalysisResultPage() {
             </div>
 
             <div className="space-y-3 text-xs">
-              <div className="p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-cyan-200 leading-relaxed">
+              <div className="p-3 rounded-xl bg-indigo-50/40 border border-cyan-500/30 text-cyan-200 leading-relaxed">
                 <span className="font-mono text-[10px] uppercase font-bold text-cyan-400 block mb-1">
                   Demo Contribution Weights (Transparent Prototype Rules)
                 </span>
@@ -1008,7 +1008,7 @@ export default function AnalysisResultPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
           <div className="relative w-full max-w-xl bg-[#0b1222] border border-slate-800 rounded-2xl shadow-2xl p-6 text-slate-100 space-y-4 max-h-[90vh] overflow-y-auto text-xs">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <h3 className="text-base font-bold text-white">Your Supporting Input Data</h3>
+              <h3 className="text-base font-bold text-slate-900">Your Supporting Input Data</h3>
               <button
                 onClick={() => setSupportingDataModalOpen(false)}
                 className="text-slate-400 hover:text-white p-1"

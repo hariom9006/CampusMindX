@@ -95,7 +95,7 @@ export const facultyInterventionPrototypes = [
   },
   {
     studentId: "STD-2024-0582",
-    studentName: "Aarav Sharma",
+    studentName: "Hariom Anand",
     riskCategory: "Moderate Risk (Score: 48)",
     primaryTrigger: "DSA internal below average (58%) & Networks attendance deficit",
     suggestedAction: "Assign Peer Study Partner & Recommend DSA Remedial Clinic",

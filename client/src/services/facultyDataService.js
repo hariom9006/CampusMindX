@@ -33,7 +33,7 @@ export const DEFAULT_FACULTY_CLASS_TEMPLATE = {
   students: [
     {
       id: 'STU-01',
-      name: 'Aarav Sharma',
+      name: 'Hariom Anand',
       rollNo: '22BCA1042',
       quizMarks: 14,
       midTermMarks: 28,

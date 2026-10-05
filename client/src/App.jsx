@@ -1,15 +1,23 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 // Layout & Core Boundaries
 import DashboardLayout from './layouts/DashboardLayout';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingScreen from './components/LoadingScreen';
 
-// Code-split pages for high performance and reduced initial bundle size
+// Public & Auth Pages
 const LandingPage = lazy(() => import('./pages/LandingPage'));
+const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/auth/RegisterPage'));
+const ForgotPasswordPage = lazy(() => import('./pages/auth/ForgotPasswordPage'));
+const ResetPasswordPage = lazy(() => import('./pages/auth/ResetPasswordPage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const RoleSelectPage = lazy(() => import('./pages/RoleSelectPage'));
 const ArchitecturePage = lazy(() => import('./pages/ArchitecturePage'));
+const AIModelCenter = lazy(() => import('./pages/AIModelCenter'));
 
 // Student Pages
 const StudentDashboard = lazy(() => import('./pages/student/StudentDashboard'));
@@ -45,66 +53,200 @@ const ConnectedIntelligencePage = lazy(() => import('./pages/integration/Connect
 // 404 Fallback Page
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
+// Smart redirect to role-specific dashboard
+function DashboardRedirect() {
+  const { user } = useAuth();
+  if (user?.role === 'faculty') return <Navigate to="/faculty/dashboard" replace />;
+  if (user?.role === 'admin') return <Navigate to="/admin/dashboard" replace />;
+  return <Navigate to="/student/dashboard" replace />;
+}
+
 export default function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        <Suspense fallback={<LoadingScreen message="Initializing CampusMind X..." />}>
-          <Routes>
-            {/* Public Landing & Persona Switcher */}
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<RoleSelectPage />} />
-            <Route path="/register" element={<RoleSelectPage />} />
+        <AuthProvider>
+          <Suspense fallback={<LoadingScreen message="Initializing CampusMind X..." />}>
+            <Routes>
+              {/* Public Landing & Authentication */}
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/persona" element={<RoleSelectPage />} />
 
-            {/* Convenience Aliases */}
-            <Route path="/dashboard" element={<Navigate to="/student" replace />} />
-            <Route path="/profile" element={<Navigate to="/student" replace />} />
+              {/* Convenience Shorthand Aliases & Role Redirects */}
+              <Route path="/dashboard" element={<ProtectedRoute><DashboardRedirect /></ProtectedRoute>} />
+              <Route path="/performance" element={<Navigate to="/student/performance" replace />} />
+              <Route path="/skills" element={<Navigate to="/student/skills" replace />} />
+              <Route path="/roadmap" element={<Navigate to="/student/roadmap" replace />} />
+              <Route path="/ai-assistant" element={<Navigate to="/student/assistant" replace />} />
+              <Route path="/insights" element={<Navigate to="/student#insights" replace />} />
+              <Route path="/notifications" element={<Navigate to="/student#notifications" replace />} />
 
-            {/* University LMS & Cloud Integration */}
-            <Route path="/connect-university" element={<ConnectUniversityPage />} />
-            <Route path="/connected-intelligence" element={<ConnectedIntelligencePage />} />
+              {/* Protected Personal Mode Analysis Routes */}
+              <Route
+                path="/analyze"
+                element={
+                  <ProtectedRoute>
+                    <AnalyzeFormPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/analyze"
+                element={
+                  <ProtectedRoute>
+                    <AnalyzeFormPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/my-analysis"
+                element={
+                  <ProtectedRoute>
+                    <AnalysisResultPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/my-analysis"
+                element={
+                  <ProtectedRoute>
+                    <AnalysisResultPage />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Personal Mode: Student Self-Analysis */}
-            <Route path="/analyze" element={<AnalyzeFormPage />} />
-            <Route path="/my-analysis" element={<AnalysisResultPage />} />
+              <Route
+                path="/analyze-class"
+                element={
+                  <ProtectedRoute allowedRoles={['faculty', 'admin']}>
+                    <FacultyAnalyzeFormPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/faculty/analyze"
+                element={
+                  <ProtectedRoute allowedRoles={['faculty', 'admin']}>
+                    <FacultyAnalyzeFormPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/my-class-analysis"
+                element={
+                  <ProtectedRoute allowedRoles={['faculty', 'admin']}>
+                    <FacultyAnalysisResultPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/faculty/my-analysis"
+                element={
+                  <ProtectedRoute allowedRoles={['faculty', 'admin']}>
+                    <FacultyAnalysisResultPage />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Personal Mode: Faculty Class Analysis */}
-            <Route path="/analyze-class" element={<FacultyAnalyzeFormPage />} />
-            <Route path="/my-class-analysis" element={<FacultyAnalysisResultPage />} />
+              <Route
+                path="/analyze-university"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AdminAnalyzeFormPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/analyze"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AdminAnalyzeFormPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/my-university-analysis"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AdminAnalysisResultPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/my-analysis"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AdminAnalysisResultPage />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Personal Mode: Administrator University Analysis */}
-            <Route path="/analyze-university" element={<AdminAnalyzeFormPage />} />
-            <Route path="/my-university-analysis" element={<AdminAnalysisResultPage />} />
+              {/* University LMS & Cloud Integration */}
+              <Route
+                path="/connect-university"
+                element={
+                  <ProtectedRoute>
+                    <ConnectUniversityPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/connected-intelligence"
+                element={
+                  <ProtectedRoute>
+                    <ConnectedIntelligencePage />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Dashboard Shell for Role-Based Portals */}
-            <Route element={<DashboardLayout />}>
-              {/* Architecture Page (also accessible inside dashboard shell) */}
-              <Route path="/architecture" element={<ArchitecturePage />} />
+              {/* Protected Dashboard Shell for Authenticated Portals */}
+              <Route
+                element={
+                  <ProtectedRoute>
+                    <DashboardLayout />
+                  </ProtectedRoute>
+                }
+              >
+                {/* User Profile */}
+                <Route path="/profile" element={<ProfilePage />} />
 
-              {/* Student Routes */}
-              <Route path="/student" element={<StudentDashboard />} />
-              <Route path="/student/performance" element={<StudentPerformance />} />
-              <Route path="/student/attendance" element={<StudentAttendance />} />
-              <Route path="/student/skills" element={<StudentSkills />} />
-              <Route path="/student/roadmap" element={<StudentRoadmap />} />
-              <Route path="/student/assistant" element={<StudentAssistant />} />
+                {/* Architecture & AI Models */}
+                <Route path="/architecture" element={<ArchitecturePage />} />
+                <Route path="/models" element={<AIModelCenter />} />
+                <Route path="/intelligence-center" element={<Navigate to="/models" replace />} />
 
-              {/* Faculty Routes */}
-              <Route path="/faculty" element={<FacultyDashboard />} />
-              <Route path="/faculty/students" element={<FacultyStudents />} />
-              <Route path="/faculty/analytics" element={<FacultyAnalytics />} />
-              <Route path="/faculty/assistant" element={<FacultyAssistant />} />
+                {/* Student Routes */}
+                <Route path="/student" element={<StudentDashboard />} />
+                <Route path="/student/dashboard" element={<StudentDashboard />} />
+                <Route path="/student/performance" element={<StudentPerformance />} />
+                <Route path="/student/attendance" element={<StudentAttendance />} />
+                <Route path="/student/skills" element={<StudentSkills />} />
+                <Route path="/student/roadmap" element={<StudentRoadmap />} />
+                <Route path="/student/assistant" element={<StudentAssistant />} />
 
-              {/* Admin Routes */}
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/analytics" element={<AdminAnalytics />} />
-              <Route path="/admin/assistant" element={<AdminAssistant />} />
-            </Route>
+                {/* Faculty Routes */}
+                <Route path="/faculty" element={<FacultyDashboard />} />
+                <Route path="/faculty/dashboard" element={<FacultyDashboard />} />
+                <Route path="/faculty/students" element={<FacultyStudents />} />
+                <Route path="/faculty/analytics" element={<FacultyAnalytics />} />
+                <Route path="/faculty/assistant" element={<FacultyAssistant />} />
 
-            {/* Application-Level 404 Catch-All */}
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
+                {/* Admin Routes */}
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/analytics" element={<AdminAnalytics />} />
+                <Route path="/admin/assistant" element={<AdminAssistant />} />
+              </Route>
+
+              {/* Application-Level 404 Catch-All */}
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </AuthProvider>
       </BrowserRouter>
     </ErrorBoundary>
   );

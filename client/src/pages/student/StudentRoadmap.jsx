@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   Compass,
   CheckCircle2,
@@ -10,323 +11,253 @@ import {
   Layers,
   Zap,
   Target,
-  HelpCircle,
-  Database
+  Check,
+  CircleDot
 } from 'lucide-react';
-
 import ProgressBar from '../../components/ProgressBar';
-import AIInsightCard from '../../components/AIInsightCard';
-import RecommendationCard from '../../components/RecommendationCard';
-import { currentStudent } from '../../data/students';
-import { apiService } from '../../services/api';
 
 export default function StudentRoadmap() {
-  const [student, setStudent] = useState(currentStudent);
-  const [skillGap, setSkillGap] = useState(null);
-  const [careerRecs, setCareerRecs] = useState([]);
-  const [isLive, setIsLive] = useState(false);
-
-  const [completedTopics, setCompletedTopics] = useState({
-    'Graph Traversal (BFS/DFS)': true,
-    'OAuth2 / JWT Token Refresh': false,
-    'REST Endpoint Architecture': true,
-    'Database Indexing & Normalization': false
-  });
-
-  useEffect(() => {
-    let isMounted = true;
-    async function loadRoadmapData() {
-      try {
-        const [studentData, gapData, recsData] = await Promise.all([
-          apiService.getCurrentStudent('22BCA1042'),
-          apiService.analyzeSkillGap({ studentId: '22BCA1042', careerTarget: 'Full Stack Developer' }),
-          apiService.getRecommendations('22BCA1042')
-        ]);
-
-        if (isMounted) {
-          if (studentData) {
-            setStudent(studentData);
-          }
-          if (gapData) {
-            setSkillGap(gapData);
-            setIsLive(true);
-          }
-          if (recsData && recsData.length > 0) {
-            setCareerRecs(recsData.filter((r) => r.category === 'Career' || r.category === 'Skill Development'));
-          }
-        }
-      } catch (err) {
-        console.warn('Error fetching roadmap live data:', err);
-      }
-    }
-
-    loadRoadmapData();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  const milestones = [
+  // 8-Week Roadmap according to Requirement 12
+  const initialWeeks = [
     {
-      step: 1,
-      title: 'Algorithmic Rigor & Graph Fundamentals',
-      targetDuration: 'Weeks 1-4 • 4 Weeks',
-      status: 'In Progress',
-      progress: 45,
-      whyAssigned: 'Why is this milestone assigned? Addresses your High Priority gap in Data Structures & Algorithms (assessed at 52% vs 80% role benchmark). Solving this foundational bottleneck restores eligibility for 85% of campus technical interview screenings.',
-      topics: [
-        'Graph Traversal (BFS/DFS)',
-        'Dijkstra Shortest Path & MST',
-        'Binary Search Tree Balancing',
-        'Dynamic Programming Memoization',
-        'LeetCode Medium Frequency Set'
-      ],
-      recommendedAction: 'Complete Thursday TA Clinic and submit Dijkstra assignment on LMS.'
+      weekNumber: 1,
+      title: 'Advanced JavaScript',
+      desc: 'Closures, Prototypes, Event Loop mechanics, Async/Await concurrency, and ES6+ modern patterns.',
+      status: 'completed',
+      topics: ['Event Loop & Microtasks', 'Closures & Scope Chain', 'Promise Combinators', 'ESModules & Bundling'],
+      color: 'from-emerald-500 to-teal-500',
+      nodeColor: 'bg-emerald-500'
     },
     {
-      step: 2,
-      title: 'Backend Runtime Internals & REST API Mastery',
-      targetDuration: 'Weeks 5-8 • 4 Weeks',
-      status: 'Upcoming',
-      progress: 20,
-      whyAssigned: 'Why is this milestone assigned? Addresses your critical 25% competency deficit in Node.js runtime mechanics and Express middleware architecture required for Full Stack backend responsibilities.',
-      topics: [
-        'Node.js Event Loop & Streams',
-        'Express Router & Middleware Chaining',
-        'OAuth2 / JWT Token Refresh',
-        'Mongoose Aggregation Pipelines',
-        'Database Indexing & Normalization'
-      ],
-      recommendedAction: 'Build an authenticated multi-tenant REST API with rate limiting.'
+      weekNumber: 2,
+      title: 'Node.js',
+      desc: 'Runtime architecture, V8 engine integration, buffer management, streams, and file system primitives.',
+      status: 'in-progress',
+      topics: ['Node.js Event-driven Architecture', 'Streams & Pipes', 'Buffer Manipulation', 'Child Processes & Worker Threads'],
+      color: 'from-indigo-500 to-indigo-600',
+      nodeColor: 'bg-indigo-600'
     },
     {
-      step: 3,
-      title: 'System Design Basics & Production Deployment',
-      targetDuration: 'Weeks 9-12 • 4 Weeks',
-      status: 'Upcoming',
-      progress: 0,
-      whyAssigned: 'Why is this milestone assigned? Bridges the 28% gap in System Design Basics and Docker deployment required for senior-tier placement qualification and placement interview case studies.',
-      topics: [
-        'Docker Multi-Stage Containerization',
-        'Stateless Architecture & Redis Caching',
-        'CI/CD Pipeline Automation (GitHub Actions)',
-        'Database Horizontal Sharding Basics',
-        'Production Deployment to Cloud'
-      ],
-      recommendedAction: 'Containerize and deploy your CampusMind full-stack capstone to Render/AWS.'
+      weekNumber: 3,
+      title: 'Express.js',
+      desc: 'Middleware chaining, routing mechanics, error handling strategies, and request pipeline lifecycles.',
+      status: 'upcoming',
+      topics: ['Middleware Pipelines', 'Router Modularization', 'Global Error Handling', 'CORS & Security Headers'],
+      color: 'from-purple-500 to-purple-600',
+      nodeColor: 'bg-purple-600'
+    },
+    {
+      weekNumber: 4,
+      title: 'REST APIs',
+      desc: 'HTTP semantics, endpoint design standards, OpenAPI/Swagger specifications, and pagination.',
+      status: 'upcoming',
+      topics: ['HTTP Status Codes & Idempotency', 'RESTful Resource Modeling', 'Query Filtering & Cursor Pagination', 'Swagger Documentation'],
+      color: 'from-pink-500 to-rose-500',
+      nodeColor: 'bg-pink-600'
+    },
+    {
+      weekNumber: 5,
+      title: 'Authentication',
+      desc: 'JWT token lifecycles, OAuth 2.0 flows, bcrypt password hashing, and session management.',
+      status: 'upcoming',
+      topics: ['Access & Refresh Token Rotation', 'OAuth 2.0 / GitHub Login', 'Role-Based Access Control (RBAC)', 'CSRF & XSS Mitigation'],
+      color: 'from-cyan-500 to-blue-500',
+      nodeColor: 'bg-cyan-600'
+    },
+    {
+      weekNumber: 6,
+      title: 'MongoDB',
+      desc: 'Schema design with Mongoose, indexing strategies, aggregation pipelines, and transactions.',
+      status: 'upcoming',
+      topics: ['Document Modeling & Normalization', 'Compound Indexing & Explain Plans', 'Aggregation Framework ($match, $lookup)', 'Replica Set Transactions'],
+      color: 'from-emerald-500 to-teal-500',
+      nodeColor: 'bg-emerald-600'
+    },
+    {
+      weekNumber: 7,
+      title: 'Deployment',
+      desc: 'Docker containerization, CI/CD GitHub Actions, environment configuration, and cloud hosting.',
+      status: 'upcoming',
+      topics: ['Dockerfile & Multi-stage Builds', 'Docker Compose Orchestration', 'GitHub Actions CI/CD Pipeline', 'Cloud Deployment & SSL'],
+      color: 'from-amber-500 to-orange-500',
+      nodeColor: 'bg-amber-600'
+    },
+    {
+      weekNumber: 8,
+      title: 'Full Stack Project',
+      desc: 'End-to-end full stack capstone: production deployment, telemetry integration, and portfolio showcase.',
+      status: 'upcoming',
+      topics: ['Full Stack Architecture Integration', 'End-to-End Testing (Playwright/Jest)', 'Lighthouse Performance Optimization', 'Portfolio Showcase & Pitch'],
+      color: 'from-indigo-600 via-purple-600 to-pink-600',
+      nodeColor: 'bg-gradient-to-r from-indigo-600 to-pink-600'
     }
   ];
 
-  // Calculate live completion percentage across all topics
-  const allTopicCount = milestones.reduce((sum, m) => sum + m.topics.length, 0);
-  const completedCount = Object.values(completedTopics).filter(Boolean).length;
-  const overallProgression = Math.round((completedCount / allTopicCount) * 100);
+  const [weeks, setWeeks] = useState(initialWeeks);
 
-  const toggleTopic = (topic) => {
-    setCompletedTopics((prev) => ({
-      ...prev,
-      [topic]: !prev[topic]
-    }));
+  const toggleComplete = (weekNumber) => {
+    setWeeks((prev) =>
+      prev.map((w) => {
+        if (w.weekNumber === weekNumber) {
+          return {
+            ...w,
+            status: w.status === 'completed' ? 'in-progress' : 'completed'
+          };
+        }
+        return w;
+      })
+    );
   };
 
+  const completedCount = weeks.filter((w) => w.status === 'completed').length;
+  const progressPercent = Math.round((completedCount / weeks.length) * 100);
+
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
-      {/* Header */}
-      <div className="glass-panel rounded-2xl p-6 border border-cyan-500/20 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-8 animate-fadeIn pb-16">
+      {/* ==================================================
+          Header & Progress Summary
+          ================================================== */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
-              Personalized Learning Path
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-0.5 rounded-full">
+              Personalized Curriculum
             </span>
-            <span className="text-[10px] font-mono text-purple-300 bg-purple-950/80 px-2 py-0.5 rounded border border-purple-500/30">
-              Target: {student.careerGoal || 'Full Stack Developer'}
-            </span>
-            {isLive && (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                <Database className="w-3 h-3 text-emerald-400" />
-                <span>Skill Engine Synced</span>
-              </span>
-            )}
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight mt-2">
-            Adaptive Academic & Career Roadmap
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Your 8-Week Full Stack Roadmap
           </h1>
-          <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
-            Dynamic 12-week remedial and skill-acceleration curriculum synthesized specifically from {student.name}'s verified skill gaps, academic deficits, and campus placement milestones.
+          <p className="text-sm sm:text-base text-slate-500 font-medium mt-1">
+            Curated weekly milestones calibrated to bridge your verified career gaps.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
-          <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-center">
-            <span className="text-[10px] uppercase font-mono text-slate-400 block">Overall Progression</span>
-            <span className="text-xl font-bold font-mono text-cyan-400">{overallProgression}% Complete</span>
-            <span className="text-[10px] text-slate-500 block mt-0.5">{completedCount} of {allTopicCount} Competencies</span>
+        {/* Progress Card */}
+        <div className="glass-card bg-white/95 rounded-[22px] p-4 border border-slate-200/90 shadow-xs flex items-center gap-4">
+          <div className="text-right">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+              Curriculum Progress
+            </span>
+            <span className="text-base font-extrabold text-indigo-600 font-mono">
+              {completedCount} of 8 Weeks Completed ({progressPercent}%)
+            </span>
+          </div>
+          <div className="w-12 h-12 rounded-full border-4 border-indigo-100 border-t-indigo-600 flex items-center justify-center font-bold text-xs text-indigo-700">
+            {progressPercent}%
           </div>
         </div>
       </div>
 
-      {/* AI Strategy Overview Card */}
-      <AIInsightCard
-        title="AI Roadmap Sequencing Rationale"
-        description={`Because campus placement technical evaluations start in 8 weeks, Milestone 1 prioritizes resolving the Data Structures assessment bottleneck (Graph Traversals and Dijkstra) immediately during Weeks 1-4, before progressing to Backend Runtime Internals and Containerized Deployment.`}
-        rationale="Solving the primary academic and algorithmic deficit first restores examination eligibility while unlocking 85% of technical screening rounds."
-        impact="Strategic Priority: Critical"
-        type="info"
-        actionText="Sync with Calendar Schedule"
-        onAction={() => alert("Roadmap study milestones exported to student calendar feed.")}
-      />
+      {/* ==================================================
+          Curved Timeline with Colorful Nodes (Requirement 12)
+          ================================================== */}
+      <div className="relative max-w-4xl mx-auto py-6">
+        {/* Continuous Connecting Center Timeline Line */}
+        <div className="absolute left-6 sm:left-1/2 top-4 bottom-4 w-1 bg-gradient-to-b from-emerald-400 via-indigo-400 to-pink-400 -translate-x-1/2 rounded-full opacity-40 hidden sm:block" />
+        <div className="absolute left-6 top-4 bottom-4 w-1 bg-gradient-to-b from-emerald-400 via-indigo-400 to-pink-400 -translate-x-1/2 rounded-full opacity-40 sm:hidden" />
 
-      {/* Interactive Milestones Timeline */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <Compass className="w-5 h-5 text-cyan-400" />
-            <span>Curated 12-Week Milestone Sprint Timeline</span>
-          </h2>
-          <span className="text-xs font-mono text-slate-400">
-            Current Role Readiness: <strong className="text-cyan-300">{skillGap?.readinessPercentage || 64}%</strong>
-          </span>
-        </div>
-
-        <div className="space-y-4">
-          {milestones.map((m) => {
-            const isCurrent = m.status === 'In Progress';
+        <div className="space-y-8">
+          {weeks.map((week, idx) => {
+            const isCompleted = week.status === 'completed';
+            const isInProgress = week.status === 'in-progress';
+            const isLeft = idx % 2 === 0;
 
             return (
               <div
-                key={m.step}
-                className={`glass-panel rounded-2xl p-6 border transition-all duration-300 ${
-                  isCurrent
-                    ? 'border-cyan-500/40 shadow-[0_0_25px_rgba(6,182,212,0.15)] bg-slate-900/80'
-                    : 'border-slate-800/80 bg-slate-950/40'
-                }`}
+                key={week.weekNumber}
+                className={`relative flex flex-col sm:flex-row items-start sm:items-center ${
+                  isLeft ? 'sm:flex-row' : 'sm:flex-row-reverse'
+                } gap-6`}
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm ${
-                        isCurrent
-                          ? 'bg-gradient-to-tr from-cyan-600 to-blue-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.5)]'
-                          : 'bg-slate-800 text-slate-300'
-                      }`}
-                    >
-                      {m.step}
-                    </div>
-                    <div>
-                      <h3 className="text-base font-bold text-white flex items-center gap-2">
-                        {m.title}
-                        {isCurrent && (
-                          <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30">
-                            Active Sprint
-                          </span>
-                        )}
-                      </h3>
-                      <span className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
-                        <Clock className="w-3.5 h-3.5 text-cyan-400" /> {m.targetDuration}
+                {/* Timeline Center Node */}
+                <div className="absolute left-6 sm:left-1/2 -translate-x-1/2 z-20 flex items-center justify-center">
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => toggleComplete(week.weekNumber)}
+                    className={`w-11 h-11 rounded-full flex items-center justify-center font-extrabold text-xs text-white shadow-md transition-all cursor-pointer ${
+                      isCompleted
+                        ? 'bg-emerald-500 ring-4 ring-emerald-100'
+                        : isInProgress
+                        ? 'bg-indigo-600 ring-4 ring-indigo-100 animate-pulse'
+                        : 'bg-slate-300 ring-4 ring-slate-100 hover:bg-indigo-400'
+                    }`}
+                    title="Click to toggle completion"
+                  >
+                    {isCompleted ? <Check className="w-5 h-5" /> : `W${week.weekNumber}`}
+                  </motion.button>
+                </div>
+
+                {/* Milestone Content Card */}
+                <div className={`w-full sm:w-[calc(50%-2.5rem)] pl-16 sm:pl-0 ${isLeft ? 'sm:pr-4' : 'sm:pl-4'}`}>
+                  <motion.div
+                    whileHover={{ y: -3 }}
+                    className={`glass-panel rounded-[24px] p-6 border transition-all ${
+                      isCompleted
+                        ? 'border-emerald-200 bg-white/95 shadow-sm'
+                        : isInProgress
+                        ? 'border-indigo-200 bg-gradient-to-br from-white/95 to-indigo-50/40 shadow-md shadow-indigo-500/10'
+                        : 'border-slate-200/80 bg-white/90 shadow-2xs'
+                    }`}
+                  >
+                    {/* Week pill & Status */}
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-indigo-700 bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
+                        Week {week.weekNumber}
+                      </span>
+                      <span
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                          isCompleted
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                            : isInProgress
+                            ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                            : 'bg-slate-100 text-slate-500 border-slate-200'
+                        }`}
+                      >
+                        {isCompleted ? 'Completed ✓' : isInProgress ? 'In Progress' : 'Upcoming'}
                       </span>
                     </div>
-                  </div>
 
-                  <div className="w-full sm:w-48">
-                    <ProgressBar
-                      value={m.progress}
-                      max={100}
-                      label={`Sprint Progress (${m.progress}%)`}
-                      color={isCurrent ? 'cyan' : 'purple'}
-                      showValue={false}
-                      height="h-2"
-                    />
-                  </div>
-                </div>
-
-                {/* Explicit Explanation: Why is this milestone assigned? */}
-                <div className="mb-4 p-3 rounded-xl bg-slate-950/60 border border-cyan-500/20 text-xs text-slate-300 flex items-start gap-2">
-                  <HelpCircle className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-cyan-300 font-medium">Why is this milestone assigned?</strong>
-                    <p className="mt-0.5 text-slate-300 text-[11px] leading-relaxed">
-                      {m.whyAssigned.replace(/^Why is this milestone assigned\?\s*/i, '')}
+                    {/* Title */}
+                    <h3 className="text-base font-bold text-slate-900 tracking-tight">
+                      {week.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      {week.desc}
                     </p>
-                  </div>
-                </div>
 
-                {/* Topics List Checklist */}
-                <div className="pt-2 border-t border-slate-800/80">
-                  <span className="text-xs font-semibold text-slate-300 block mb-2">
-                    Core Learning Modules & Verified Competencies (Click to Toggle):
-                  </span>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
-                    {m.topics.map((t, i) => {
-                      const checked = completedTopics[t] || false;
-                      return (
-                        <div
-                          key={i}
-                          onClick={() => toggleTopic(t)}
-                          className={`p-2.5 rounded-xl border cursor-pointer text-xs flex items-center justify-between transition-colors ${
-                            checked
-                              ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-300'
-                              : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:border-slate-700'
-                          }`}
-                        >
+                    {/* Core Topics Checklist */}
+                    <div className="mt-4 pt-3 border-t border-slate-100 space-y-1.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                        Syllabus Focus
+                      </span>
+                      {week.topics.map((t, tIdx) => (
+                        <div key={tIdx} className="flex items-center gap-2 text-xs text-slate-700">
+                          <CircleDot className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
                           <span>{t}</span>
-                          <CheckCircle2
-                            className={`w-4 h-4 shrink-0 ${
-                              checked ? 'text-emerald-400' : 'text-slate-600'
-                            }`}
-                          />
                         </div>
-                      );
-                    })}
-                  </div>
-                </div>
+                      ))}
+                    </div>
 
-                {/* Suggested Action Bar */}
-                <div className="mt-4 pt-3 border-t border-slate-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
-                    <span>
-                      <strong className="text-cyan-300">Target Action:</strong> {m.recommendedAction}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => alert(`Starting interactive learning module for: ${m.title}`)}
-                    className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700 shrink-0 self-start sm:self-auto flex items-center gap-1.5 text-xs font-semibold"
-                  >
-                    <span>Launch Module</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
-                  </button>
+                    {/* Toggle Action */}
+                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <button
+                        onClick={() => toggleComplete(week.weekNumber)}
+                        className={`text-xs font-bold transition-colors ${
+                          isCompleted
+                            ? 'text-slate-400 hover:text-slate-600'
+                            : 'text-indigo-600 hover:text-indigo-800'
+                        }`}
+                      >
+                        {isCompleted ? 'Mark as Incomplete' : 'Mark Week Complete ✓'}
+                      </button>
+                    </div>
+                  </motion.div>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-
-      {/* Linked Career & Skill Recommendations */}
-      {careerRecs.length > 0 && (
-        <div className="space-y-4 pt-4 border-t border-slate-800">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-purple-400" />
-                <span>Linked Career Interventions</span>
-              </h2>
-              <p className="text-xs text-slate-400">
-                Actionable milestones synchronized with your career track requirements.
-              </p>
-            </div>
-            <span className="text-xs font-mono text-purple-400 bg-purple-950/60 px-2.5 py-1 rounded-lg border border-purple-500/30">
-              {careerRecs.length} Actions
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {careerRecs.map((rec, i) => (
-              <RecommendationCard key={rec._id || rec.id || i} recommendation={rec} />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

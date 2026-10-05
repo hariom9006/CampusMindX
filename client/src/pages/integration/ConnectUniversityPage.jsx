@@ -153,22 +153,22 @@ export default function ConnectUniversityPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050814] text-slate-100 flex flex-col justify-between selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex flex-col justify-between aurora-bg-mesh selection:bg-indigo-500/20 selection:text-indigo-900">
       <div className="max-w-4xl mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-6">
         {/* TOP BRAND HEADER */}
-        <div className="glass-panel rounded-2xl p-5 border border-cyan-500/30 bg-slate-950/80 backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+        <div className="glass-panel rounded-[24px] p-5 border border-emerald-100 bg-white/95 backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 shrink-0">
               <Building2 className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-300 font-bold px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 px-2 py-0.5 rounded-full bg-emerald-100 border border-emerald-300">
                   Connected LMS Mode
                 </span>
-                <span className="text-xs text-slate-400">OAuth 2.0 / SSO Integration</span>
+                <span className="text-xs text-slate-500 font-medium">OAuth 2.0 / SSO Integration</span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-white mt-0.5">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">
                 Connect Your University Account
               </h1>
               <p className="text-xs text-slate-400">
@@ -606,7 +606,7 @@ export default function ConnectUniversityPage() {
                             Authenticated Student
                           </span>
                           <span className="text-base font-bold text-white">
-                            {authenticatedStudent?.name || (selectedUniv.isLive ? 'Rahul Kumar' : 'Aarav Sharma')}
+                            {authenticatedStudent?.name || (selectedUniv.isLive ? 'Rahul Kumar' : 'Hariom Anand')}
                           </span>
                         </div>
                         <span className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border ${

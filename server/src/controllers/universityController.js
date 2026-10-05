@@ -166,7 +166,7 @@ export const authenticateStudent = (req, res) => {
   } else {
     // Demo sandbox persona
     studentIdentity = {
-      name: 'Aarav Sharma',
+      name: 'Hariom Anand',
       admissionId: studentId.toUpperCase(),
       enrollmentNumber: `DEMO-ENR-${studentId.toUpperCase()}`,
       university: 'Demo University LMS',
@@ -175,7 +175,7 @@ export const authenticateStudent = (req, res) => {
       department: 'Department of Computer Science',
       semester: 5,
       section: 'BCA-A',
-      email: 'aarav.sharma@demo.ac.in',
+      email: 'hariom.anand@demo.ac.in',
       authTimestamp: new Date().toISOString(),
       dataSource: 'DEMO SANDBOX',
       isLiveIntegration: false

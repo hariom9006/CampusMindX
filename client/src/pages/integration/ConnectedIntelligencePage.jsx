@@ -103,10 +103,10 @@ export default function ConnectedIntelligencePage() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-[#050814] text-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex items-center justify-center p-4 aurora-bg-mesh">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-medium text-slate-400">Loading connected university intelligence...</span>
+          <div className="w-10 h-10 border-2 border-emerald-200 border-t-emerald-600 rounded-full animate-spin" />
+          <span className="text-sm font-semibold text-slate-500">Loading connected university intelligence...</span>
         </div>
       </div>
     );
@@ -196,17 +196,17 @@ export default function ConnectedIntelligencePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050814] text-slate-100 flex flex-col justify-between selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen bg-[#F8FAFF] text-slate-800 flex flex-col justify-between aurora-bg-mesh selection:bg-indigo-500/20 selection:text-indigo-900">
       <div className="max-w-7xl mx-auto w-full p-4 sm:p-6 lg:p-8 space-y-6">
         {/* TOP BAR / MODE HEADER */}
-        <div className="glass-panel rounded-2xl p-5 border border-cyan-500/30 bg-slate-950/80 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
+        <div className="glass-panel rounded-[24px] p-5 border border-emerald-100 bg-white/95 backdrop-blur-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-600 via-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] shrink-0">
-              <Building2 className="w-6 h-6 text-emerald-300" />
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 shrink-0">
+              <Building2 className="w-6 h-6 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-300 font-bold px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 font-bold px-2 py-0.5 rounded-full bg-emerald-100 border border-emerald-300">
                   Connected LMS Mode
                 </span>
                 {/* Section 8: Live University Data Source Indicator */}

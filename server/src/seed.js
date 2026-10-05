@@ -157,11 +157,11 @@ export const seedDatabase = async () => {
       description: 'Advanced graph traversals, Dijkstra, Minimum Spanning Trees, Dynamic Programming.'
     });
 
-    console.log('🌱 Seeding Aarav Sharma & Cohort Students...');
+    console.log('🌱 Seeding Hariom Anand & Cohort Students...');
     const aarav = await Student.create({
-      name: 'Aarav Sharma',
+      name: 'Hariom Anand',
       enrollmentNumber: '22BCA1042',
-      email: 'aarav.sharma@campus.edu.in',
+      email: 'hariom.anand@campus.edu.in',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       program: 'BCA (Bachelor of Computer Applications)',
       shortProgram: 'BCA',
@@ -297,8 +297,8 @@ export const seedDatabase = async () => {
     console.log('🌱 Seeding Users (Password: Password123!)...');
     await User.create([
       {
-        name: 'Aarav Sharma',
-        email: 'aarav.sharma@campus.edu.in',
+        name: 'Hariom Anand',
+        email: 'hariom.anand@campus.edu.in',
         password: 'Password123!',
         role: 'student',
         student: aarav._id
@@ -318,7 +318,7 @@ export const seedDatabase = async () => {
       }
     ]);
 
-    console.log('🌱 Seeding Attendance for Aarav Sharma...');
+    console.log('🌱 Seeding Attendance for Hariom Anand...');
     const weeklyData = [
       { week: 'Wk 1', attendance: 88, threshold: 75 },
       { week: 'Wk 2', attendance: 82, threshold: 75 },
@@ -393,7 +393,7 @@ export const seedDatabase = async () => {
       }
     ]);
 
-    console.log('🌱 Seeding Marks for Aarav Sharma...');
+    console.log('🌱 Seeding Marks for Hariom Anand...');
     await Marks.create([
       {
         student: aarav._id,
@@ -467,7 +467,7 @@ export const seedDatabase = async () => {
       }
     ]);
 
-    console.log('🌱 Seeding Assignments for Aarav Sharma...');
+    console.log('🌱 Seeding Assignments for Hariom Anand...');
     await Assignment.create([
       {
         student: aarav._id,
@@ -511,7 +511,7 @@ export const seedDatabase = async () => {
       }
     ]);
 
-    console.log('🌱 Seeding Skills for Aarav Sharma...');
+    console.log('🌱 Seeding Skills for Hariom Anand...');
     const skills = await Skill.create([
       {
         student: aarav._id,
@@ -578,7 +578,7 @@ export const seedDatabase = async () => {
     // Attach skill ids to aarav
     await Student.findByIdAndUpdate(aarav._id, { skills: skills.map((s) => s._id) });
 
-    console.log('🌱 Seeding Projects for Aarav Sharma...');
+    console.log('🌱 Seeding Projects for Hariom Anand...');
     const project = await Project.create({
       student: aarav._id,
       title: 'Campus Resource Management Portal',
@@ -586,12 +586,12 @@ export const seedDatabase = async () => {
       technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS'],
       status: 'Completed',
       grade: 'A',
-      repoUrl: 'https://github.com/aaravsharma/campus-resource-portal',
+      repoUrl: 'https://github.com/hariomanand/campus-resource-portal',
       liveUrl: 'https://campus-resource-demo.vercel.app'
     });
     await Student.findByIdAndUpdate(aarav._id, { $push: { projects: project._id } });
 
-    console.log('🌱 Seeding Recommendations for Aarav Sharma...');
+    console.log('🌱 Seeding Recommendations for Hariom Anand...');
     await Recommendation.create([
       {
         student: aarav._id,
@@ -646,7 +646,7 @@ export const seedDatabase = async () => {
       }
     ]);
 
-    console.log('🌱 Seeding Notifications for Aarav Sharma...');
+    console.log('🌱 Seeding Notifications for Hariom Anand...');
     await Notification.create([
       {
         student: aarav._id,

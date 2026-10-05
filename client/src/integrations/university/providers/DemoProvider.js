@@ -26,7 +26,7 @@ export class DemoProvider extends UniversityConnector {
     this.authenticated = true;
     this.sessionToken = `demo_token_${Date.now()}`;
     this.studentProfile = {
-      name: 'Aarav Sharma',
+      name: 'Hariom Anand',
       admissionId: credentials.studentId || 'DEMO2026',
       enrollmentNumber: 'DEMO-ENR-22BCA1042',
       university: 'Demo University LMS',
@@ -35,7 +35,7 @@ export class DemoProvider extends UniversityConnector {
       department: 'Department of Computer Science',
       semester: 5,
       section: 'BCA-A',
-      email: 'aarav.sharma@demo.ac.in',
+      email: 'hariom.anand@demo.ac.in',
       isLiveIntegration: false,
       dataSource: 'DEMO SANDBOX'
     };

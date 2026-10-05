@@ -9,7 +9,7 @@ export default function NotificationPanel({ isOpen, onClose }) {
       id: 1,
       type: 'alert',
       title: 'Attendance Shortage Alert',
-      message: 'Computer Networks (BCA-504) is at 48%. Attending the next 7 classes is required for exam clearance.',
+      message: 'Computer Networks (BCA-504) is at 48%. Attending the next 7 classes is recommended.',
       time: '12m ago',
       urgent: true,
       link: '/student/attendance'
@@ -17,8 +17,8 @@ export default function NotificationPanel({ isOpen, onClose }) {
     {
       id: 2,
       type: 'deadline',
-      title: 'Overdue Assignment Notice',
-      message: 'Dijkstra Implementation (BCA-505) was due yesterday. Submit today for 80% maximum credit.',
+      title: 'Pending Coursework Notice',
+      message: 'Dijkstra Implementation (BCA-505) internal submission is pending.',
       time: '2h ago',
       urgent: true,
       link: '/student/performance'
@@ -49,7 +49,7 @@ export default function NotificationPanel({ isOpen, onClose }) {
           setIsLive(true);
         }
       } catch (err) {
-        console.error('Error fetching notifications:', err);
+        console.warn('Notifications fallback:', err);
       }
     }
 
@@ -66,61 +66,61 @@ export default function NotificationPanel({ isOpen, onClose }) {
     } catch {}
   };
 
-  if (!isOpen) return null;
-
   return (
     <div
-      className="absolute right-0 top-14 w-80 sm:w-96 glass-panel rounded-2xl border border-cyan-500/30 shadow-[0_10px_40px_rgba(0,0,0,0.6)] z-50 overflow-hidden animate-fadeIn text-slate-200"
+      className="fixed inset-x-3 sm:inset-x-auto sm:absolute sm:right-0 top-16 sm:top-14 sm:w-96 max-w-[calc(100vw-1.5rem)] glass-panel rounded-2xl border border-slate-200/90 shadow-2xl z-50 overflow-hidden bg-white/95 text-slate-800 animate-fadeIn"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/80">
+      <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-indigo-50/70 to-purple-50/70">
         <div className="flex items-center gap-2">
-          <Bell className="w-4 h-4 text-cyan-400" />
-          <h4 className="text-xs font-bold text-white uppercase tracking-wider">Academic Notifications</h4>
+          <Bell className="w-4 h-4 text-indigo-600" />
+          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+            Academic Notifications
+          </h4>
           {isLive && (
-            <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/30">
-              MongoDB
+            <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+              Live DB
             </span>
           )}
         </div>
         <button
           onClick={onClose}
-          aria-label="Close academic notifications"
-          className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+          aria-label="Close notifications"
+          className="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
-      <div className="max-h-[380px] overflow-y-auto divide-y divide-slate-800/60 p-1">
+      <div className="max-h-[380px] overflow-y-auto divide-y divide-slate-100 p-1">
         {notifications.map((n) => (
           <div
             key={n.id}
-            className={`p-3.5 hover:bg-slate-800/40 transition-colors rounded-xl m-1 ${
-              n.urgent ? 'bg-rose-950/15 border-l-2 border-rose-500' : ''
+            className={`p-3.5 hover:bg-slate-50 transition-colors rounded-xl m-1 ${
+              n.urgent ? 'bg-amber-50/40 border-l-2 border-amber-500' : ''
             }`}
           >
             <div className="flex items-start justify-between gap-2">
-              <h5 className="text-xs font-semibold text-white flex items-center gap-1.5">
-                {n.urgent && <AlertTriangle className="w-3.5 h-3.5 text-rose-400 shrink-0" />}
+              <h5 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                {n.urgent && <AlertTriangle className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
                 {n.title}
               </h5>
-              <span className="text-[10px] text-slate-500 flex items-center gap-1 shrink-0">
+              <span className="text-[10px] text-slate-400 flex items-center gap-1 shrink-0 font-medium">
                 <Clock className="w-3 h-3" /> {n.time}
               </span>
             </div>
-            <p className="text-[11px] text-slate-300 mt-1 leading-relaxed">{n.message}</p>
+            <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">{n.message}</p>
             <div className="mt-2.5 flex items-center justify-between">
               <Link
                 to={n.link}
                 onClick={onClose}
-                className="text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
+                className="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 transition-colors"
               >
                 View Details →
               </Link>
               {n.urgent && (
-                <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-rose-900/40 text-rose-300 border border-rose-500/30">
-                  Action Required
+                <span className="text-[9px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+                  Advisory
                 </span>
               )}
             </div>
@@ -128,10 +128,10 @@ export default function NotificationPanel({ isOpen, onClose }) {
         ))}
       </div>
 
-      <div className="p-3 bg-slate-900/90 border-t border-slate-800 text-center">
+      <div className="p-3 bg-slate-50 border-t border-slate-100 text-center">
         <button
           onClick={handleMarkAllRead}
-          className="text-xs font-medium text-slate-400 hover:text-slate-200 transition-colors"
+          className="text-xs font-bold text-slate-500 hover:text-indigo-600 transition-colors"
         >
           Mark all as read
         </button>
