@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
 // Layout & Core Boundaries
@@ -66,7 +67,8 @@ export default function App() {
     <ErrorBoundary>
       <BrowserRouter>
         <AuthProvider>
-          <Suspense fallback={<LoadingScreen message="Initializing CampusMind X..." />}>
+          <ThemeProvider>
+            <Suspense fallback={<LoadingScreen message="Initializing CampusMind X..." />}>
             <Routes>
               {/* Public Landing & Authentication */}
               <Route path="/" element={<LandingPage />} />
@@ -246,6 +248,7 @@ export default function App() {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
+          </ThemeProvider>
         </AuthProvider>
       </BrowserRouter>
     </ErrorBoundary>

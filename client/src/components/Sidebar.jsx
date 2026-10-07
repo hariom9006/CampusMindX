@@ -28,8 +28,11 @@ import {
   X
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import ThemeToggle from './ThemeToggle';
 
 export default function Sidebar({ isOpen = true, onCloseMobile = null }) {
+  const { isDark } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
@@ -122,7 +125,11 @@ export default function Sidebar({ isOpen = true, onCloseMobile = null }) {
       )}
 
       <aside
-        className={`fixed md:sticky top-0 md:top-16 left-0 z-50 md:z-30 h-full md:h-[calc(100vh-4rem)] w-72 max-w-[85vw] md:w-56 lg:w-60 xl:w-64 glass-panel border-r border-slate-200/80 bg-white/95 md:bg-white/80 backdrop-blur-xl flex flex-col justify-between p-4 transition-transform duration-300 ease-in-out shrink-0 shadow-2xl md:shadow-none ${
+        className={`fixed md:sticky top-0 md:top-16 left-0 z-50 md:z-30 h-full md:h-[calc(100vh-4rem)] w-72 max-w-[85vw] md:w-56 lg:w-60 xl:w-64 border-r backdrop-blur-xl flex flex-col justify-between p-4 transition-transform duration-300 ease-in-out shrink-0 shadow-2xl md:shadow-none ${
+          isDark
+            ? 'bg-[#0D111A]/95 md:bg-[#0D111A]/85 border-[#202938] text-[#F8FAFC]'
+            : 'glass-panel border-slate-200/80 bg-white/95 md:bg-white/80 text-slate-800'
+        } ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
@@ -308,42 +315,64 @@ export default function Sidebar({ isOpen = true, onCloseMobile = null }) {
           </div>
         </div>
 
-        {/* Sidebar Footer with User Card & Logout */}
-        <div className="pt-3 border-t border-slate-200/80 space-y-2">
+        {/* Sidebar Footer with Theme Switcher, User Card & Logout */}
+        <div className={`pt-3 border-t space-y-2 ${isDark ? 'border-[#202938]' : 'border-slate-200/80'}`}>
+          {/* Quick Theme Switcher */}
+          <div
+            className={`p-2 rounded-xl flex items-center justify-between border text-xs ${
+              isDark ? 'bg-[#151C28] border-[#202938] text-[#F8FAFC]' : 'bg-slate-50 border-slate-200 text-slate-700'
+            }`}
+          >
+            <span className="font-semibold text-[11px]">Theme</span>
+            <ThemeToggle variant="segmented" />
+          </div>
+
           {isAuthenticated && user ? (
-            <div className="p-2.5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
+            <div
+              className={`p-2.5 rounded-2xl border shadow-sm ${
+                isDark ? 'bg-[#151C28] border-[#202938]' : 'bg-white border-slate-200/80'
+              }`}
+            >
               <div className="flex items-center gap-2.5 mb-2">
                 <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">
                   {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-slate-800 truncate leading-tight">
+                  <p className={`text-xs font-bold truncate leading-tight ${isDark ? 'text-[#F8FAFC]' : 'text-slate-800'}`}>
                     {user.name}
                   </p>
-                  <p className="text-[10px] text-slate-400 truncate">
+                  <p className={`text-[10px] truncate ${isDark ? 'text-[#94A3B8]' : 'text-slate-400'}`}>
                     {user.email}
                   </p>
                 </div>
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-indigo-50 text-indigo-700 capitalize">
+                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-md capitalize ${
+                  isDark ? 'bg-[#111722] text-[#8B5CF6] border border-[#202938]' : 'bg-indigo-50 text-indigo-700'
+                }`}>
                   {user.role}
                 </span>
               </div>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100/80 border border-rose-200 transition-all cursor-pointer"
+                className={`w-full flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                  isDark
+                    ? 'text-rose-400 bg-rose-950/30 hover:bg-rose-900/50 border-rose-900/40'
+                    : 'text-rose-600 bg-rose-50 hover:bg-rose-100/80 border border-rose-200'
+                }`}
               >
                 <LogOut className="w-3.5 h-3.5 text-rose-500" />
                 <span>Sign Out</span>
               </button>
             </div>
           ) : (
-            <div className="p-3 rounded-2xl bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 border border-indigo-100 text-xs">
-              <div className="flex items-center gap-2 text-indigo-700 font-bold mb-0.5">
-                <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Aurora Intelligence</span>
+            <div className={`p-3 rounded-2xl border text-xs ${
+              isDark ? 'bg-[#151C28] border-[#202938] text-[#94A3B8]' : 'bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 border-indigo-100'
+            }`}>
+              <div className="flex items-center gap-2 text-indigo-500 font-bold mb-0.5">
+                <Cpu className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                <span>CampusMind X</span>
               </div>
-              <p className="text-[11px] text-slate-500 leading-snug">
-                Explainable neural pipelines active & monitoring cohort.
+              <p className="text-[11px] opacity-80 leading-snug">
+                University Intelligence & Student Success.
               </p>
             </div>
           )}

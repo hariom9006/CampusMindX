@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
 import {
   User,
   Mail,
@@ -11,12 +13,14 @@ import {
   LogOut,
   GraduationCap,
   Sparkles,
-  Layers
+  Layers,
+  Palette
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function ProfilePage() {
   const { user, updateProfile, logout } = useAuth();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
 
   const [name, setName] = useState(user?.name || '');
@@ -229,6 +233,40 @@ export default function ProfilePage() {
                 </button>
               </div>
             </form>
+          </div>
+
+          {/* Theme Preference Settings Card */}
+          <div className={`rounded-[28px] p-6 sm:p-8 border shadow-sm transition-colors ${
+            isDark ? 'bg-[#111722] border-[#202938]' : 'glass-panel bg-white/95 border-slate-200/90'
+          }`}>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-500">
+                <Palette className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className={`text-lg font-bold ${isDark ? 'text-[#F8FAFC]' : 'text-slate-900'}`}>
+                  Theme & Display Preference
+                </h3>
+                <p className={`text-xs font-medium ${isDark ? 'text-[#94A3B8]' : 'text-slate-500'}`}>
+                  Switch between Dark Mode and Light Mode according to your student or faculty preference.
+                </p>
+              </div>
+            </div>
+
+            <div className={`mt-5 p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+              isDark ? 'bg-[#151C28] border-[#202938]' : 'bg-slate-50 border-slate-200/80'
+            }`}>
+              <div>
+                <span className={`text-xs font-bold block ${isDark ? 'text-[#F8FAFC]' : 'text-slate-800'}`}>
+                  Active Workspace Appearance
+                </span>
+                <span className={`text-[11px] block mt-0.5 ${isDark ? 'text-[#94A3B8]' : 'text-slate-500'}`}>
+                  Current mode: <span className="font-semibold">{isDark ? 'Dark Mode (Enterprise Intelligence)' : 'Light Mode (Aurora Classic)'}</span>
+                </span>
+              </div>
+
+              <ThemeToggle variant="segmented" />
+            </div>
           </div>
         </div>
       </div>

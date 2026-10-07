@@ -23,7 +23,7 @@
 }
 
 /* ==================================================
-   Aurora Intelligence — Light Glassmorphism & Cards
+   Aurora Intelligence — Light & Dark Glassmorphism & Cards
    ================================================== */
 
 .glass-card {
@@ -32,6 +32,12 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(226, 232, 240, 0.85);
   box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.05), 0 4px 12px rgba(15, 23, 42, 0.02);
+}
+
+html.dark .glass-card {
+  background: rgba(17, 23, 34, 0.85);
+  border: 1px solid rgba(32, 41, 56, 0.85);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .glass-card-hover {
@@ -45,12 +51,24 @@
   transform: translateY(-3px);
 }
 
+html.dark .glass-card-hover:hover {
+  background: rgba(21, 28, 40, 0.95);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(139, 92, 246, 0.15);
+}
+
 .glass-panel {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(226, 232, 240, 0.85);
   box-shadow: 0 14px 40px -10px rgba(99, 102, 241, 0.07), 0 4px 14px rgba(15, 23, 42, 0.02);
+}
+
+html.dark .glass-panel {
+  background: rgba(17, 23, 34, 0.92);
+  border: 1px solid rgba(32, 41, 56, 0.85);
+  box-shadow: 0 14px 40px -10px rgba(0, 0, 0, 0.5), 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
 .glass-input {
@@ -61,10 +79,21 @@
   transition: all 0.2s ease;
 }
 
+html.dark .glass-input {
+  background: rgba(17, 23, 34, 0.92);
+  border: 1px solid #202938;
+  color: #F8FAFC;
+}
+
 .glass-input:focus {
   border-color: #6366F1;
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
   outline: none;
+}
+
+html.dark .glass-input:focus {
+  border-color: #8B5CF6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
 }
 
 /* ==================================================
@@ -214,4 +243,53 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
+}
+
+/* ==================================================
+   CampusMind X — Dark Enterprise Theme Utilities
+   ================================================== */
+
+.dark-landing {
+  background-color: #080B12;
+  color: #F8FAFC;
+}
+
+.dark-bg-grid {
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.light-bg-grid {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.dark-hero-ambient {
+  background-image: 
+    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(139, 92, 246, 0.08), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 80% 25%, rgba(59, 130, 246, 0.05), transparent 60%);
+}
+
+.dark-card {
+  background-color: #111722;
+  border: 1px solid #202938;
+}
+
+.dark-card-elevated {
+  background-color: #151C28;
+  border: 1px solid #202938;
+}
+
+.dark-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark-card-hover:hover {
+  border-color: #334155;
+  background-color: #151C28;
+  transform: translateY(-2px);
 }
